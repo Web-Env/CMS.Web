@@ -1,0 +1,13 @@
+@import 'src/assets/scss/variables/colours';
+@import 'src/assets/scss/variables/dimensions';
+@import 'src/assets/scss/variables/paddings';
+
+.sidebar {
+    width: 100%;
+    height: 100%;
+
+    background-color: $tertiary-background-colour;
+    color: $primary-text-colour;
+
+    //padding: $sidebar-padding;
+}

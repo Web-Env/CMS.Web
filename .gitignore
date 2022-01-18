@@ -1,0 +1,39 @@
+# Compiled output
+/cms-web/dist
+/cms-web/tmp
+/cms-web/out-tsc
+
+# Dependencies
+/cms-web/node_modules
+
+# IDEs and editors
+/cms-web/.idea
+/cms-web/.project
+/cms-web/.classpath
+/cms-web/.c9/
+/cms-web/*.launch
+/cms-web/.settings/
+/cms-web/*.sublime-workspace
+
+# IDE - VSCode
+/cms-web/.vscode
+/cms-web/!.vscode/settings.json
+/cms-web/!.vscode/tasks.json
+/cms-web/!.vscode/launch.json
+/cms-web/!.vscode/extensions.json
+
+# Misc
+/cms-web/.sass-cache
+/cms-web/connect.lock
+/cms-web/coverage
+/cms-web/libpeerconnection.log
+/cms-web/npm-debug.log
+/cms-web/yarn-error.log
+/cms-web/testem.log
+/cms-web/typings
+
+# System Files
+/cms-web/.DS_Store
+/cms-web/Thumbs.db
+/cms-web/extension/extension.zip
+/cms-web/extension/Firefox/Firefox.zip
