@@ -81,23 +81,11 @@
                 }
             }
         }
-
-        .logo-container {
-            width: $header-logo-dimensions;
-            height: $header-logo-dimensions;
-
-            margin: auto 0;
-    
-            img {
-                width: $header-logo-dimensions;
-                height: $header-logo-dimensions;
-            }
-        }
     
         .user-container {
             height: 40px;
 
-            margin: auto 0;
+            margin: auto 0 auto auto;
 
             display: flex;
             justify-content: space-between;
@@ -118,11 +106,11 @@
 
                 .user-action-icon-container {
                     svg {
-                        -webkit-transform: rotate(180deg);// scaleX(1) translate(0, $header-user-action-icon-padding-vertical);
-                        -moz-transform: rotate(180deg);//  scaleX(1) translate(0, $header-user-action-icon-padding-vertical);
-                        -o-transform: rotate(180deg);//  scaleX(1) translate(0, $header-user-action-icon-padding-vertical);
-                        -ms-transform: rotate(180deg);//  scaleX(1) translate(0, $header-user-action-icon-padding-vertical);
-                        transform: rotate(180deg);//  scaleX(1) translate(0, $header-user-action-icon-padding-vertical);
+                        -webkit-transform: rotate(180deg);
+                        -moz-transform: rotate(180deg);
+                        -o-transform: rotate(180deg);
+                        -ms-transform: rotate(180deg);
+                        transform: rotate(180deg);
                     }
                 }
             }
@@ -210,10 +198,6 @@
         .header-children-container {
             .menu-button-container {
                 margin-left: $header-menu-button-container-margin-horizontal-phone;
-            }
-
-            .logo-container {
-                margin-left: $header-logo-container-margin-horizontal-phone;
             }
 
             .user-container {

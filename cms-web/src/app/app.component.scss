@@ -17,20 +17,20 @@
     position: relative;
 
     .header-container {
-        width: 100%;
+        width: calc(100% - $sidebar-width);
         height: $header-height;
 
         position: absolute;
         top: 0;
-        left: 0;
+        left: $sidebar-width;
     }
 
     .sidebar-container {
         width: $sidebar-width;
-        height: calc(100% - ($header-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
+        height: 100%;
 
         position: absolute;
-        top: calc($header-height + $header-border-bottom-height + ($header-vertical-padding * 2));
+        top: 0;
         left: 0;
     }
 

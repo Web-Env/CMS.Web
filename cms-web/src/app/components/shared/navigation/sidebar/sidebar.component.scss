@@ -8,6 +8,20 @@
 
     background-color: $tertiary-background-colour;
     color: $primary-text-colour;
+    
+    .sidebar-header {
+        width: 100%;
+        height: 200px;
 
-    //padding: $sidebar-padding;
+        .sidebar-logo-container {
+            width: fit-content;
+
+            margin: auto;
+            padding: $sidebar-logo-padding;
+
+            .sidebar-logo {
+                height: $sidebar-logo-height;
+            }
+        }
+    }
 }
