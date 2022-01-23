@@ -1,0 +1,139 @@
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/margins";
+@import "src/assets/scss/variables/paddings";
+@import "src/assets/scss/variables/timings";
+@import "src/assets/scss/variables/typeface";
+
+.sidebar-button-container {
+    width: 100%;
+    height: auto;
+
+    padding-top: $sidebar-button-vertical-padding;
+    padding-bottom: $sidebar-button-vertical-padding;
+
+    &.active {
+        .sidebar-button {
+            h3 {
+                color: $primary-hover-colour;
+            }
+
+            .sidebar-button-action-icon-container {
+                -webkit-transform: rotate(180deg) scaleX(1) translate(0, 2px);
+                -moz-transform: rotate(180deg) scaleX(1) translate(0, 2px);
+                -o-transform: rotate(180deg) scaleX(1) translate(0, 2px);
+                -ms-transform: rotate(180deg) scaleX(1) translate(0, 2px);
+                transform: rotate(180deg) scaleX(1) translate(0, 2px);
+
+                svg {
+                    fill: $primary-hover-colour;
+                }
+            }
+        }
+
+        .sub-button-container {
+            max-height: 500px;
+        }
+    }
+
+    .sidebar-button {
+        display: flex;
+
+        position: relative;
+
+        cursor: pointer;
+
+        user-select: none;
+
+        &:hover {
+            h3 {
+                color: $primary-hover-colour;
+            }
+
+            .sidebar-button-action-icon-container {
+                svg {
+                    fill: $primary-hover-colour;
+                }
+            }
+        }
+
+        h3 {
+            color: $primary-text-colour;
+
+            user-select: none;
+
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+
+            font-size: 1.5rem;
+        }
+
+        .sidebar-button-action-icon-container {
+            padding-top: $sidebar-button-action-icon-padding-vertical;
+            padding-bottom: $sidebar-button-action-icon-padding-vertical;
+            padding-left: none;
+            padding-right: none;
+
+            position: absolute;
+            right: 0;
+
+            -webkit-transition: -webkit-transform $standard-transition-time ease;
+            -moz-transition: -moz-transform $standard-transition-time ease;
+            -ms-transition: -ms-transform $standard-transition-time ease;
+            -o-transition: -o-transform $standard-transition-time ease;
+            transition: transform $standard-transition-time ease;
+
+            svg {
+                width: $sidebar-button-action-icon-dimensions;
+                height: $sidebar-button-action-icon-dimensions;
+
+                fill: $primary-text-colour;
+            }
+        }
+    }
+
+    .sub-button-container {
+        max-height: 0;
+
+        padding-left: $sidebar-sub-button-padding-left;
+
+        overflow: hidden;
+
+        -webkit-transition: max-height $standard-transition-time ease-in-out;
+        -moz-transition: max-height $standard-transition-time ease-in-out;
+        -ms-transition: max-height $standard-transition-time ease-in-out;
+        -o-transition: max-height $standard-transition-time ease-in-out;
+        transition: max-height $standard-transition-time ease-in-out;
+
+        :last-child {
+            .sidebar-button-container {
+                margin-bottom: $sidebar-sub-button-margin-bottom;
+            }
+        }
+
+        .sidebar-button-container {
+            &.active {
+                div {
+                    h4 {
+                        color: $primary-hover-colour;
+                    }
+                }
+            }
+
+            .sidebar-button {
+                &:hover {
+                    color: $primary-hover-colour;
+                }
+
+                h4 {
+                    margin-top: 0;
+                    margin-bottom: 0.5em;
+
+                    font-size: $sidebar-sub-button-font-size;
+                    font-weight: 500;
+                    line-height: 1.2;
+                }
+            }
+        }
+    }
+}

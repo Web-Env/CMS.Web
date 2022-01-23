@@ -1,0 +1,36 @@
+@import 'src/assets/scss/variables/colours';
+@import 'src/assets/scss/variables/dimensions';
+@import 'src/assets/scss/variables/margins';
+@import 'src/assets/scss/variables/paddings';
+
+.sidebar-button-search-container {
+    width: 80%;
+    height: $sidebar-button-search-container-height;
+
+    margin: auto;
+
+    input {
+        width: calc(100% - ($sidebar-button-search-horizontal-padding * 2));
+        height: calc($sidebar-button-search-container-height - ($sidebar-button-search-vertical-padding * 2));
+
+        background-color: $tertiary-background-colour;
+        filter: brightness(calc(100% - $darkening-factor));
+        color: $primary-text-colour;
+
+        padding: 1px $sidebar-button-search-horizontal-padding;
+
+        border: none;
+        border-radius: 5px;
+        outline: none;
+
+        font-size: 1.5em;
+    }
+}
+
+.sidebar-buttons-container {
+    height: calc(100% - ($sidebar-header-height + $sidebar-button-search-container-height));
+
+    margin: 0 $sidebar-buttons-container-horizontal-margin;
+
+    overflow-y: auto;
+}

@@ -1,0 +1,6 @@
+<div class="sidebar-button-search-container">
+    <input class="sidebar-button-search" placeholder="Search">
+</div>
+<div class="sidebar-buttons-container">
+    <app-sidebar-button *ngFor="let button of sidebarButtons" [title]="button.title" [path]="button.path" [subButtons]="button.subButtons"></app-sidebar-button>
+</div>
