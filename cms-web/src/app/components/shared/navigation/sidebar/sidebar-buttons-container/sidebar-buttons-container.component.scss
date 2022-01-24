@@ -7,7 +7,9 @@
     width: 80%;
     height: $sidebar-button-search-container-height;
 
-    margin: auto;
+    margin: auto auto $sidebar-button-search-margin-bottom auto;
+
+    position: relative;
 
     input {
         width: calc(100% - ($sidebar-button-search-horizontal-padding * 2));
@@ -25,12 +27,32 @@
 
         font-size: 1.5em;
     }
+
+    .clear-icon {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+
+        font-size: 1.5em;
+
+        cursor: pointer;
+    }
 }
 
 .sidebar-buttons-container {
-    height: calc(100% - ($sidebar-header-height + $sidebar-button-search-container-height));
+    height: calc(100% - ($sidebar-header-height + $sidebar-button-search-container-height + $sidebar-button-search-margin-bottom));
 
     margin: 0 $sidebar-buttons-container-horizontal-margin;
 
     overflow-y: auto;
+
+    .sidebar-buttons-message-container {
+        text-align: center;
+
+        h1 {
+            color: $tertiary-text-colour;
+
+            font-size: 3em;
+        }
+    }
 }

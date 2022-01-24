@@ -16,8 +16,8 @@ export class SidebarButtonComponent implements OnInit{
     @Input() path!: string;
     @Input() subButtons: any;
     @Input() isSubButton!: boolean;
-
-    isActive: boolean = false;
+    @Input() isActive: boolean = false;
+    
     isVisible: boolean = false;
 
     hasSubButtons: boolean = false;
