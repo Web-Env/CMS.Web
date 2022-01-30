@@ -43,7 +43,7 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
             if (!this.isActive) {
                 this.activateButton();
 
-                this.sidebarButtonClickedEventEmitter.emit(this.path);
+                this.emitSidebarButtonClickedEvent(this.path);
             }
         }
     }
@@ -53,6 +53,10 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
             this.activateButton();
         }
 
+        this.emitSidebarButtonClickedEvent(path);
+    }
+
+    public emitSidebarButtonClickedEvent(path: string): void {
         this.sidebarButtonClickedEventEmitter.emit(path);
     }
 
