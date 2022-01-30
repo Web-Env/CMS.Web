@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { debounceTime, fromEvent, Observable } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { debounceTime, fromEvent, Observable, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { SidebarButton } from "src/app/models/sidebar-button.model";
 import { stringSimilarity } from "string-similarity-js";
@@ -9,9 +9,12 @@ import { stringSimilarity } from "string-similarity-js";
     templateUrl: './sidebar-buttons-container.component.html',
     styleUrls: ['./sidebar-buttons-container.component.scss']
 })
-export class SidebarButtonsContainerComponent implements AfterViewInit, OnInit {
+export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild("searchTermInput") searchTermInput!: ElementRef;
-    private searchTermInputTimeOutObservable!: Observable<any>;
+    searchTermInputSubscription!: Subscription;
+
+    activeSidebarButtonPath!: string;
+    deactivateSidebarButtonSubject: Subject<string> = new Subject<string>();
 
     searchTermEntered: boolean = false;
     searchTerm!: string | undefined;
@@ -146,7 +149,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnInit {
     }
 
     ngAfterViewInit(): void {
-        fromEvent(this.searchTermInput.nativeElement, 'input')
+        this.searchTermInputSubscription = fromEvent(this.searchTermInput.nativeElement, 'input')
             .pipe(
                 debounceTime(1000),
                 distinctUntilChanged())
@@ -194,8 +197,6 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnInit {
 
             var searchSimilarity = stringSimilarity(searchTerm, button.title);
 
-            console.log (`Button: ${button.title} -------- ${searchSimilarity}`)
-
             if ((searchTerm.length < 3 && searchSimilarity >= 0.05) || (searchTerm.length >= 3 && searchSimilarity >= 0.35)) {
                 if (button.subButtons != null) {
                     button.isActive = true;
@@ -231,6 +232,12 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnInit {
         this.searchProcessed = true;
     }
 
+    public sidebarButtonClicked(sidebarButtonClickedPath: string): void {
+        this.deactivateSidebarButtonSubject.next(this.activeSidebarButtonPath);
+
+        this.activeSidebarButtonPath = sidebarButtonClickedPath;
+    }
+
     public clearSearchInput(): void {
         this.searchTermInput.nativeElement.value = '';
 
@@ -242,5 +249,9 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnInit {
         this.searchTermEntered = false;
 
         this.sidebarButtons = this.buttons;
+    }
+    
+    ngOnDestroy(): void {
+        this.searchTermInputSubscription.unsubscribe();
     }
 }
