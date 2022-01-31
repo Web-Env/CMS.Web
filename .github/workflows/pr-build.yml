@@ -31,6 +31,6 @@ jobs:
     - name: Install modules and Build for Production
       run: |
         npm i
-        npm run build:prod
+        npm run build
     - name: Run Tests and Generate Coverage Report
       run: npm run test
