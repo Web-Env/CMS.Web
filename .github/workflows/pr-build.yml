@@ -8,6 +8,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./cms-web
     strategy:
       matrix:
         node-version: [14.x]
@@ -28,6 +31,6 @@ jobs:
     - name: Install modules and Build for Production
       run: |
         npm i
-        npm run build:prod
+        npm run build
     - name: Run Tests and Generate Coverage Report
       run: npm run test

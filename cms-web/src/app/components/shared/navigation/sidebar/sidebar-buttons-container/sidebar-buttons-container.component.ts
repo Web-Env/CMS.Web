@@ -213,7 +213,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                     button.subButtons = refinedSubButtons;
 
                     this.sidebarButtons.push(button);
-                    break;
+                    continue;
                 }
             }
 
