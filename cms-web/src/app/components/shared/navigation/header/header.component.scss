@@ -1,9 +1,9 @@
-@import 'src/assets/scss/variables/colours';
-@import 'src/assets/scss/variables/dimensions';
-@import 'src/assets/scss/variables/margins';
-@import 'src/assets/scss/variables/paddings';
-@import 'src/assets/scss/variables/timings';
-@import 'src/assets/scss/variables/typeface';
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/margins";
+@import "src/assets/scss/variables/paddings";
+@import "src/assets/scss/variables/timings";
+@import "src/assets/scss/variables/typeface";
 
 .header {
     height: $header-height;
@@ -24,7 +24,7 @@
             margin-right: $header-sidebar-button-margin-right;
 
             display: none;
-            
+
             justify-content: center;
             align-items: center;
 
@@ -69,7 +69,7 @@
                     -webkit-transform: rotate(405deg) translate(-4px, -8px);
                     transform: rotate(405deg) translate(-4px, -8px);
                 }
-                
+
                 .menu-icon {
                     height: $header-sidebar-button-icon-height;
                     width: 100%;
@@ -81,7 +81,7 @@
                 }
             }
         }
-    
+
         .user-container {
             height: 40px;
 
@@ -90,7 +90,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-    
+
             cursor: pointer;
 
             &.active {
@@ -99,7 +99,7 @@
                         fill: $primary-hover-colour;
                     }
                 }
-                
+
                 p {
                     color: $primary-hover-colour;
                 }
@@ -114,14 +114,14 @@
                     }
                 }
             }
-    
+
             &:hover {
                 div {
                     svg {
                         fill: $primary-hover-colour;
                     }
                 }
-                
+
                 p {
                     color: $primary-hover-colour;
 
@@ -132,7 +132,7 @@
             div {
                 svg {
                     fill: $primary-text-colour;
-        
+
                     -webkit-transition: fill $standard-transition-time ease;
                     -moz-transition: fill $standard-transition-time ease;
                     -ms-transition: fill $standard-transition-time ease;
@@ -140,14 +140,13 @@
                     transition: fill $standard-transition-time ease;
                 }
             }
-    
+
             .user-icon-container {
                 svg {
                     width: $header-user-icon-dimensions;
                     height: $header-user-icon-dimensions;
                 }
             }
-            
 
             p {
                 color: $primary-text-colour;
@@ -155,7 +154,7 @@
                 padding: $header-user-name-padding;
 
                 font-size: $header-user-font-size;
-                    
+
                 -webkit-transition: color $standard-transition-time ease;
                 -moz-transition: color $standard-transition-time ease;
                 -ms-transition: color $standard-transition-time ease;
@@ -172,7 +171,8 @@
                     width: $header-user-action-icon-dimensions;
                     height: $header-user-action-icon-dimensions;
 
-                    -webkit-transition: -webkit-transform $standard-transition-time ease, fill $standard-transition-time ease;
+                    -webkit-transition: -webkit-transform $standard-transition-time ease,
+                        fill $standard-transition-time ease;
                     -moz-transition: -moz-transform $standard-transition-time ease, fill $standard-transition-time ease;
                     -ms-transition: -ms-transform $standard-transition-time ease, fill $standard-transition-time ease;
                     -o-transition: -o-transform $standard-transition-time ease, fill $standard-transition-time ease;
@@ -203,11 +203,16 @@
             .user-container {
                 &.active {
                     .user-action-icon-container {
-                        -webkit-transform: rotate(180deg) scaleX(1) translate(0, $header-user-action-icon-padding-vertical-phone);
-                        -moz-transform: rotate(180deg) scaleX(1) translate(0, $header-user-action-icon-padding-vertical-phone);
-                        -o-transform: rotate(180deg) scaleX(1) translate(0, $header-user-action-icon-padding-vertical-phone);
-                        -ms-transform: rotate(180deg) scaleX(1) translate(0, $header-user-action-icon-padding-vertical-phone);
-                        transform: rotate(180deg) scaleX(1) translate(0, $header-user-action-icon-padding-vertical-phone);
+                        -webkit-transform: rotate(180deg) scaleX(1)
+                            translate(0, $header-user-action-icon-padding-vertical-phone);
+                        -moz-transform: rotate(180deg) scaleX(1)
+                            translate(0, $header-user-action-icon-padding-vertical-phone);
+                        -o-transform: rotate(180deg) scaleX(1)
+                            translate(0, $header-user-action-icon-padding-vertical-phone);
+                        -ms-transform: rotate(180deg) scaleX(1)
+                            translate(0, $header-user-action-icon-padding-vertical-phone);
+                        transform: rotate(180deg) scaleX(1)
+                            translate(0, $header-user-action-icon-padding-vertical-phone);
                     }
                 }
 
@@ -225,7 +230,7 @@
                 .user-action-icon-container {
                     padding-top: $header-user-action-icon-padding-vertical-phone;
                     padding-bottom: $header-user-action-icon-padding-vertical-phone;
-    
+
                     svg {
                         width: $header-user-action-icon-dimensions-phone;
                         height: $header-user-action-icon-dimensions-phone;

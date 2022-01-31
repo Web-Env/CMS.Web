@@ -1,7 +1,7 @@
-@import 'src/assets/scss/variables/colours';
-@import 'src/assets/scss/variables/dimensions';
-@import 'src/assets/scss/variables/margins';
-@import 'src/assets/scss/variables/paddings';
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/margins";
+@import "src/assets/scss/variables/paddings";
 
 .sidebar-button-search-container {
     width: 80%;
@@ -40,7 +40,9 @@
 }
 
 .sidebar-buttons-container {
-    height: calc(100% - ($sidebar-header-height + $sidebar-button-search-container-height + $sidebar-button-search-margin-bottom));
+    height: calc(
+        100% - ($sidebar-header-height + $sidebar-button-search-container-height + $sidebar-button-search-margin-bottom)
+    );
 
     margin: 0 $sidebar-buttons-container-horizontal-margin;
 

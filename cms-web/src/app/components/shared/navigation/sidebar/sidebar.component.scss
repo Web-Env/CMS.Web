@@ -1,6 +1,6 @@
-@import 'src/assets/scss/variables/colours';
-@import 'src/assets/scss/variables/dimensions';
-@import 'src/assets/scss/variables/paddings';
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/paddings";
 
 .sidebar {
     width: 100%;
@@ -8,7 +8,7 @@
 
     background-color: $tertiary-background-colour;
     color: $primary-text-colour;
-    
+
     .sidebar-header {
         width: 100%;
         height: $sidebar-header-height;

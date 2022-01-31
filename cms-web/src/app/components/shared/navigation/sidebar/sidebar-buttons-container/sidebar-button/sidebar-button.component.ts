@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-// import { SidebarButtonEventService } from "src/app/services/events/sidebar-button.events.service";
-// import { RoutingService } from "src/app/services/routing.service";
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Observable, Subscription } from "rxjs";
 import { FadeIn } from "src/assets/animations/FadeIn";
 
 @Component({
@@ -11,65 +10,65 @@ import { FadeIn } from "src/assets/animations/FadeIn";
         FadeIn
     ]
 })
-export class SidebarButtonComponent implements OnInit{
+export class SidebarButtonComponent implements OnDestroy, OnInit {
     @Input() title!: string;
     @Input() path!: string;
     @Input() subButtons: any;
     @Input() isSubButton!: boolean;
     @Input() isActive: boolean = false;
-    
-    isVisible: boolean = false;
+    @Input() deactivateSidebarButtonObservable!: Observable<string>;
+    deactivateSidebarButtonSubscription!: Subscription;
 
+    @Output() sidebarButtonClickedEventEmitter: EventEmitter<string> = new EventEmitter();
+    
     hasSubButtons: boolean = false;
 
-    lastButtonClicked!: string;
-
-    constructor(//private sidebarButtonEventService: SidebarButtonEventService,
-                //private routingService: RoutingService
-                ) { }
+    constructor() { }
 
     ngOnInit(): void {
         this.hasSubButtons = this.subButtons != null;
-        // this.sidebarButtonEventService.sidebarButtonClickResultEventEmitter.subscribe((path) => {
-        //     this.siderbarButtonEventHandler(path);
-        // });
-        // this.sidebarButtonEventService.sidebarSubButtonClickResultEventEmitter.subscribe((path) => {
-        //     this.siderbarSubButtonEventHandler(path);
-        // });
 
-        // this.sidebarButtonEventService.sidebarButtonClickEventEmitter.subscribe((path) => {
-        //     this.lastButtonClicked = path;
-        // });
+        this.deactivateSidebarButtonSubscription = this.deactivateSidebarButtonObservable.subscribe((deactivatedSidebarButtonPath: string) => {
+            if (this.isActive && this.path === deactivatedSidebarButtonPath) {
+                this.deactivateButton();
+            }
+        });
     }
 
-    public buttonClicked(): void {
+    public sidebarButtonClicked(): void {
         if (this.hasSubButtons) {
-            //this.sidebarButtonEventService.emitSidebarButtonClick(this.path);
             this.isActive = !this.isActive;
         }
         else {
             if (!this.isActive) {
-                this.isActive = true;
+                this.activateButton();
+
+                this.emitSidebarButtonClickedEvent(this.path);
             }
         }
     }
 
-    private siderbarButtonEventHandler(paths: string[]) {
-        if (paths.includes(this.path)) {
-            this.isActive = true;
+    public sidebarSubButtonClicked(path: string): void {
+        if (!this.isActive) {
+            this.activateButton();
         }
-        else {
-            this.isActive = false;
-        }
+
+        this.emitSidebarButtonClickedEvent(path);
     }
 
-    private siderbarSubButtonEventHandler(paths: string[]) {
-        if (paths.includes(this.path)) {
-            this.isActive = true;
-            //this.routingService.navigateTo(this.path);
-        }
-        else {
-            this.isActive = false;
-        }
+    public emitSidebarButtonClickedEvent(path: string): void {
+        this.sidebarButtonClickedEventEmitter.emit(path);
+    }
+
+    public activateButton(): void {
+        this.isActive = true;
+    }
+
+    public deactivateButton(): void {
+        this.isActive = false;
+    }
+
+    ngOnDestroy(): void {
+        this.deactivateSidebarButtonSubscription.unsubscribe();
     }
 }
