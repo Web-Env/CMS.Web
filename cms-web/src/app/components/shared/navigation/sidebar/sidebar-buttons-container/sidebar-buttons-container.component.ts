@@ -153,7 +153,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
             .pipe(
                 debounceTime(1000),
                 distinctUntilChanged())
-            .subscribe((data: any) => {
+            .subscribe(() => {
                 let searchTerm = this.searchTermInput.nativeElement.value;
 
                 if (searchTerm !== '') {
@@ -195,27 +195,15 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         for (let i = 0; i <= this.buttons.length - 1; i++) {
             let button: SidebarButton = Object.assign({}, this.buttons[i]);
 
-            var searchSimilarity = stringSimilarity(searchTerm, button.title);
-
-            if ((searchTerm.length < 3 && searchSimilarity >= 0.05) || (searchTerm.length >= 3 && searchSimilarity >= 0.35)) {
-                if (button.subButtons != null) {
-                    button.isActive = true;
-                }
-
-                this.sidebarButtons.push(button);
-            }
-
             if (button.subButtons != null) {
                 let refinedSubButtons = [];
 
                 for (let j = 0; j <= button.subButtons.length - 1; j++) {
                     let subButton: SidebarButton = Object.assign({}, button.subButtons[j]);
 
-                    var searchSimilarity = stringSimilarity(searchTerm, subButton.title);
+                    var subButtonSearchSimilarity = stringSimilarity(searchTerm, subButton.title);
 
-                    console.log (`Sub-button: ${subButton.title} -------- ${searchSimilarity}`)
-
-                    if (searchSimilarity >= 0.35) {
+                    if (subButtonSearchSimilarity >= 0.35) {
                         refinedSubButtons.push(subButton);
                     }
                 }
@@ -225,7 +213,18 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                     button.subButtons = refinedSubButtons;
 
                     this.sidebarButtons.push(button);
+                    break;
                 }
+            }
+
+            var buttonSearchSimilarity = stringSimilarity(searchTerm, button.title);
+
+            if ((searchTerm.length < 3 && buttonSearchSimilarity >= 0.05) || (searchTerm.length >= 3 && buttonSearchSimilarity >= 0.35)) {
+                if (button.subButtons != null) {
+                    button.isActive = true;
+                }
+
+                this.sidebarButtons.push(button);
             }
         }
 
@@ -233,9 +232,13 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     }
 
     public sidebarButtonClicked(sidebarButtonClickedPath: string): void {
-        this.deactivateSidebarButtonSubject.next(this.activeSidebarButtonPath);
+        this.emitActiveSidebarButtonPathToDeactivate();
 
         this.activeSidebarButtonPath = sidebarButtonClickedPath;
+    }
+
+    public emitActiveSidebarButtonPathToDeactivate(): void {
+        this.deactivateSidebarButtonSubject.next(this.activeSidebarButtonPath);
     }
 
     public clearSearchInput(): void {
@@ -244,7 +247,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         this.resetSearch();
     }
 
-    private resetSearch(): void {
+    public resetSearch(): void {
         this.searchTerm = undefined;
         this.searchTermEntered = false;
 
