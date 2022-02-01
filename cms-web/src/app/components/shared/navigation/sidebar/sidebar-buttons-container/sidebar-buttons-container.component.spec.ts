@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidebarButton } from "src/app/models/sidebar-button.model";
+import { SidebarButton } from "src/app/models/view-models/sidebar-button.model";
 
 import { SidebarButtonsContainerComponent } from './sidebar-buttons-container.component';
 
