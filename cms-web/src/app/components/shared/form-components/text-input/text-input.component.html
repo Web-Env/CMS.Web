@@ -1,0 +1,10 @@
+<div class="form-group" [ngClass]="{'active': inputActive, 'populated': inputPopulated, 'has-error': hasError}">
+    <div class="input-container">
+        <label [for]="inputId">{{ inputTitle }}</label>
+        <input class="form-control" [id]="inputId + '-input'" [type]="inputType" [name]="inputName" [value]="inputValue"
+            (focus)="changeInputState(true)"
+            (blur)="changeInputState(false)"
+            (input)="inputChanged($event)">
+    </div>
+    <small class="warning-label">{{ displayedErrorMessage }}</small>
+</div>

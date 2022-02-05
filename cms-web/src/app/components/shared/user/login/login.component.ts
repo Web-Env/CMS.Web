@@ -1,15 +1,78 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import * as shajs from 'sha.js';
+import { AuthRequestUploadModel } from "src/app/models/upload-models/auth-request.model";
+import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+    loginForm!: FormGroup;
 
-  constructor() { }
+    isLoading: boolean = false;
 
-  ngOnInit(): void {
-  }
+    constructor(private authService: AuthService) {
+        this.buildForm();
+    }
+
+    ngOnInit(): void {
+    }
+
+    public buildForm(): void {
+        // this.loginForm = this.formBuilder.group({
+        //     email: ['', [Validators.required]],
+        //     //password: ['', [Validators.required, Validators.minLength(8)]]
+        // });
+        this.loginForm = new FormGroup({
+            email: new FormControl(
+                '',
+                [Validators.required]
+            ),
+            password: new FormControl(
+                '',
+                [Validators.required, Validators.minLength(8)]
+            )
+        });
+    }
+
+    public async loginAsync(loginForm: any): Promise<void> {
+        if(!this.isLoading) {
+            //this.formErrorMessageVisible = false;
+            this.isLoading = true;
+
+            var hashedPassword = shajs('sha256').update(loginForm['password']).digest('hex');
+
+            var authRequestModel = new AuthRequestUploadModel(
+                loginForm['email'],
+                hashedPassword
+            );
+
+            console.log (authRequestModel)
+
+            try {
+                await this.authService.loginAsync(authRequestModel);
+            }
+            catch (err) {
+                if (err instanceof HttpErrorResponse) {
+                    if (err.status === 400) {
+                        //this.formErrorMessage = "Invalid login credentials";
+                    }
+                }
+                else {
+                    //this.formErrorMessage = "An unexpected error occured, please try again";
+                }
+                
+                //this.formErrorMessageVisible = true;
+                throw err;
+            }
+            finally {
+                this.isLoading = false;
+            }
+        }
+    }
 
 }

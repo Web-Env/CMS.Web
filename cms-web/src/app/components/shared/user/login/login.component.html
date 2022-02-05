@@ -1,5 +1,13 @@
 <div class="login-card-container">
     <div class="login-card">
-    
+        <div class="login-card-header">
+            <img class="sidebar-logo" src="assets/images/logo.png">
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="loginAsync(loginForm.value)">
+            <app-text-input formControlName="email" [parentForm]="loginForm" [inputId]="'email'" [inputName]="'email'" [inputTitle]="'Email'" [inputType]="'text'"></app-text-input>
+            <app-text-input formControlName="password" [parentForm]="loginForm" [inputId]="'password'" [inputName]="'password'" [inputTitle]="'Password'" [inputType]="'password'" [inputErrorMessage]="'Password must be at least 8 characters'"></app-text-input>
+            <app-loading-button [buttonText]="'Login'" [isLoading]="isLoading" [isDisabled]="!loginForm.valid"></app-loading-button>
+        </form>
     </div>
 </div>

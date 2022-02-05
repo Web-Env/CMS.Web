@@ -19,6 +19,9 @@ import { DataService } from "./services/data.service";
 import { HttpClientModule } from "@angular/common/http";
 import { ToastrModule } from "ngx-toastr";
 import { MainComponent } from './components/main/main.component';
+import { TextInputComponent } from './components/shared/form-components/text-input/text-input.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { LoadingButtonComponent } from './components/shared/buttons/loading-button/loading-button.component';
 
 @NgModule({
     declarations: [
@@ -32,13 +35,17 @@ import { MainComponent } from './components/main/main.component';
         AnnouncementsComponent,
         ContentComponent,
         NotFoundComponent,
-        MainComponent
+        MainComponent,
+        TextInputComponent,
+        LoadingButtonComponent
     ],
     imports: [
         AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
+        FormsModule,
         HttpClientModule,
+        ReactiveFormsModule,
         ToastrModule.forRoot({
             progressBar: true,
             progressAnimation: 'increasing'

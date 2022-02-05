@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
     selector: 'app-header',
@@ -11,13 +13,13 @@ export class HeaderComponent implements OnInit {
     userName!: string;
     sidebarOpened: boolean = false;
 
-    constructor() { }
+    constructor(private authService: AuthService,
+                private router: Router) { }
 
     ngOnInit(): void {
-        // this.userDataEventService.userNameEventEmitter.subscribe((userName: string) => {
-        //     this.initializeUserComponent(userName);
-        // });
-        this.initializeUserComponent('John Doe');
+        let firstName = localStorage.getItem('FirstName');
+        let lastName = localStorage.getItem('LastName');
+        this.initializeUserComponent(`${firstName} ${lastName}`);
     }
 
     private initializeUserComponent(userName: string): void {
@@ -31,5 +33,11 @@ export class HeaderComponent implements OnInit {
 
     public userClicked(): void {
         this.userMenuActive = !this.userMenuActive;
+    }
+
+    public logOutButtonClicked(): void {
+        this.authService.logOut();
+
+        this.router.navigate(['login']);
     }
 }

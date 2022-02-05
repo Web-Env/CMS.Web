@@ -1,0 +1,193 @@
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/typeface";
+
+$label-size-minified: 12pt;
+$input-background-colour: #25282d;
+$input-vertical-margin: 3px;
+$input-horizontal-padding: 5px;
+$input-border-width: 2px;
+
+.form-group {
+    height: fit-content;
+
+    margin-bottom: 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    &.has-error {
+        .input-container {
+            border-color: $primary-negative-colour;
+
+            label {
+                color: $primary-negative-colour;
+            }
+        }
+
+        .warning-label {
+            opacity: 1;
+        }
+    }
+
+    &:not(.populated) {
+        &.has-error {
+            .input-container {
+                label {
+                    color: $tertiary-text-colour;
+                }
+            }
+        }
+
+        .input-container {
+            label {
+                top: calc(50% - (#{$form-input-font-size} / 2));
+
+                font-size: $form-input-font-size;
+            }
+        }
+    }
+
+    &.active,
+    &.populated {
+        .input-container {
+            label {
+                top: 5px;
+
+                font-size: $label-size-minified;
+            }
+        }
+    }
+
+    &.active {
+        .input-container {
+            border-color: $secondary-text-colour;
+        }
+    }
+
+    &.populated {
+        .input-container {
+            .status-input {
+                .status-container {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .input-container {
+        height: 70px;
+
+        background-color: $input-background-colour;
+
+        padding: 0 $input-horizontal-padding;
+
+        border: $input-border-width solid $input-background-colour;
+        border-radius: $secondary-border-radius;
+
+        position: relative;
+
+        &.active {
+            border-color: $secondary-text-colour;
+        }
+
+        // .status-input {
+        //     width: 100%;
+        //     height: 35px;
+
+        //     display: flex;
+
+        //     position: absolute;
+        //     top: 22px;
+        //     left: 0;
+        //     bottom: 0;
+        //     right: 0;
+
+        //     input {
+        //         width: calc(100% - #{$status-checker-dimensions});
+
+        //         position: unset;
+
+        //         top: 0;
+        //     }
+
+        //     .status-container {
+        //         display: none;
+        //     }
+        // }
+
+        label {
+            color: $tertiary-text-colour;
+
+            position: absolute;
+
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            transition: all 0.1s linear;
+
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        input,
+        textarea {
+            width: 95%;
+            height: 35px;
+            max-height: 35px;
+
+            background-color: transparent;
+            color: $primary-text-colour;
+
+            margin: $input-vertical-margin 0;
+            padding: 5px;
+
+            border: none;
+
+            position: absolute;
+            top: 22px;
+            left: 0;
+            bottom: 0;
+            right: 0;
+
+            font-size: $form-input-font-size;
+
+            &:active,
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    .warning-label {
+        color: $primary-negative-colour;
+
+        opacity: 0;
+
+        -webkit-transition: opacity 0.1s linear;
+        -moz-transition: opacity 0.1s linear;
+        transition: opacity 0.1s linear;
+    }
+}
+
+.form-error {
+    color: $primary-negative-colour;
+
+    padding: 15px 15px 0 15px;
+
+    font-size: $form-input-font-size;
+    text-align: center;
+}
+
+@media (min-width: 1920px) {
+    .form-group {
+        .input-container {
+            input {
+                width: 100%;
+            }
+        }
+    }
+}

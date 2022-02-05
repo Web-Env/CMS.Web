@@ -45,12 +45,8 @@ export class AuthService {
         try {
             let authResponse = await this.dataService.postAsync<AuthResponseDownloadModel>(endpoint, authRequestModel, AuthResponseDownloadModel);
             if (authResponse !== null) {
-                localStorage.setItem('Username', authResponse.username);
-                localStorage.setItem('DisplayName', authResponse.displayName);
                 localStorage.setItem('FirstName', authResponse.firstName);
                 localStorage.setItem('LastName', authResponse.lastName);
-                localStorage.setItem('SpotifyUsername', authResponse.spotifyUsername);
-                localStorage.setItem('SpotifyMarket', authResponse.spotifyMarket);
                 localStorage.setItem('Token', authResponse.token);
             }
 
@@ -66,18 +62,14 @@ export class AuthService {
         }
     }
 
-    public logout(): void {
+    public logOut(): void {
         this.purgeLocalStorage();
         this.router.navigate(['']);
     }
 
     public purgeLocalStorage(): void {
-        localStorage.removeItem('Username');
-        localStorage.removeItem('DisplayName');
         localStorage.removeItem('FirstName');
         localStorage.removeItem('LastName');
-        localStorage.removeItem('PictureUrl');
-        localStorage.removeItem('SpotifyMarket');
         localStorage.removeItem('Token');
     }
 }
