@@ -215,6 +215,12 @@
                     padding: $header-user-action-menu-button-padding;
 
                     cursor: pointer;
+
+                    &.warning-button {
+                        span {
+                            color: $primary-negative-colour;
+                        }
+                    }
                     
                     span {
                         color: $primary-text-colour;

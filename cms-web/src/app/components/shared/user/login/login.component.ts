@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import * as shajs from 'sha.js';
 import { AuthRequestUploadModel } from "src/app/models/upload-models/auth-request.model";
 import { AuthService } from "src/app/services/auth/auth.service";
@@ -15,18 +16,23 @@ export class LoginComponent implements OnInit {
 
     isLoading: boolean = false;
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService,
+                private router: Router) {
         this.buildForm();
     }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        var token = localStorage.getItem('Token');
+        if (token !== null && token !== '') {
+            var tokenIsValid = await this.authService.checkTokenValidAsync();
+
+            if (tokenIsValid) {
+                this.router.navigate(['']);
+            }
+        }
     }
 
     public buildForm(): void {
-        // this.loginForm = this.formBuilder.group({
-        //     email: ['', [Validators.required]],
-        //     //password: ['', [Validators.required, Validators.minLength(8)]]
-        // });
         this.loginForm = new FormGroup({
             email: new FormControl(
                 '',
@@ -50,8 +56,6 @@ export class LoginComponent implements OnInit {
                 loginForm['email'],
                 hashedPassword
             );
-
-            console.log (authRequestModel)
 
             try {
                 await this.authService.loginAsync(authRequestModel);
