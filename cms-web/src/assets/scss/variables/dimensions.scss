@@ -1,3 +1,10 @@
+$tablet-small-breakpoint: 730px;
+$tablet-breakpoint: 1024px;
+$tablet-large-breakpoint: 1180px;
+$desktop-small-breakpoint: 1600px;
+$desktop-breakpoint: 1920px;
+$desktop-large-breakpoint: 2560px;
+
 $primary-border-radius: 5px;
 $secondary-border-radius: 3px;
 
@@ -31,7 +38,8 @@ $sidebar-button-action-icon-dimensions: 30px;
 $stage-width: 85%;
 $stage-width-mobile: 100%;
 
-$login-card-header-height: 250px;
+$login-card-header-height: 150px;
+$login-card-header-desktop-height: 250px;
 
 $home-info-container-table-height: 380px;
 $home-info-container-table-border-radius: 5px;

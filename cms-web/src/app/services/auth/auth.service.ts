@@ -43,7 +43,7 @@ export class AuthService {
         let endpoint ='Auth/auth';
 
         try {
-            let authResponse = await this.dataService.postAsync<AuthResponseDownloadModel>(endpoint, authRequestModel, AuthResponseDownloadModel);
+            let authResponse = await this.dataService.postAsync<AuthResponseDownloadModel>(endpoint, authRequestModel, AuthResponseDownloadModel, true);
             if (authResponse !== null) {
                 localStorage.setItem('FirstName', authResponse.firstName);
                 localStorage.setItem('LastName', authResponse.lastName);

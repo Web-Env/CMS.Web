@@ -13,7 +13,7 @@ export class DataService {
 
     constructor(private httpClient: HttpClient,
                 private router: Router,
-                private toastr: ToastrService) { } //private toastr: ToastrService
+                private toastr: ToastrService) { }
 
     private createHttpOptions(): Object {
         let httpOptions = {
@@ -55,9 +55,7 @@ export class DataService {
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {
-                            if (!blockToast) {
-                                this.handleError(err);
-                            }
+                            this.handleError(err, blockToast);
                             
                             reject(err);
                         }
@@ -87,9 +85,7 @@ export class DataService {
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {
-                            if (!blockToast) {
-                                this.handleError(err);
-                            }
+                            this.handleError(err, blockToast);
                             
                             reject(err);
                         }
@@ -115,9 +111,7 @@ export class DataService {
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {
-                            if (!blockToast) {
-                                this.handleError(err);
-                            }
+                            this.handleError(err, blockToast);
                             
                             reject(err);
                         }
@@ -141,9 +135,7 @@ export class DataService {
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {
-                            if (!blockToast) {
-                                this.handleError(err);
-                            }
+                            this.handleError(err, blockToast);
                             
                             reject(err);
                         }
@@ -167,9 +159,7 @@ export class DataService {
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {
-                            if (!blockToast) {
-                                this.handleError(err);
-                            }
+                            this.handleError(err, blockToast);
                             
                             reject(err);
                         }
@@ -193,9 +183,7 @@ export class DataService {
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {
-                            if (!blockToast) {
-                                this.handleError(err);
-                            }
+                            this.handleError(err, blockToast);
                             
                             reject(err);
                         }
@@ -219,9 +207,7 @@ export class DataService {
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {
-                            if (!blockToast) {
-                                this.handleError(err);
-                            }
+                            this.handleError(err, blockToast);
                             
                             reject(err);
                         }
@@ -245,9 +231,7 @@ export class DataService {
                     },
                     async (err) => {
                         if (err instanceof HttpErrorResponse) {
-                            if (!blockToast) {
-                                this.handleError(err);
-                            }
+                            this.handleError(err, blockToast);
                             
                             reject(err);
                         }
@@ -260,11 +244,11 @@ export class DataService {
         });
     }
 
-    public handleError(error: HttpErrorResponse) {
-        if (error.status === 400) {
+    public handleError(error: HttpErrorResponse, blockToast: boolean) {
+        if (error.status === 400 && !blockToast) {
             this.toastr.error('There has been an error processing your request', 'Error');
         }
-        else if (error.status === 401) {
+        else if (error.status === 401 && !blockToast) {
             this.toastr.warning('You have been logged out', 'Warning');
 
             localStorage.removeItem('Username');
@@ -277,10 +261,10 @@ export class DataService {
 
             this.router.navigate(['/login']);
         }
-        else if (error.status === 403) {
+        else if (error.status === 403 && !blockToast) {
             this.toastr.warning('You are not allowed to perform this action', 'Warning');
         }
-        else {
+        else if (!blockToast) {
             this.toastr.error('There has been an error processing your request', 'Error');
         }
     }

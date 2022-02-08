@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
 
     isLoading: boolean = false;
+    loginFormErrorMessageVisible: boolean = false;
+    loginFormErrorMessage: string = '';
 
     constructor(private authService: AuthService,
                 private router: Router) {
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
 
     public async loginAsync(loginForm: any): Promise<void> {
         if(!this.isLoading) {
-            //this.formErrorMessageVisible = false;
+            this.loginFormErrorMessageVisible = false;
             this.isLoading = true;
 
             var hashedPassword = shajs('sha256').update(loginForm['password']).digest('hex');
@@ -63,14 +65,17 @@ export class LoginComponent implements OnInit {
             catch (err) {
                 if (err instanceof HttpErrorResponse) {
                     if (err.status === 400) {
-                        //this.formErrorMessage = "Invalid login credentials";
+                        this.loginFormErrorMessage = 'Invalid login credentials';
+                    }
+                    else {
+                        this.loginFormErrorMessage = 'An unexpected error occured, please try again';
                     }
                 }
                 else {
-                    //this.formErrorMessage = "An unexpected error occured, please try again";
+                    this.loginFormErrorMessage = 'An unexpected error occured, please try again';
                 }
                 
-                //this.formErrorMessageVisible = true;
+                this.loginFormErrorMessageVisible = true;
                 throw err;
             }
             finally {

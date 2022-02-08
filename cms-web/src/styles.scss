@@ -19,5 +19,15 @@ html {
             width: 100%;
             height: 100%;
         }
+
+        a {
+            color: $tertiary-text-colour;
+    
+            text-decoration: none;
+    
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 }

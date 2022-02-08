@@ -9,5 +9,9 @@
             <app-text-input formControlName="password" [parentForm]="loginForm" [inputId]="'password'" [inputName]="'password'" [inputTitle]="'Password'" [inputType]="'password'" [inputErrorMessage]="'Password must be at least 8 characters'"></app-text-input>
             <app-loading-button [buttonText]="'Login'" [isLoading]="isLoading" [isDisabled]="!loginForm.valid"></app-loading-button>
         </form>
+
+        <span class="login-form-error" *ngIf="loginFormErrorMessageVisible">{{ loginFormErrorMessage }}</span>
+
+        <a class="form-link" [routerLink]="['/account/password-reset']">Forgot your password? Reset</a>
     </div>
 </div>
