@@ -72,6 +72,10 @@
                     height: $sidebar-logo-desktop-height;
                 }
             }
+
+            .sidebar-user-container {
+                display: none;
+            }
         }
     }
 }
