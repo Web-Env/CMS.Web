@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
@@ -15,8 +14,7 @@ export class HeaderComponent implements OnInit {
 
     @Output() menuButtonClickedEvent: EventEmitter<boolean> = new EventEmitter();
 
-    constructor(private authService: AuthService,
-                private router: Router) { }
+    constructor(private authService: AuthService) { }
 
     ngOnInit(): void {
         let firstName = localStorage.getItem('FirstName');
@@ -41,7 +39,5 @@ export class HeaderComponent implements OnInit {
 
     public logOutButtonClicked(): void {
         this.authService.logOut();
-
-        this.router.navigate(['login']);
     }
 }

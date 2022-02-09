@@ -64,7 +64,8 @@ export class AuthService {
 
     public logOut(): void {
         this.purgeLocalStorage();
-        this.router.navigate(['']);
+        
+        this.router.navigate(['login']);
     }
 
     public purgeLocalStorage(): void {

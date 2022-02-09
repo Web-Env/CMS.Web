@@ -23,6 +23,42 @@
                 height: $sidebar-logo-mobile-height;
             }
         }
+
+        .sidebar-user-container {
+            width: 80%;
+
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+
+            .user-name {
+                width: 90%;
+
+                color: $secondary-text-colour;
+
+                display: block;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: 1.3em;
+
+                cursor: pointer;
+            }
+
+            .log-out-button {
+                width: 10%;
+
+                fill: $primary-negative-colour;
+
+                cursor: pointer;
+
+                &:hover {
+                    fill: $primary-negative-colour-hover;
+                }
+            }
+        }
     }
 }
 
