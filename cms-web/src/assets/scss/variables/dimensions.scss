@@ -11,7 +11,8 @@ $secondary-border-radius: 3px;
 $scrollbar-width: 10px;
 $scrollbar-border-radius: 3px;
 
-$header-height: 50px;
+$header-mobile-height: 35px;
+$header-desktop-height: 50px;
 $header-sidebar-button-dimensions: 35px;
 $header-sidebar-button-margin-right: 28px;
 $header-sidebar-button-icon-height: 17.5%;
@@ -24,19 +25,22 @@ $header-user-action-icon-dimensions: 25px;
 $header-user-action-icon-dimensions-phone: 20px;
 $header-border-bottom-height: 3px;
 
-$sidebar-width: 15%;
-$sidebar-width-tablet: 25%;
-$sidebar-width-tablet-small: 35%;
-$sidebar-width-tablet-xsmall: 45%;
-$sidebar-width-phone: 100%;
-$sidebar-header-height: 200px;
-$sidebar-logo-height: 130px;
+$sidebar-mobile-width: 100%;
+$sidebar-tablet-small-width: 50%;
+$sidebar-tablet-width: 35%;
+$sidebar-tablet-large-width: 30%;
+$sidebar-desktop-small-width: 20%;
+$sidebar-desktop-width: 15%;
+$sidebar-header-mobile-height: 145px;
+$sidebar-header-desktop-height: 200px;
+$sidebar-logo-mobile-height: 100px;
+$sidebar-logo-desktop-height: 130px;
 $sidebar-button-search-container-height: 50px;
 $sidebar-button-height: 50px;
 $sidebar-button-action-icon-dimensions: 30px;
 
-$stage-width: 85%;
-$stage-width-mobile: 100%;
+$stage-mobile-width: 100%;
+$stage-desktop-width: 85%;
 
 $home-info-container-table-height: 380px;
 $home-info-container-table-border-radius: 5px;

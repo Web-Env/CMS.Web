@@ -1,6 +1,6 @@
-<div class="app-stage">
+<div class="app-stage" [ngClass]="{'menu-open': menuOpen}">
     <div class="header-container">
-        <app-header></app-header>
+        <app-header (menuButtonClickedEvent)="menuButtonClicked($event)"></app-header>
     </div>
 
     <div class="stage" #stage>

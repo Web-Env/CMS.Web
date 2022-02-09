@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth/auth.service";
 
@@ -12,6 +12,8 @@ export class HeaderComponent implements OnInit {
     userMenuActive: boolean = false;
     userName!: string;
     sidebarOpened: boolean = false;
+
+    @Output() menuButtonClickedEvent: EventEmitter<boolean> = new EventEmitter();
 
     constructor(private authService: AuthService,
                 private router: Router) { }
@@ -29,6 +31,8 @@ export class HeaderComponent implements OnInit {
 
     public menuButtonClicked(): void {
         this.sidebarOpened = !this.sidebarOpened;
+
+        this.menuButtonClickedEvent.emit(this.sidebarOpened);
     }
 
     public userClicked(): void {

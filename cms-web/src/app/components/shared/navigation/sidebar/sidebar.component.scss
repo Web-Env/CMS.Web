@@ -11,7 +11,7 @@
 
     .sidebar-header {
         width: 100%;
-        height: $sidebar-header-height;
+        height: $sidebar-header-mobile-height;
 
         .sidebar-logo-container {
             width: fit-content;
@@ -20,7 +20,21 @@
             padding: $sidebar-logo-padding;
 
             .sidebar-logo {
-                height: $sidebar-logo-height;
+                height: $sidebar-logo-mobile-height;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: $desktop-small-breakpoint) {
+    .sidebar {
+        .sidebar-header {
+            height: $sidebar-header-desktop-height;
+    
+            .sidebar-logo-container {
+                .sidebar-logo {
+                    height: $sidebar-logo-desktop-height;
+                }
             }
         }
     }

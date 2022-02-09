@@ -6,136 +6,120 @@
     width: 100%;
     height: 100%;
 
-    // padding-top: $header-height;
-
-    // display: flex;
-
-    // app-sidebar {
-    //     width: $sidebar-width;
-    // }
-
     position: relative;
 
-    .header-container {
-        width: calc(100% - $sidebar-width);
-        height: $header-height;
+    &.menu-open {
+        .sidebar-container {
+            left: 0;
+        }
+    }
 
-        position: absolute;
-        top: 0;
-        left: $sidebar-width;
+    .header-container {
+        width: 100%;
+        height: calc($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2));
     }
 
     .sidebar-container {
-        width: $sidebar-width;
-        height: 100%;
+        width: $sidebar-mobile-width;
+        height: calc(100% - ($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
 
         position: absolute;
-        top: 0;
-        left: 0;
+        top: calc($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2));
+        left: -$sidebar-mobile-width;
+
+        -webkit-transition: left $standard-transition-time ease;
+        -moz-transition: left $standard-transition-time ease;
+        -ms-transition: left $standard-transition-time ease;
+        -o-transition: left $standard-transition-time ease;
+        transition: left $standard-transition-time ease;
     }
 
     .stage {
-        width: $stage-width;
-        height: calc(100% - ($header-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
+        width: $stage-mobile-width;
+        height: calc(100% - ($header-desktop-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
 
         position: absolute;
-        top: calc($header-height + $header-border-bottom-height + ($header-vertical-padding * 2));
-        left: $sidebar-width;
+        top: calc($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2));
+        left: 0;
 
         overflow: auto;
     }
 }
 
-// @media (max-width: 1800px) {
-//     .staging-area {
-//         app-sidebar {
-//             position: absolute;
-//             top: $header-height;
-//             left: -$sidebar-width;
-//             bottom: 0;
-//             z-index: 1;
+@media screen and (min-width: $tablet-small-breakpoint) {
+    .app-stage {
+        .sidebar-container {
+            width: $sidebar-tablet-small-width;
 
-//             -webkit-transition: $standard-transition-time ease;
-//             -moz-transition: $standard-transition-time ease;
-//             -ms-transition: $standard-transition-time ease;
-//             -o-transition: $standard-transition-time ease;
-//             transition: $standard-transition-time ease;
+            left: -$sidebar-tablet-small-width;
+        }
+    }
+}
 
-//             &.sidebar-opened {
-//                 left: 0;
-//                 right: calc(100% - #{$sidebar-width});
-//             }
-//         }
-        
-//         .stage {
-//             width: $stage-width-mobile;
-//         }
-//     }
+@media screen and (min-width: $tablet-breakpoint) {
+    .app-stage {
+        .sidebar-container {
+            width: $sidebar-tablet-width;
+
+            left: -$sidebar-tablet-width;
+        }
+    }
+}
+
+@media screen and (min-width: $tablet-large-breakpoint) {
+    .app-stage {
+        .sidebar-container {
+            width: $sidebar-tablet-large-width;
+
+            left: -$sidebar-tablet-large-width;
+        }
+    }
+}
+
+@media screen and (min-width: $desktop-small-breakpoint) {
+    .app-stage {
+        .header-container {
+            width: calc(100% - $sidebar-desktop-small-width);
+            height: $header-desktop-height;
     
-//     app-stage-overlay {
-//         opacity: 0;
+            position: absolute;
+            top: 0;
+            left: $sidebar-desktop-small-width;
+        }
 
-//         -webkit-transition: $standard-transition-time ease;
-//         -moz-transition: $standard-transition-time ease;
-//         -ms-transition: $standard-transition-time ease;
-//         -o-transition: $standard-transition-time ease;
-//         transition: $standard-transition-time ease;
+        .sidebar-container {
+            width: $sidebar-desktop-small-width;
+            height: 100%;
 
-//         &.visible {
-//             opacity: 1;
-//         }
-//     }
-// }
+            top: 0;
+            left: 0;
+        }
 
-// @media (max-width: 1600px) {
-//     .staging-area {
-//         app-sidebar {
-//             width: unset;
+        .stage {
+            width: calc(100% - $sidebar-desktop-small-width);
 
-//             position: absolute;
-//             top: $header-height;
-//             left: -$sidebar-width-tablet;
+            left: 0;
+        }
+    }
+}
 
-//             &.sidebar-opened {
-//                 left: 0;
-//                 right: calc(100% - #{$sidebar-width-tablet});
-//             }
-//         }
-//     }
-// }
+@media screen and (min-width: $desktop-breakpoint) {
+    .app-stage {
+        .header-container {
+            width: calc(100% - $sidebar-desktop-width);
+            height: $header-desktop-height;
+    
+            position: absolute;
+            top: 0;
+            left: $sidebar-desktop-width;
+        }
 
-// @media (max-width: 1024px) {
-//     .staging-area {
-//         app-sidebar {
-//             left: -$sidebar-width-tablet-small;
+        .sidebar-container {
+            width: $sidebar-desktop-width;
+        }
 
-//             &.sidebar-opened {
-//                 right: calc(100% - #{$sidebar-width-tablet-small});
-//             }
-//         }
-//     }
-// }
-
-// @media (max-width: 1024px) {
-//     .staging-area {
-//         app-sidebar {
-//             left: -$sidebar-width-tablet-xsmall;
-
-//             &.sidebar-opened {
-//                 right: calc(100% - #{$sidebar-width-tablet-xsmall});
-//             }
-//         }
-//     }
-// }
-
-// @media (max-width: 450px) {
-//     .staging-area {
-//         app-sidebar {
-//             left: -$sidebar-width-phone;
-
-//             &.sidebar-opened {
-//                 right: 0;
-//             }
-//         }
-//     }
-// }
+        .stage {
+            width: calc(100% - $sidebar-desktop-width);
+        }
+    }
+}
