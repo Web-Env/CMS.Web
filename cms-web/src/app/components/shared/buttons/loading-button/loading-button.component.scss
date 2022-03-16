@@ -5,13 +5,9 @@
 
 .button {
     width: 100%;
-    
+
     color: $primary-text-colour;
-    background-image: linear-gradient(
-        to left,
-        $secondary-text-hover-colour 50%,
-        $secondary-text-colour 50%
-    );
+    background-image: linear-gradient(to left, $secondary-text-hover-colour 50%, $secondary-text-colour 50%);
     background-size: 200% 100%;
 
     margin-bottom: 0;
@@ -61,7 +57,7 @@
     .text {
         font-size: 1.5em;
     }
-    
+
     .loading-icon {
         background-image: url("../../../../../assets/svg/loading.svg");
         background-size: contain;

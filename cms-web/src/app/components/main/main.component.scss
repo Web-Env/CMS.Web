@@ -1,6 +1,6 @@
-@import 'src/assets/scss/variables/dimensions';
-@import 'src/assets/scss/variables/paddings';
-@import 'src/assets/scss/variables/timings';
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/paddings";
+@import "src/assets/scss/variables/timings";
 
 .app-stage {
     width: 100%;
@@ -81,7 +81,7 @@
         .header-container {
             width: calc(100% - $sidebar-desktop-small-width);
             height: $header-desktop-height;
-    
+
             position: absolute;
             top: 0;
             left: $sidebar-desktop-small-width;
@@ -108,7 +108,7 @@
         .header-container {
             width: calc(100% - $sidebar-desktop-width);
             height: $header-desktop-height;
-    
+
             position: absolute;
             top: 0;
             left: $sidebar-desktop-width;

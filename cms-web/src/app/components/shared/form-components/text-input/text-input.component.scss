@@ -91,31 +91,6 @@ $input-border-width: 2px;
             border-color: $secondary-text-colour;
         }
 
-        // .status-input {
-        //     width: 100%;
-        //     height: 35px;
-
-        //     display: flex;
-
-        //     position: absolute;
-        //     top: 22px;
-        //     left: 0;
-        //     bottom: 0;
-        //     right: 0;
-
-        //     input {
-        //         width: calc(100% - #{$status-checker-dimensions});
-
-        //         position: unset;
-
-        //         top: 0;
-        //     }
-
-        //     .status-container {
-        //         display: none;
-        //     }
-        // }
-
         label {
             color: $tertiary-text-colour;
 

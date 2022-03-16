@@ -197,7 +197,7 @@
                 border-radius: $secondary-border-radius;
 
                 overflow: hidden;
-                
+
                 -webkit-transition: max-height $standard-transition-time ease;
                 -moz-transition: max-height $standard-transition-time ease;
                 -ms-transition: max-height $standard-transition-time ease;
@@ -218,7 +218,7 @@
                             color: $primary-negative-colour;
                         }
                     }
-                    
+
                     span {
                         color: $primary-text-colour;
 
@@ -233,7 +233,7 @@
 @media screen and (min-width: $desktop-small-breakpoint) {
     .header {
         height: $header-desktop-height;
-        
+
         padding: $header-vertical-padding $header-horizontal-padding;
 
         .header-children-container {
@@ -242,7 +242,7 @@
             .menu-button-container {
                 display: none;
             }
-    
+
             .user-container {
                 display: flex;
             }

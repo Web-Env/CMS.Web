@@ -1,5 +1,5 @@
-@import 'src/assets/scss/variables/colours';
-@import 'src/assets/scss/variables/dimensions';
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
 
 $login-card-header-height: 150px;
 $login-card-header-desktop-height: 250px;
@@ -21,9 +21,9 @@ $login-card-header-desktop-height: 250px;
         .login-card-header {
             width: fit-content;
             height: $login-card-header-height;
-    
+
             margin: 0 auto 25px auto;
-    
+
             img {
                 height: $login-card-header-height;
             }
@@ -32,7 +32,7 @@ $login-card-header-desktop-height: 250px;
         form {
             padding: 15px;
         }
-        
+
         .login-form-error {
             width: 100%;
 
@@ -44,7 +44,7 @@ $login-card-header-desktop-height: 250px;
 
             text-align: center;
         }
-        
+
         .form-link {
             width: fit-content;
 
@@ -68,7 +68,7 @@ $login-card-header-desktop-height: 250px;
             background-color: $secondary-background-colour;
 
             border-radius: $primary-border-radius;
-            
+
             .login-card-header {
                 margin: 25px auto 0 auto;
             }
@@ -115,7 +115,7 @@ $login-card-header-desktop-height: 250px;
 
             .login-card-header {
                 height: $login-card-header-desktop-height;
-        
+
                 img {
                     height: $login-card-header-desktop-height;
                 }
