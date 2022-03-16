@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
     selector: 'app-header',
@@ -11,13 +12,14 @@ export class HeaderComponent implements OnInit {
     userName!: string;
     sidebarOpened: boolean = false;
 
-    constructor() { }
+    @Output() menuButtonClickedEvent: EventEmitter<boolean> = new EventEmitter();
+
+    constructor(private authService: AuthService) { }
 
     ngOnInit(): void {
-        // this.userDataEventService.userNameEventEmitter.subscribe((userName: string) => {
-        //     this.initializeUserComponent(userName);
-        // });
-        this.initializeUserComponent('John Doe');
+        let firstName = localStorage.getItem('FirstName');
+        let lastName = localStorage.getItem('LastName');
+        this.initializeUserComponent(`${firstName} ${lastName}`);
     }
 
     private initializeUserComponent(userName: string): void {
@@ -27,9 +29,15 @@ export class HeaderComponent implements OnInit {
 
     public menuButtonClicked(): void {
         this.sidebarOpened = !this.sidebarOpened;
+
+        this.menuButtonClickedEvent.emit(this.sidebarOpened);
     }
 
     public userClicked(): void {
         this.userMenuActive = !this.userMenuActive;
+    }
+
+    public logOutButtonClicked(): void {
+        this.authService.logOut();
     }
 }

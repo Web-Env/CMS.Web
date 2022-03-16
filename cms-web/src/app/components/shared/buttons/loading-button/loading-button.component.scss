@@ -1,0 +1,65 @@
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/paddings";
+@import "src/assets/scss/variables/typeface";
+
+.button {
+    width: 100%;
+
+    color: $primary-text-colour;
+    background-image: linear-gradient(to left, $secondary-text-hover-colour 50%, $secondary-text-colour 50%);
+    background-size: 200% 100%;
+
+    margin-bottom: 0;
+    padding: $primary-button-padding;
+
+    border: none;
+    border-radius: $secondary-border-radius;
+    outline: none;
+
+    -webkit-transition: background-position 0.5s ease-in-out;
+    -moz-transition: background-position 0.5s ease-in-out;
+    transition: background-position 0.5s ease-in-out;
+
+    user-select: none;
+
+    cursor: pointer;
+
+    &:hover {
+        background-position: -100% 0;
+    }
+
+    &.loading,
+    &:disabled {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    &.loading {
+        padding: 5px 15px;
+
+        .text {
+            display: none;
+        }
+
+        .loading-icon {
+            width: 43px;
+            height: 43px;
+
+            margin: auto;
+        }
+    }
+
+    &:disabled {
+        background: $secondary-text-colour-disabled;
+    }
+
+    .text {
+        font-size: 1.5em;
+    }
+
+    .loading-icon {
+        background-image: url("../../../../../assets/svg/loading.svg");
+        background-size: contain;
+    }
+}

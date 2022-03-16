@@ -8,21 +8,55 @@ import { HeaderComponent } from './components/shared/navigation/header/header.co
 import { SidebarComponent } from './components/shared/navigation/sidebar/sidebar.component';
 import { SidebarButtonComponent } from './components/shared/navigation/sidebar/sidebar-buttons-container/sidebar-button/sidebar-button.component';
 import { SidebarButtonsContainerComponent } from './components/shared/navigation/sidebar/sidebar-buttons-container/sidebar-buttons-container.component';
+import { LoginComponent } from './components/shared/user/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import { ContentComponent } from './components/content/content.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthGuardService } from "./services/auth/auth-guard.service";
+import { AuthService } from "./services/auth/auth.service";
+import { DataService } from "./services/data.service";
+import { HttpClientModule } from "@angular/common/http";
+import { ToastrModule } from "ngx-toastr";
+import { MainComponent } from './components/main/main.component';
+import { TextInputComponent } from './components/shared/form-components/text-input/text-input.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { LoadingButtonComponent } from './components/shared/buttons/loading-button/loading-button.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    SidebarComponent,
-    SidebarButtonComponent,
-    SidebarButtonsContainerComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        SidebarComponent,
+        SidebarButtonComponent,
+        SidebarButtonsContainerComponent,
+        LoginComponent,
+        HomeComponent,
+        AnnouncementsComponent,
+        ContentComponent,
+        NotFoundComponent,
+        MainComponent,
+        TextInputComponent,
+        LoadingButtonComponent
+    ],
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        ToastrModule.forRoot({
+            progressBar: true,
+            progressAnimation: 'increasing'
+        })
+
+    ],
+    providers: [
+        AuthService,
+        AuthGuardService,
+        DataService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

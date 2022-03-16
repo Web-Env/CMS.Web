@@ -1,6 +1,7 @@
 @import "src/assets/scss/variables/colours";
 @import "src/assets/scss/variables/dimensions";
 @import "src/assets/scss/variables/typeface";
+@import "~ngx-toastr/toastr";
 
 html {
     height: 100%;
@@ -17,6 +18,16 @@ html {
         app-root {
             width: 100%;
             height: 100%;
+        }
+
+        a {
+            color: $tertiary-text-colour;
+
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }

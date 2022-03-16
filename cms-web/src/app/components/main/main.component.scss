@@ -1,0 +1,125 @@
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/paddings";
+@import "src/assets/scss/variables/timings";
+
+.app-stage {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    &.menu-open {
+        .sidebar-container {
+            left: 0;
+        }
+    }
+
+    .header-container {
+        width: 100%;
+        height: calc($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2));
+    }
+
+    .sidebar-container {
+        width: $sidebar-mobile-width;
+        height: calc(100% - ($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
+
+        position: absolute;
+        top: calc($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2));
+        left: -$sidebar-mobile-width;
+
+        -webkit-transition: left $standard-transition-time ease;
+        -moz-transition: left $standard-transition-time ease;
+        -ms-transition: left $standard-transition-time ease;
+        -o-transition: left $standard-transition-time ease;
+        transition: left $standard-transition-time ease;
+    }
+
+    .stage {
+        width: $stage-mobile-width;
+        height: calc(100% - ($header-desktop-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
+
+        position: absolute;
+        top: calc($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2));
+        left: 0;
+
+        overflow: auto;
+    }
+}
+
+@media screen and (min-width: $tablet-small-breakpoint) {
+    .app-stage {
+        .sidebar-container {
+            width: $sidebar-tablet-small-width;
+
+            left: -$sidebar-tablet-small-width;
+        }
+    }
+}
+
+@media screen and (min-width: $tablet-breakpoint) {
+    .app-stage {
+        .sidebar-container {
+            width: $sidebar-tablet-width;
+
+            left: -$sidebar-tablet-width;
+        }
+    }
+}
+
+@media screen and (min-width: $tablet-large-breakpoint) {
+    .app-stage {
+        .sidebar-container {
+            width: $sidebar-tablet-large-width;
+
+            left: -$sidebar-tablet-large-width;
+        }
+    }
+}
+
+@media screen and (min-width: $desktop-small-breakpoint) {
+    .app-stage {
+        .header-container {
+            width: calc(100% - $sidebar-desktop-small-width);
+            height: $header-desktop-height;
+
+            position: absolute;
+            top: 0;
+            left: $sidebar-desktop-small-width;
+        }
+
+        .sidebar-container {
+            width: $sidebar-desktop-small-width;
+            height: 100%;
+
+            top: 0;
+            left: 0;
+        }
+
+        .stage {
+            width: calc(100% - $sidebar-desktop-small-width);
+
+            left: 0;
+        }
+    }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+    .app-stage {
+        .header-container {
+            width: calc(100% - $sidebar-desktop-width);
+            height: $header-desktop-height;
+
+            position: absolute;
+            top: 0;
+            left: $sidebar-desktop-width;
+        }
+
+        .sidebar-container {
+            width: $sidebar-desktop-width;
+        }
+
+        .stage {
+            width: calc(100% - $sidebar-desktop-width);
+        }
+    }
+}

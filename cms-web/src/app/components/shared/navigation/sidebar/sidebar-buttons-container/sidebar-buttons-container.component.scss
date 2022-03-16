@@ -41,11 +41,16 @@
 
 .sidebar-buttons-container {
     height: calc(
-        100% - ($sidebar-header-height + $sidebar-button-search-container-height + $sidebar-button-search-margin-bottom)
+        100% -
+            (
+                $sidebar-header-mobile-height + $sidebar-button-search-container-height +
+                    $sidebar-button-search-margin-bottom
+            )
     );
 
     margin: 0 $sidebar-buttons-container-horizontal-margin;
 
+    overflow-x: hidden;
     overflow-y: auto;
 
     .sidebar-buttons-message-container {
@@ -56,5 +61,17 @@
 
             font-size: 3em;
         }
+    }
+}
+
+@media screen and (min-width: $desktop-small-breakpoint) {
+    .sidebar-buttons-container {
+        height: calc(
+            100% -
+                (
+                    $sidebar-header-desktop-height + $sidebar-button-search-container-height +
+                        $sidebar-button-search-margin-bottom
+                )
+        );
     }
 }

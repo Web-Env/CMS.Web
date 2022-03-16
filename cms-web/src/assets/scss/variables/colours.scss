@@ -1,5 +1,6 @@
 $primary-background-colour: #404349;
 $secondary-background-colour: #303237;
+$secondary-background-hover-colour: #292c31;
 $tertiary-background-colour: #222831;
 
 $primary-text-colour: #d9d9da;
@@ -7,8 +8,8 @@ $secondary-text-colour: #04cad3;
 $tertiary-text-colour: #818181;
 
 $primary-hover-colour: #04cad3;
-$secondary-background-hover-colour: #31353c;
 $secondary-text-hover-colour: #03bac3;
+$secondary-text-colour-disabled: #066a6f;
 
 $stage-overlay-background-colour: #050607b0;
 
@@ -19,3 +20,6 @@ $scrollbar-thumb-colour: #8b8d91;
 $scrollbar-thumb-hover-colour: #727171;
 
 $darkening-factor: 20%;
+
+$primary-negative-colour: #a52e1d;
+$primary-negative-colour-hover: darken($primary-negative-colour, 5%);

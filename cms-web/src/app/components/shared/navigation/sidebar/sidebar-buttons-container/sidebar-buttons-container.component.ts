@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { debounceTime, fromEvent, Observable, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { SidebarButton } from "src/app/models/sidebar-button.model";
+import { SidebarButton } from "src/app/models/view-models/sidebar-button.model";
 import { stringSimilarity } from "string-similarity-js";
 
 @Component({

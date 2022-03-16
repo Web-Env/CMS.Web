@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BehaviorSubject } from "rxjs";
-import { SidebarButton } from "src/app/models/sidebar-button.model";
+import { SidebarButton } from "src/app/models/view-models/sidebar-button.model";
 
 import { SidebarButtonComponent } from './sidebar-button.component';
 
