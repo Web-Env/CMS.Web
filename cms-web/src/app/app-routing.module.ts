@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SectionsComponent } from "./components/admin/sections/sections.component";
 import { AnnouncementsComponent } from "./components/announcements/announcements.component";
 import { ContentComponent } from "./components/content/content.component";
 import { HomeComponent } from "./components/home/home.component";
@@ -14,6 +15,7 @@ const routes: Routes = [
         {path: 'announcements', component: AnnouncementsComponent},
         {path: 'content/:sectionId/:entryId', component: ContentComponent},
         {path: 'content/:announcementId', component: ContentComponent},
+        {path: 'admin/sections', component: SectionsComponent},
         //{path: 'admin/edit-content/:contentId', component: ContentEditComponent},
         {path: "**", redirectTo: "404"}
     ]},

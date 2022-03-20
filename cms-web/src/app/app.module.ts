@@ -22,6 +22,12 @@ import { MainComponent } from './components/main/main.component';
 import { TextInputComponent } from './components/shared/form-components/text-input/text-input.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoadingButtonComponent } from './components/shared/buttons/loading-button/loading-button.component';
+import { SectionsComponent } from './components/admin/sections/sections.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './ngrx/reducers/index';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { sectionReducer } from "./ngrx/reducers/section.reducer";
 
 @NgModule({
     declarations: [
@@ -37,7 +43,8 @@ import { LoadingButtonComponent } from './components/shared/buttons/loading-butt
         NotFoundComponent,
         MainComponent,
         TextInputComponent,
-        LoadingButtonComponent
+        LoadingButtonComponent,
+        SectionsComponent
     ],
     imports: [
         AppRoutingModule,
@@ -49,7 +56,13 @@ import { LoadingButtonComponent } from './components/shared/buttons/loading-butt
         ToastrModule.forRoot({
             progressBar: true,
             progressAnimation: 'increasing'
-        })
+        }),
+        StoreModule.forRoot({sections: sectionReducer}),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25,
+            logOnly: environment.production,
+        }),
+        !environment.production ? StoreDevtoolsModule.instrument() : []
 
     ],
     providers: [

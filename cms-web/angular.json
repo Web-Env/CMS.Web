@@ -107,5 +107,8 @@
       }
     }
   },
-  "defaultProject": "cms-web"
+  "defaultProject": "cms-web",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

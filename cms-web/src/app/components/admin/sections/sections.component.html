@@ -1,0 +1,5 @@
+<div class="sections" *ngFor="let section of sections$ | async;">
+    {{section.title}}
+</div>
+
+<div (click)="createNewSection()" width="50px" height="25px" background-color="blue"></div>
