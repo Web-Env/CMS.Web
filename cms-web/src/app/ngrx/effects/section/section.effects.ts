@@ -7,8 +7,6 @@ import { loadSections, loadSectionsFailure, loadSectionsSuccess } from "../../ac
 import { AppState } from "../../app.state";
 import { Section } from "../../models/section.model";
 
-
-
 @Injectable()
 export class SectionEffects {
     constructor(private actions$: Actions,
@@ -25,7 +23,5 @@ export class SectionEffects {
                 )
             )
         )
-    );            
-
-    
+    );
 }
