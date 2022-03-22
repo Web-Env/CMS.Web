@@ -10,10 +10,10 @@ import { Section } from "../../models/section.model";
 @Injectable()
 export class SectionEffects {
     constructor(private actions$: Actions,
-                private store: Store<AppState>,
-                private dataService: DataService) { }
+        private store: Store<AppState>,
+        private dataService: DataService) { }
 
-    loadSections$ = createEffect(() => 
+    loadSections$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadSections),
             switchMap(() =>
