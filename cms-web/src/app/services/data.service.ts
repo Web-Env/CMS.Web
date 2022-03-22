@@ -75,13 +75,14 @@ export class DataService {
             this.httpClient.get<Array<T>>(url, this.createHttpOptions())
                 .subscribe(
                     (data) => {
-                        if (type != null) {
-                            var mappedArray = this.mapJsonArrayToObjectArray<T>(data, type);
-                            resolve(mappedArray as Array<T>);
-                        }
-                        else {
+                        console.log(data)
+                        //if (type != null) {
+                            //var mappedArray = this.mapJsonArrayToObjectArray<T>(data, type);
+                            //resolve(mappedArray as Array<T>);
+                        //}
+                        //else {
                             resolve(data);
-                        }
+                        //}
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {

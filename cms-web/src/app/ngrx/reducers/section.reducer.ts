@@ -27,6 +27,11 @@ export const sectionReducer = createReducer(
         })
     ),
     on(SectionActions.loadSections, (state) => ({ ...state, status: 'loading' })),
+    on(SectionActions.loadSectionsSuccess, (state, { sections }) => ({ 
+        ...state,
+        sections: sections,
+        error: '',
+        status: 'success' }))
 );
 
 24

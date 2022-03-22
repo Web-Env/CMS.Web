@@ -28,6 +28,8 @@ import { reducers, metaReducers } from './ngrx/reducers/index';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { sectionReducer } from "./ngrx/reducers/section.reducer";
+import { SectionEffects } from './ngrx/effects/section/section.effects';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
     declarations: [
@@ -62,7 +64,8 @@ import { sectionReducer } from "./ngrx/reducers/section.reducer";
             maxAge: 25,
             logOnly: environment.production,
         }),
-        !environment.production ? StoreDevtoolsModule.instrument() : []
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        EffectsModule.forRoot([SectionEffects])
 
     ],
     providers: [

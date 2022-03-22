@@ -16,19 +16,12 @@ export class SectionsComponent implements OnInit {
     constructor(private store: Store<AppState>) {}
 
     ngOnInit(): void {
-        console.log("Add")
-        const section = new Section();
-        section.title = "Test";
-        section.path = "test";
         this.store.dispatch(loadSections());
-        this.store.dispatch(addSection(section));
-        console.log("Added")
     }
 
     createNewSection(): void {
         const section = new Section();
-        section.title = "Test";
-        section.path = "test";
-        this.store.dispatch(addSection(section));
+        section.title = "5659864";
+        section.path = "asasfasf";
     }
 }
