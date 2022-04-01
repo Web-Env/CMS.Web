@@ -30,6 +30,9 @@ import { environment } from '../environments/environment';
 import { sectionReducer } from "./ngrx/reducers/section.reducer";
 import { SectionEffects } from './ngrx/effects/section/section.effects';
 import { EffectsModule } from '@ngrx/effects';
+import { TableComponent } from './components/shared/table/table.component';
+import { TableRowComponent } from './components/shared/table/table-row/table-row.component';
+import { TableHeaderComponent } from './components/shared/table/table-header/table-header.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +49,10 @@ import { EffectsModule } from '@ngrx/effects';
         MainComponent,
         TextInputComponent,
         LoadingButtonComponent,
-        SectionsComponent
+        SectionsComponent,
+        TableComponent,
+        TableRowComponent,
+        TableHeaderComponent
     ],
     imports: [
         AppRoutingModule,
