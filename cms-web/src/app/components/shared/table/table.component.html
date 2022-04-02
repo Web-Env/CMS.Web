@@ -1,11 +1,11 @@
 <div class="table-container">
     <table>
         <tr>
-            <div app-table-header *ngFor="let header of headers" [data]="header"></div>
+            <th *ngFor="let header of headers" [style.width.%]="header.width">
+                <div app-table-header [data]="header"></div>
+            </th>
         </tr>
 
-        <tr  *ngFor="let row of rows">
-            <app-table-row [row]="row"></app-table-row>
-        </tr>
+        <tr *ngFor="let row of rows" app-table-row [row]="row"></tr>
     </table>
 </div>
