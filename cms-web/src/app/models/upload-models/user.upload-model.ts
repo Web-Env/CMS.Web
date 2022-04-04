@@ -1,0 +1,19 @@
+export class UserUploadModel {
+    firstName!: string;
+    lastName!: string;
+    email!: string;
+    isAdmin!: boolean;
+    adminPassword: string | undefined;
+
+    constructor(
+        firstName: string,
+        lastName: string,
+        email: string,
+        isAdmin: boolean
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.isAdmin = isAdmin;
+    }
+}

@@ -1,3 +1,34 @@
-:host {
-    width: 100%;
+@import "src/assets/scss/variables/colours";
+
+td {
+    background-color: $secondary-background-colour;
+    color: $primary-text-colour;
+
+    padding: 10px;
+
+    border-right: 1px solid $tertiary-background-colour;
+    border-bottom: 1px solid $tertiary-background-colour;
+
+    font-size: 0.55em;
+
+    &:last-child {
+        border-right: none;
+    }
+
+    .action-buttons-container {
+        display: flex;
+        
+        .action-button {
+            width: 30px;
+            height: 30px;
+
+            margin: 0 5px;
+
+            cursor: pointer;
+
+            img {
+                width: 30px;
+            }
+        }
+    }
 }

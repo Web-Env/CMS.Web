@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from "@angular/router";
 import { debounceTime, fromEvent, Observable, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { SidebarButton } from "src/app/models/view-models/sidebar-button.model";
@@ -142,7 +143,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         )
     ];
 
-    constructor() { }
+    constructor(private router: Router) { }
 
     ngOnInit(): void {
         this.mapButtonsToSidebar();
@@ -235,6 +236,8 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         this.emitActiveSidebarButtonPathToDeactivate();
 
         this.activeSidebarButtonPath = sidebarButtonClickedPath;
+
+        this.router.navigate([this.activeSidebarButtonPath]);
     }
 
     public emitActiveSidebarButtonPathToDeactivate(): void {

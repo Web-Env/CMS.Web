@@ -5,7 +5,7 @@ import { TableRow } from "src/app/models/view-models/table-row.model";
 import { addSection, loadSections } from "src/app/ngrx/actions/section/section.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { Section } from "src/app/ngrx/models/section.model";
-import { selectAllSections } from "src/app/ngrx/selectors/section.selectors";
+import { selectAllSections } from "src/app/ngrx/selectors/section/section.selectors";
 
 @Component({
     selector: 'app-sections',
@@ -32,10 +32,9 @@ export class SectionsComponent implements OnInit {
     ngOnInit(): void {
         this.store.dispatch(loadSections());
 
-        this.sections$.subscribe(data => {
-            if (data !== null) {
-                console.log (data)
-                data.forEach(section => {
+        this.sections$.subscribe(sections => {
+            if (sections !== null) {
+                sections.forEach(section => {
                     this.rows.push(
                         new TableRow(
                             section.id,

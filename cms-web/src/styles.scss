@@ -1,7 +1,9 @@
 @import "src/assets/scss/variables/colours";
 @import "src/assets/scss/variables/dimensions";
 @import "src/assets/scss/variables/typeface";
+@import "~@angular/material/theming";
 @import "~ngx-toastr/toastr";
+@include mat-core();
 
 html {
     height: 100%;
@@ -29,5 +31,13 @@ html {
                 text-decoration: underline;
             }
         }
+    }
+
+    .cdk-overlay-dark-backdrop {
+        background: rgba(0, 0, 0, 0.85) !important;
+    }
+
+    mat-dialog-container {
+        background-color: $primary-background-colour !important;
     }
 }

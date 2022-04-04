@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,12 +28,16 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './ngrx/reducers/index';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { sectionReducer } from "./ngrx/reducers/section.reducer";
+import { sectionReducer } from "./ngrx/reducers/section/section.reducer";
 import { SectionEffects } from './ngrx/effects/section/section.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { TableComponent } from './components/shared/table/table.component';
 import { TableRowComponent } from './components/shared/table/table-row/table-row.component';
 import { TableHeaderComponent } from './components/shared/table/table-header/table-header.component';
+import { UsersComponent } from './components/admin/users/users.component';
+import { userReducer } from "./ngrx/reducers/user/user.reducer";
+import { UserEffects } from "./ngrx/effects/user/user.effects";
+import { AddUserComponent } from './components/admin/users/add-user/add-user.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +57,9 @@ import { TableHeaderComponent } from './components/shared/table/table-header/tab
         SectionsComponent,
         TableComponent,
         TableRowComponent,
-        TableHeaderComponent
+        TableHeaderComponent,
+        UsersComponent,
+        AddUserComponent
     ],
     imports: [
         AppRoutingModule,
@@ -60,25 +67,39 @@ import { TableHeaderComponent } from './components/shared/table/table-header/tab
         BrowserAnimationsModule,
         FormsModule,
         HttpClientModule,
+        MatDialogModule,
         ReactiveFormsModule,
         ToastrModule.forRoot({
             progressBar: true,
             progressAnimation: 'increasing'
         }),
-        StoreModule.forRoot({sections: sectionReducer}),
+        StoreModule.forRoot({
+            sections: sectionReducer,
+            users: userReducer
+        }),
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             logOnly: environment.production,
         }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
-        EffectsModule.forRoot([SectionEffects])
+        EffectsModule.forRoot([
+            SectionEffects,
+            UserEffects
+        ])
 
     ],
     providers: [
         AuthService,
         AuthGuardService,
-        DataService
+        DataService,
+        {
+            provide: MatDialogRef,
+            useValue: {}
+        }
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [
+        AddUserComponent
+    ]
 })
 export class AppModule { }

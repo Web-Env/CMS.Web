@@ -1,11 +1,24 @@
 <div class="table-container">
-    <table>
-        <tr>
-            <th *ngFor="let header of headers" [style.width.%]="header.width">
-                <div app-table-header [data]="header"></div>
-            </th>
-        </tr>
+    <h1 class="table-name">{{ tableName }}s</h1>
+    <div class="table-actions-container">
+        <div class="table-search-container">
+            <input class="sidebar-button-search" placeholder="Search {{ tableName }}s" (input)="searchTermChanged($event)" #searchTermInput>
+            <span *ngIf="searchTermEntered" class="clear-icon" (click)="clearSearchInput()">&#x2715;</span>
+        </div>
+        
+        <button class="add-to-table-button button" (click)="emitTableActionClickedEvent()">Add {{ tableName }}</button>
+    </div>
 
-        <tr *ngFor="let row of rows" app-table-row [row]="row"></tr>
+    <table>
+        <thead>
+            <tr class="table-header">
+                <th *ngFor="let header of headers" [style.width.%]="header.width" app-table-header [data]="header"></th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr *ngFor="let row of rows" app-table-row [row]="row"></tr>
+        </tbody>
     </table>
 </div>

@@ -1,0 +1,12 @@
+@import "src/assets/scss/variables/colours";
+
+p {
+    color: $tertiary-text-colour;
+
+    margin: 0;
+    padding: 10px;
+
+    font-size: 0.5em;
+    font-weight: 100;
+    text-align: start;
+}

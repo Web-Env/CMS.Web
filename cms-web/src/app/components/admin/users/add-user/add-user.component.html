@@ -1,0 +1,16 @@
+<div class="add-user-form-container">
+    <form [formGroup]="addUserForm" (ngSubmit)="createUserAsync(addUserForm.value)">
+        <app-text-input formControlName="firstName" [parentForm]="addUserForm" [inputId]="'first-name'" [inputName]="'firstName'" [inputTitle]="'First Name'" [inputType]="'text'"></app-text-input>
+        <app-text-input formControlName="lastName" [parentForm]="addUserForm" [inputId]="'last-name'" [inputName]="'lastName'" [inputTitle]="'Last Name'" [inputType]="'text'"></app-text-input>
+        <app-text-input formControlName="email" [parentForm]="addUserForm" [inputId]="'email'" [inputName]="'email'" [inputTitle]="'Email'" [inputType]="'text'"></app-text-input>
+        <div class="is-admin-form-group">
+            <input type="checkbox" class="checkbox" id="is-admin" formControlName="isAdmin" (input)="isAdminChanged($event)">
+            <label for="is-admin">Make user an Administrator</label>
+        </div>
+        <p *ngIf="isAdminChecked" class="admin-warning">You must provide your password to make this user an Administrator</p>
+        <app-text-input *ngIf="isAdminChecked" formControlName="password" [parentForm]="addUserForm" [inputId]="'password'" [inputName]="'password'" [inputTitle]="'Your Password'" [inputType]="'password'" [inputErrorMessage]="'Password must be at least 8 characters'"></app-text-input>
+        <app-loading-button [buttonText]="'Add User'" [isLoading]="isLoading" [isDisabled]="!addUserForm.valid"></app-loading-button>
+    </form>
+    
+    <p class="add-user-form-error" *ngIf="addUserFormErrorMessageVisible">{{ addUserFormErrorMessage }}</p>
+</div>

@@ -2,9 +2,9 @@ import { createAction, props } from '@ngrx/store';
 import { Section } from "src/app/ngrx/models/section.model";
 import { StoreActions, StoreActionStatuses } from "src/app/consts/store-actions.const";
 
-const ACTION_TITLE = '[Section]';
 const ACTION_SUBJECT = 'Section';
 const ACTION_SUBJECT_PLURAL = 'Sections';
+const ACTION_TITLE = `[${ACTION_SUBJECT}]`;
 
 export const LOAD_SECTIONS = `${ACTION_TITLE} ${StoreActions.load} ${ACTION_SUBJECT_PLURAL}`;
 export const LOAD_SECTIONS_SUCCESS = `${ACTION_TITLE} ${StoreActions.load} ${ACTION_SUBJECT_PLURAL} ${StoreActionStatuses.success}`;
