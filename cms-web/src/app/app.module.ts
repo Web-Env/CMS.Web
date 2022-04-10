@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -79,6 +80,7 @@ import { RequestPasswordResetComponent } from './components/shared/user/request-
         AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
+        CKEditorModule,
         FormsModule,
         HttpClientModule,
         MatDialogModule,

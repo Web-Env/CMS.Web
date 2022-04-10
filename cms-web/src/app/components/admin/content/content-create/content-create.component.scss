@@ -39,5 +39,250 @@
                 cursor: pointer;
             }
         }
+
+        .content-editor-container {
+            margin-bottom: 15px;
+            
+            ::ng-deep .ck-editor {
+                .ck-editor__top {
+                    .ck-sticky-panel {
+                        .ck-sticky-panel__content {
+                            .ck-toolbar {
+                                background-color: $secondary-background-colour;
+    
+                                border-color: $primary-border-colour;
+                                border-top-width: $content-edit-container-border-width;
+                                border-left-width: $content-edit-container-border-width;
+                                border-right-width: $content-edit-container-border-width;
+                                border-top-left-radius: 5px;
+                                border-top-right-radius: 5px;
+        
+                                .ck-toolbar__items {
+                                    button {
+                                        color: $primary-text-colour;
+        
+                                        cursor: pointer;
+        
+                                        &:not(.ck-disabled):hover,
+                                        &.ck-on {
+                                            background-color: $secondary-background-hover-colour;
+        
+                                            svg {
+                                                path {
+                                                    fill: $secondary-text-colour;
+                                                }
+                                            }
+                                        }
+                                    }
+        
+                                    .ck-dropdown {
+                                        &.ck-heading-dropdown {
+                                            .ck-dropdown__panel {
+                                                left: -5px;
+    
+                                                ul {
+                                                    li {
+                                                        button {
+                                                            &:hover {
+                                                                span {
+                                                                    color: $secondary-text-colour;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+        
+                                        .ck-dropdown__panel {
+                                            background-color: $secondary-background-colour;
+                                            color: $primary-text-colour;
+    
+                                            border-color: $primary-border-colour;
+        
+                                            * {
+                                                background-color: $secondary-background-colour;
+                                                color: $primary-text-colour;
+                                            }
+        
+                                            .ck-button__label {
+                                                background-color: transparent;
+                                            }
+    
+                                            .ck-button-save,
+                                            .ck-button-cancel {
+                                                svg {
+                                                    background-color: transparent;
+                                                }
+                                            }
+        
+                                            .ck {
+                                                .ck-insert-table-dropdown__grid {
+                                                    .ck-insert-table-dropdown-grid-box {
+                                                        border-color: $secondary-border-colour;
+        
+                                                        &.ck-on {
+                                                            border-color: $primary-border-colour;
+                                                        }
+                                                    }
+                                                }
+                                            }
+        
+                                            input:focus {
+                                                border: 1px solid $primary-border-colour;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                .ck-editor__main {
+                    .ck-content {
+                        background-color: $secondary-background-colour;
+                        color: $primary-text-colour;
+    
+                        border-color: $primary-border-colour !important;
+                        border-bottom-width: $content-edit-container-border-width;
+                        border-left-width: $content-edit-container-border-width;
+                        border-right-width: $content-edit-container-border-width;
+                        border-bottom-left-radius: 5px !important;
+                        border-bottom-right-radius: 5px !important;
+    
+                        &.ck-focused {
+                            border-bottom-width: $content-edit-container-border-width;
+                            border-left-width: $content-edit-container-border-width;
+                            border-right-width: $content-edit-container-border-width;
+                        }
+    
+                        p,
+                        li {
+                            font-size: $content-font-size;
+                        }
+    
+                        a {
+                            color: $secondary-text-colour;
+    
+                            cursor: pointer;
+    
+                            &:hover {
+                                color: $secondary-text-hover-colour;
+                            }
+                        }
+    
+                        h2,
+                        h3,
+                        h4 {
+                            color: $secondary-text-colour;
+                        }
+    
+                        h2 {
+                            font-size: 2.5em;
+                        }
+    
+                        h3 {
+                            font-size: 2em;
+                        }
+    
+                        h4 {
+                            font-size: 1.75em;
+                        }
+    
+                        figcaption {
+                            background-color: $secondary-background-colour;
+                            color: $primary-text-colour;
+                        }
+                    }
+                }
+            }
+    
+            ::ng-deep .ck-balloon-panel {
+                border-color: $secondary-text-colour !important;
+    
+                &.ck-balloon-panel[class*=arrow_n]::before {
+                    border-color: $primary-border-colour;
+                    border-left-color: transparent;
+                    border-right-color: transparent;
+                    border-top-color: transparent;
+                }
+    
+                &.ck-balloon-panel[class*=arrow_n]::after {
+                    border-color: $secondary-background-colour;
+                    border-left-color: transparent;
+                    border-right-color: transparent;
+                    border-top-color: transparent;
+                }
+    
+                &.ck-balloon-panel[class*=arrow_s]::before {
+                    border-color: $primary-border-colour;
+                    border-left-color: transparent;
+                    border-right-color: transparent;
+                    border-bottom-color: transparent;
+                }
+    
+                &.ck-balloon-panel[class*=arrow_s]::after {
+                    border-top-color: $secondary-background-colour !important;
+                    border-left-color: transparent;
+                    border-right-color: transparent;
+                    border-bottom-color: transparent;
+                }
+    
+                .ck-link-form,
+                .ck-text-alternative-form,
+                .ck-balloon-rotator {
+                    background-color: $secondary-background-colour;
+                    
+                    border-color: $primary-border-colour;
+    
+                    .ck-balloon-rotator__content {
+                        .ck-toolbar {
+                            background-color: $secondary-background-colour;
+        
+                            .ck-toolbar__items {
+                                button {
+                                    background-color: $secondary-background-colour;
+    
+                                    svg {
+                                        path {
+                                            fill: $primary-text-colour;
+                                        }
+                                    }
+    
+                                    &:hover {
+                                        svg {
+                                            path {
+                                                fill: $secondary-text-colour;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+    
+                    button {
+                        cursor: pointer;
+    
+                        &:hover {
+                            background: $secondary-background-hover-colour !important;
+                        }
+                    }
+                    
+                    input {
+                        background-color: $secondary-background-colour;
+                        color: $primary-text-colour;
+    
+                        outline: $primary-border-colour;
+                    }
+    
+                    label {
+                        background: $secondary-background-colour !important;
+                        color: $primary-text-colour;
+                    }
+                }
+            }
+        }
     }
 }

@@ -7,6 +7,10 @@
         </select>
         <app-text-input formControlName="title" [parentForm]="addContentForm" [inputId]="'title'" [inputName]="'title'" [inputTitle]="'Title'" [inputType]="'text'"></app-text-input>
         <app-text-input formControlName="path" [parentForm]="addContentForm" [inputId]="'path'" [inputName]="'path'" [inputTitle]="'Path'" [inputType]="'text'" [disabled]="true" #pathTextInputComponent></app-text-input>
+
+        <div class="content-editor-container">
+            <ckeditor id="editor" [editor]="editor" (change)="onChange($event)"></ckeditor>
+        </div>
         
         <app-loading-button [buttonText]="'Add Content'" [isLoading]="isLoading" [isDisabled]="!addContentForm.valid"></app-loading-button>
     </form>

@@ -14,6 +14,7 @@ import * as ContentActions from "src/app/ngrx/actions/content/content.actions";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
     selector: 'app-content-create',
@@ -28,6 +29,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     sections!: Array<Section>;
 
     addContentForm!: FormGroup;
+    editor = ClassicEditor;
 
     isLoading: boolean = false;
     addContentFormErrorMessageVisible: boolean = false;
@@ -107,8 +109,6 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             let titleData = data.toLowerCase().trim();
             titleData = titleData.replaceAll(' ', '-');
 
-            console.log (titleData)
-
             this.pathTextInputComponent.writeValue(titleData);
             this.pathTextInputComponent.changed(titleData);
 
@@ -119,6 +119,12 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
                 this.pathTextInputComponent.inputPopulated = false;
             }
         });
+    }
+
+    public onChange( { editor }: any ) {
+        //const data = editor.getData();
+
+        //console.log( data );
     }
 
     public async createContentAsync(addContentForm: any): Promise<void> {
@@ -136,17 +142,19 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
                 newContentUploadModel.sectionId = addContentForm.section;
             }
 
-            try {
-                this.store.dispatch(addContent(newContentUploadModel));
-            }
-            catch (err) {
-                this.addContentFormErrorMessage = 'An unexpected error occured, please try again';
+            //console.log (this.editor.getData())
 
-                this.addContentFormErrorMessageVisible = true;
-                this.isLoading = false;
+            // try {
+            //     this.store.dispatch(addContent(newContentUploadModel));
+            // }
+            // catch (err) {
+            //     this.addContentFormErrorMessage = 'An unexpected error occured, please try again';
 
-                console.error(err);
-            }
+            //     this.addContentFormErrorMessageVisible = true;
+            //     this.isLoading = false;
+
+            //     console.error(err);
+            // }
         }
     }
 
