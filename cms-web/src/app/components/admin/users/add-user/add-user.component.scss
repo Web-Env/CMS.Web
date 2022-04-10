@@ -10,19 +10,20 @@
             .checkbox {
                 width: 25px;
                 height: 25px;
-    
-                filter: brightness(0) saturate(100%) invert(9%) sepia(3%) saturate(5811%) hue-rotate(178deg) brightness(96%) contrast(83%);
+
+                filter: brightness(0) saturate(100%) invert(9%) sepia(3%) saturate(5811%) hue-rotate(178deg)
+                    brightness(96%) contrast(83%);
                 accent-color: $secondary-text-colour;
-    
+
                 margin: 0;
-    
+
                 border: none;
                 outline: none;
-    
+
                 cursor: pointer;
-    
+
                 &:checked {
-                    filter: none
+                    filter: none;
                 }
             }
 
@@ -35,7 +36,7 @@
 
                 font-size: 1.3em;
                 line-height: 30px;
-                
+
                 cursor: pointer;
             }
         }

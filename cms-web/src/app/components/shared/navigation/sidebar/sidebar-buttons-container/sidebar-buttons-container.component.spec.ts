@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidebarButton } from "src/app/models/view-models/sidebar-button.model";
+import { SidebarButtonViewModel } from "src/app/models/view-models/sidebar-button.model";
 
 import { SidebarButtonsContainerComponent } from './sidebar-buttons-container.component';
 
@@ -8,14 +8,14 @@ describe('SidebarButtonsContainerComponent', () => {
     let component: SidebarButtonsContainerComponent;
     let fixture: ComponentFixture<SidebarButtonsContainerComponent>;
 
-    let buttons: Array<SidebarButton> = [
-        new SidebarButton (
+    let buttons: Array<SidebarButtonViewModel> = [
+        new SidebarButtonViewModel (
             'Home',
             'home',
             false,
             null
         ),
-        new SidebarButton (
+        new SidebarButtonViewModel (
             'Announcements',
             'announcements',
             false,
@@ -113,12 +113,12 @@ describe('SidebarButtonsContainerComponent', () => {
     });
 
     it('#processSearchTerm should return items if search term matches any sub-button', () => {
-        var newButtons = buttons.concat(new SidebarButton (
+        var newButtons = buttons.concat(new SidebarButtonViewModel (
             'Test Sidebar Button 3',
             'test-button-3',
             false,
             [
-                new SidebarButton(
+                new SidebarButtonViewModel(
                     'Test Sidebar Sub-Button 1',
                     'test-sidebar-subbutton-1',
                     false,
