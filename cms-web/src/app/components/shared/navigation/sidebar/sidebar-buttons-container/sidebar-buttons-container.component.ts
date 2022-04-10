@@ -25,7 +25,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     buttons: SidebarButton[] = [
         new SidebarButton (
             "Home",
-            "home",
+            "",
             false,
             null
         ),

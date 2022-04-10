@@ -2,7 +2,7 @@
     <form [formGroup]="addUserForm" (ngSubmit)="createUserAsync(addUserForm.value)">
         <app-text-input formControlName="firstName" [parentForm]="addUserForm" [inputId]="'first-name'" [inputName]="'firstName'" [inputTitle]="'First Name'" [inputType]="'text'"></app-text-input>
         <app-text-input formControlName="lastName" [parentForm]="addUserForm" [inputId]="'last-name'" [inputName]="'lastName'" [inputTitle]="'Last Name'" [inputType]="'text'"></app-text-input>
-        <app-text-input formControlName="email" [parentForm]="addUserForm" [inputId]="'email'" [inputName]="'email'" [inputTitle]="'Email'" [inputType]="'text'"></app-text-input>
+        <app-text-input formControlName="email" [parentForm]="addUserForm" [inputId]="'email'" [inputName]="'email'" [inputTitle]="'Email'" [inputType]="'email'"></app-text-input>
         <div class="is-admin-form-group">
             <input type="checkbox" class="checkbox" id="is-admin" formControlName="isAdmin" (input)="isAdminChanged($event)">
             <label for="is-admin">Make user an Administrator</label>

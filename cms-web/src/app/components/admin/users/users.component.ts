@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Store } from "@ngrx/store";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
 import { loadUsers } from "src/app/ngrx/actions/user/user.actions";
 import { AppState } from "src/app/ngrx/app.state";
+import { User } from "src/app/ngrx/models/user.model";
 import { selectAllUsers } from "src/app/ngrx/selectors/user/user.selectors";
 import { AddUserComponent } from "./add-user/add-user.component";
 
@@ -50,35 +51,39 @@ export class UsersComponent implements OnInit {
             if (users !== null) {
                 users.forEach(user => {
                     this.rows.push(
-                        new TableRow(
-                            user.id,
-                            [
-                                new TableColumn(
-                                    user.firstName,
-                                    15
-                                ),
-                                new TableColumn(
-                                    user.lastName,
-                                    25
-                                ),
-                                new TableColumn(
-                                    user.email,
-                                    30
-                                ),
-                                new TableColumn(
-                                    '02/04/2022',
-                                    5
-                                ),
-                                new TableColumn(
-                                    'Adam Barry-O\'Donovan',
-                                    25
-                                )
-                            ]
-                        )
+                        this.castUserToTableRow(user)
                     );
                 });
             }
         });
+    }
+
+    private castUserToTableRow(user: User): TableRow {
+        return new TableRow(
+            user.id,
+            [
+                new TableColumn(
+                    user.firstName,
+                    15
+                ),
+                new TableColumn(
+                    user.lastName,
+                    25
+                ),
+                new TableColumn(
+                    user.email,
+                    30
+                ),
+                new TableColumn(
+                    '02/04/2022',
+                    5
+                ),
+                new TableColumn(
+                    'Adam Barry-O\'Donovan',
+                    25
+                )
+            ]
+        );
     }
 
     public addUserClicked(): void {
@@ -92,5 +97,10 @@ export class UsersComponent implements OnInit {
         dialogConfig.closeOnNavigation = true;
 
         let instance = this.dialog.open(AddUserComponent, dialogConfig);
+        instance.afterClosed().subscribe((user: User) => {
+            if (user !== undefined) {
+                this.rows.push(this.castUserToTableRow(user));
+            }
+        })
     }
 }

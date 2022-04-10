@@ -1,0 +1,15 @@
+<div class="add-content-form-container">
+    <h1 class="table-name">Create Content</h1>
+    <form [formGroup]="addContentForm" (ngSubmit)="createContentAsync(addContentForm.value)">
+        <select id="section" formControlName="section">
+            <option value="none"><i>No Section Selected</i></option>
+            <option *ngFor="let section of sections" [value]="section.id">{{ section.title }}</option>
+        </select>
+        <app-text-input formControlName="title" [parentForm]="addContentForm" [inputId]="'title'" [inputName]="'title'" [inputTitle]="'Title'" [inputType]="'text'"></app-text-input>
+        <app-text-input formControlName="path" [parentForm]="addContentForm" [inputId]="'path'" [inputName]="'path'" [inputTitle]="'Path'" [inputType]="'text'" [disabled]="true" #pathTextInputComponent></app-text-input>
+        
+        <app-loading-button [buttonText]="'Add Content'" [isLoading]="isLoading" [isDisabled]="!addContentForm.valid"></app-loading-button>
+    </form>
+    
+    <p class="add-content-form-error" *ngIf="addContentFormErrorMessageVisible">{{ addContentFormErrorMessage }}</p>
+</div>

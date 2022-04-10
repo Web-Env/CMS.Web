@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Store } from "@ngrx/store";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
@@ -6,6 +7,7 @@ import { addSection, loadSections } from "src/app/ngrx/actions/section/section.a
 import { AppState } from "src/app/ngrx/app.state";
 import { Section } from "src/app/ngrx/models/section.model";
 import { selectAllSections } from "src/app/ngrx/selectors/section/section.selectors";
+import { AddSectionComponent } from "./add-section/add-section.component";
 
 @Component({
     selector: 'app-sections',
@@ -27,7 +29,8 @@ export class SectionsComponent implements OnInit {
 
     sections$ = this.store.select(selectAllSections);
 
-    constructor(private store: Store<AppState>) {}
+    constructor(private store: Store<AppState>,
+                private dialog: MatDialog) {}
 
     ngOnInit(): void {
         this.store.dispatch(loadSections());
@@ -36,30 +39,44 @@ export class SectionsComponent implements OnInit {
             if (sections !== null) {
                 sections.forEach(section => {
                     this.rows.push(
-                        new TableRow(
-                            section.id,
-                            [
-                                new TableColumn(
-                                    section.title,
-                                    50
-                                ),
-                                new TableColumn(
-                                    section.path,
-                                    50
-                                )
-                            ]
-                        )
+                        this.castSectionToTableRow(section)
                     );
                 });
             }
         });
     }
 
-    createNewSection(): void {
-        const section = new Section();
-        section.title = "5659864";
-        section.path = "asasfasf";
+    private castSectionToTableRow(section: Section): TableRow {
+        return new TableRow(
+            section.id,
+            [
+                new TableColumn(
+                    section.title,
+                    50
+                ),
+                new TableColumn(
+                    section.path,
+                    50
+                )
+            ]
+        )
+    }
 
-        this.store.dispatch(addSection(section));
+    public addSectionClicked(): void {
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = false;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = '90%';
+        dialogConfig.maxWidth = "800px";
+        dialogConfig.height = 'fit-content';
+        dialogConfig.closeOnNavigation = true;
+
+        let instance = this.dialog.open(AddSectionComponent, dialogConfig);
+        instance.afterClosed().subscribe((section: Section) => {
+            if (section !== undefined) {
+                this.rows.push(this.castSectionToTableRow(section));
+            }
+        })
     }
 }

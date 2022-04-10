@@ -38,6 +38,12 @@ import { UsersComponent } from './components/admin/users/users.component';
 import { userReducer } from "./ngrx/reducers/user/user.reducer";
 import { UserEffects } from "./ngrx/effects/user/user.effects";
 import { AddUserComponent } from './components/admin/users/add-user/add-user.component';
+import { SetPasswordComponent } from './components/shared/user/set-password/set-password.component';
+import { AddSectionComponent } from './components/admin/sections/add-section/add-section.component';
+import { ContentsComponent } from "./components/admin/content/contents.component";
+import { ContentEffects } from "./ngrx/effects/content/content.effects";
+import { contentReducer } from "./ngrx/reducers/content/content.reducer";
+import { ContentCreateComponent } from './components/admin/content/content-create/content-create.component';
 
 @NgModule({
     declarations: [
@@ -50,6 +56,7 @@ import { AddUserComponent } from './components/admin/users/add-user/add-user.com
         HomeComponent,
         AnnouncementsComponent,
         ContentComponent,
+        ContentsComponent,
         NotFoundComponent,
         MainComponent,
         TextInputComponent,
@@ -59,7 +66,10 @@ import { AddUserComponent } from './components/admin/users/add-user/add-user.com
         TableRowComponent,
         TableHeaderComponent,
         UsersComponent,
-        AddUserComponent
+        AddUserComponent,
+        SetPasswordComponent,
+        AddSectionComponent,
+        ContentCreateComponent
     ],
     imports: [
         AppRoutingModule,
@@ -74,6 +84,7 @@ import { AddUserComponent } from './components/admin/users/add-user/add-user.com
             progressAnimation: 'increasing'
         }),
         StoreModule.forRoot({
+            contents: contentReducer,
             sections: sectionReducer,
             users: userReducer
         }),
@@ -83,6 +94,7 @@ import { AddUserComponent } from './components/admin/users/add-user/add-user.com
         }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         EffectsModule.forRoot([
+            ContentEffects,
             SectionEffects,
             UserEffects
         ])
@@ -99,7 +111,8 @@ import { AddUserComponent } from './components/admin/users/add-user/add-user.com
     ],
     bootstrap: [AppComponent],
     entryComponents: [
-        AddUserComponent
+        AddUserComponent,
+        AddSectionComponent
     ]
 })
 export class AppModule { }

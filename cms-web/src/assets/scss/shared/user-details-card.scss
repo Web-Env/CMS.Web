@@ -1,10 +1,10 @@
 @import "src/assets/scss/variables/colours";
 @import "src/assets/scss/variables/dimensions";
 
-$login-card-header-height: 150px;
-$login-card-header-desktop-height: 250px;
+$user-details-card-header-height: 150px;
+$user-details-card-header-desktop-height: 250px;
 
-.login-card-container {
+.user-details-card-container {
     width: 100%;
     height: 100%;
 
@@ -14,18 +14,18 @@ $login-card-header-desktop-height: 250px;
     align-items: center;
     justify-content: center;
 
-    .login-card {
+    .user-details-card {
         width: 100%;
         height: fit-content;
 
-        .login-card-header {
+        .user-details-card-header {
             width: fit-content;
-            height: $login-card-header-height;
+            height: $user-details-card-header-height;
 
             margin: 0 auto 25px auto;
 
             img {
-                height: $login-card-header-height;
+                height: $user-details-card-header-height;
             }
         }
 
@@ -33,7 +33,7 @@ $login-card-header-desktop-height: 250px;
             padding: 15px;
         }
 
-        .login-form-error {
+        .form-error {
             width: 100%;
 
             color: $primary-negative-colour;
@@ -59,17 +59,17 @@ $login-card-header-desktop-height: 250px;
 }
 
 @media screen and (min-width: $tablet-small-breakpoint) {
-    .login-card-container {
+    .user-details-card-container {
         background-color: unset;
 
-        .login-card {
+        .user-details-card {
             width: 65%;
 
             background-color: $secondary-background-colour;
 
             border-radius: $primary-border-radius;
 
-            .login-card-header {
+            .user-details-card-header {
                 margin: 25px auto 0 auto;
             }
         }
@@ -77,47 +77,47 @@ $login-card-header-desktop-height: 250px;
 }
 
 @media screen and (min-width: $tablet-breakpoint) {
-    .login-card-container {
-        .login-card {
+    .user-details-card-container {
+        .user-details-card {
             width: 50%;
         }
     }
 }
 
 @media screen and (min-width: $tablet-large-breakpoint) {
-    .login-card-container {
-        .login-card {
+    .user-details-card-container {
+        .user-details-card {
             width: 45%;
         }
     }
 }
 
 @media screen and (min-width: $desktop-small-breakpoint) {
-    .login-card-container {
-        .login-card {
+    .user-details-card-container {
+        .user-details-card {
             width: 32.5%;
         }
     }
 }
 
 @media screen and (min-width: $desktop-breakpoint) {
-    .login-card-container {
-        .login-card {
+    .user-details-card-container {
+        .user-details-card {
             width: 30%;
         }
     }
 }
 
 @media screen and (min-width: $desktop-large-breakpoint) {
-    .login-card-container {
-        .login-card {
+    .user-details-card-container {
+        .user-details-card {
             width: 22.5%;
 
-            .login-card-header {
-                height: $login-card-header-desktop-height;
+            .user-details-card-header {
+                height: $user-details-card-header-desktop-height;
 
                 img {
-                    height: $login-card-header-desktop-height;
+                    height: $user-details-card-header-desktop-height;
                 }
             }
 

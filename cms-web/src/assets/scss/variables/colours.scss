@@ -2,6 +2,7 @@ $primary-background-colour: #404349;
 $secondary-background-colour: #303237;
 $secondary-background-hover-colour: #292c31;
 $tertiary-background-colour: #222831;
+$input-background-colour: #25282d;
 
 $primary-text-colour: #d9d9da;
 $secondary-text-colour: #04cad3;
@@ -20,6 +21,9 @@ $scrollbar-thumb-colour: #8b8d91;
 $scrollbar-thumb-hover-colour: #727171;
 
 $darkening-factor: 20%;
+
+$primary-positive-colour: #38cc2d;
+$primary-negative-colour-hover: darken($primary-positive-colour, 5%);
 
 $primary-negative-colour: #f44336;
 $primary-negative-colour-hover: darken($primary-negative-colour, 5%);

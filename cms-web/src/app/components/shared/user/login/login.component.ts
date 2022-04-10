@@ -9,7 +9,7 @@ import { AuthService } from "src/app/services/auth/auth.service";
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['../../../../../assets/scss/shared/user-details-card.scss']
 })
 export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.loginForm = new FormGroup({
             email: new FormControl(
                 '',
-                [Validators.required]
+                [Validators.required, Validators.email]
             ),
             password: new FormControl(
                 '',

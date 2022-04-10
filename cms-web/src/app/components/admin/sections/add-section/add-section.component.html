@@ -1,0 +1,9 @@
+<div class="add-section-form-container">
+    <form [formGroup]="addSectionForm" (ngSubmit)="createSectionAsync(addSectionForm.value)">
+        <app-text-input formControlName="title" [parentForm]="addSectionForm" [inputId]="'title'" [inputName]="'title'" [inputTitle]="'Title'" [inputType]="'text'"></app-text-input>
+        <app-text-input formControlName="path" [parentForm]="addSectionForm" [inputId]="'path'" [inputName]="'path'" [inputTitle]="'Path'" [inputType]="'text'" [disabled]="true" #pathTextInputComponent></app-text-input>
+        <app-loading-button [buttonText]="'Add Section'" [isLoading]="isLoading" [isDisabled]="!addSectionForm.valid"></app-loading-button>
+    </form>
+    
+    <p class="add-section-form-error" *ngIf="addSectionFormErrorMessageVisible">{{ addSectionFormErrorMessage }}</p>
+</div>

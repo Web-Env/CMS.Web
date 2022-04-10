@@ -71,19 +71,11 @@ export class DataService {
     public async getArrayAsync<T>(endpoint: string, type: { new(): T; }, blockToast: boolean = false): Promise<Array<T>> {
         return new Promise((resolve, reject) => {
             let url = `${environment.apiUrl}/${endpoint}`;
-            console.log (url)
 
             this.httpClient.get<Array<T>>(url, this.createHttpOptions())
                 .subscribe(
                     (data) => {
-                        console.log(data)
-                        //if (type != null) {
-                            //var mappedArray = this.mapJsonArrayToObjectArray<T>(data, type);
-                            //resolve(mappedArray as Array<T>);
-                        //}
-                        //else {
-                            resolve(data);
-                        //}
+                        resolve(data);
                     },
                     (err) => {
                         if (err instanceof HttpErrorResponse) {
