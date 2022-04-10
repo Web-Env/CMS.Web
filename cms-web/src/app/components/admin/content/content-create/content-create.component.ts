@@ -12,7 +12,6 @@ import { Section } from "src/app/ngrx/models/section.model";
 import { selectAllSections } from "src/app/ngrx/selectors/section/section.selectors";
 import * as ContentActions from "src/app/ngrx/actions/content/content.actions";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 
 import Editor from 'src/assets/lib/ckeditor/build/ckeditor';
@@ -103,6 +102,10 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             path: new FormControl(
                 '',
                 [Validators.required]
+            ),
+            content: new FormControl(
+                '',
+                [Validators.required]
             )
         });
 
@@ -134,9 +137,12 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             this.isLoading = true;
             this.saveClicked = true;
 
+            console.log (addContentForm.content)
+
             var newContentUploadModel = new ContentUploadModel(
                 addContentForm.title,
-                addContentForm.path
+                addContentForm.path,
+                addContentForm.content
             );
 
             if (addContentForm.section !== 'none') {
