@@ -35,15 +35,6 @@ export class SetPasswordComponent implements OnInit {
     }
 
     async ngOnInit(): Promise<void> {
-        var token = localStorage.getItem('Token');
-        if (token !== null && token !== '') {
-            var tokenIsValid = await this.authService.checkTokenValidAsync();
-
-            if (tokenIsValid) {
-                this.router.navigate(['']);
-            }
-        }
-
         var queryParams = this.route.snapshot.queryParams;
 
         if (queryParams && Object.keys(queryParams).length !== 0 &&
@@ -54,6 +45,7 @@ export class SetPasswordComponent implements OnInit {
         }
         else {
             //this.isRequesting = true;
+            this.isSetTokenValid = false;
         }
     }
 
@@ -71,6 +63,8 @@ export class SetPasswordComponent implements OnInit {
     }
 
     private async checkResetTokenValidAsync(resetToken: string): Promise<void> {
+        this.isLoading = true;
+
         try {
             await this.dataService.getAsync(`User/ForgotPassword/Validate?passwordResetToken=${encodeURIComponent(resetToken)}`, undefined, true);
             this.isSetTokenValid = true;
@@ -78,6 +72,9 @@ export class SetPasswordComponent implements OnInit {
         catch (err) {
             this.isSetTokenValid = false;
             throw err;
+        }
+        finally {
+            this.isLoading = false;
         }
     }
 
@@ -104,7 +101,7 @@ export class SetPasswordComponent implements OnInit {
                 this.authService.purgeLocalStorage();
 
                 window.setTimeout(() => {
-                    //this.router.navigate(['/login']);
+                    this.router.navigate(['/login']);
                 }, 5000);
             }
             catch (err) {
