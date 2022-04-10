@@ -47,11 +47,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
 
         this.sidebarButtons$.subscribe(sidebarButtons => {
             if (!this.sidebarButtonsConfigured) {
-                console.log (sidebarButtons)
                 this.configureSidebarButtons(sidebarButtons);
-            }
-            else {
-                console.log (sidebarButtons)
             }
         });
     }
@@ -133,19 +129,12 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
             })
 
             this.mapButtonsToSidebar();
-
-            window.setTimeout(()=> {
-
-                console.log (this.sidebarButtons)
-            }, 5000)
         }
     }
 
     private mapButtonsToSidebar(): void {
         this.sidebarButtons = [];
         var promise = Promise.resolve();
-
-        console.log (this.buttons)
 
         this.buttons.forEach((button) => {
             promise = promise.then(() => {

@@ -14,7 +14,8 @@ import * as ContentActions from "src/app/ngrx/actions/content/content.actions";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import Editor from 'src/assets/lib/ckeditor/build/ckeditor';
 
 @Component({
     selector: 'app-content-create',
@@ -29,7 +30,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     sections!: Array<Section>;
 
     addContentForm!: FormGroup;
-    editor = ClassicEditor;
+    editor = Editor;
 
     isLoading: boolean = false;
     addContentFormErrorMessageVisible: boolean = false;
