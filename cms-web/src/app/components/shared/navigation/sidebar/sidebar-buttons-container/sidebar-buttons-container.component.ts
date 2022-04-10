@@ -1,7 +1,13 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { debounceTime, fromEvent, Observable, Subject, Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { SidebarButton } from "src/app/models/view-models/sidebar-button.model";
+import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { debounceTime, fromEvent, Subject, Subscription } from 'rxjs';
+import { distinctUntilChanged, first, take } from 'rxjs/operators';
+import { SidebarButtonViewModel } from "src/app/models/view-models/sidebar-button.model";
+import { SidebarButton } from "src/app/ngrx/models/sidebarbutton.model";
+import { loadSidebarButtons } from "src/app/ngrx/actions/sidebar/sidebar.actions";
+import { AppState } from "src/app/ngrx/app.state";
+import { selectAllSidebarButtons } from "src/app/ngrx/selectors/sidebar/sidebar.selectors";
 import { stringSimilarity } from "string-similarity-js";
 
 @Component({
@@ -13,6 +19,8 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     @ViewChild("searchTermInput") searchTermInput!: ElementRef;
     searchTermInputSubscription!: Subscription;
 
+    url!: string;
+
     activeSidebarButtonPath!: string;
     deactivateSidebarButtonSubject: Subject<string> = new Subject<string>();
 
@@ -20,132 +28,32 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     searchTerm!: string | undefined;
     searchProcessed: boolean = false;
 
-    sidebarButtons: SidebarButton[] = [];
-    buttons: SidebarButton[] = [
-        new SidebarButton (
-            "Home",
-            "home",
-            false,
-            null
-        ),
-        new SidebarButton (
-            "Announcements",
-            "announcements",
-            false,
-            null
-        ),
-        new SidebarButton (
-            "Meal Plans",
-            "meal-plans",
-            false,
-            [
-                new SidebarButton (
-                    "Breakfast",
-                    "content/meal-plans/breakfast",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Lunch",
-                    "content/meal-plans/lunch",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Dinner",
-                    "content/meal-plans/dinner",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Snacks & Hydration",
-                    "content/meal-plans/snacks-&-hydration",
-                    false,
-                    null
-                )
-            ]
-        ),
-        new SidebarButton (
-            "Home Exercises",
-            "home-exercises",
-            false,
-            [
-                new SidebarButton (
-                    "Stretches At Home",
-                    "content/home-exercises/stretches-at-home",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Body Weight Training",
-                    "content/home-exercises/body-weight-training",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Free Weights",
-                    "content/home-exercises/free-weights",
-                    false,
-                    null
-                )
-            ]
-        ),
-        new SidebarButton (
-            "Gym",
-            "gym",
-            false,
-            [
-                new SidebarButton (
-                    "What to Bring",
-                    "content/gym/what-to-bring",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Your Trainer",
-                    "content/gym/your-trainer",
-                    false,
-                    null
-                )
-            ]
-        ),
-        new SidebarButton (
-            "Admin",
-            "admin",
-            false,
-            [
-                new SidebarButton (
-                    "Users",
-                    "admin/users",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Announcements",
-                    "admin/announcements",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Sections",
-                    "admin/sections",
-                    false,
-                    null
-                ),
-                new SidebarButton (
-                    "Content",
-                    "admin/content",
-                    false,
-                    null
-                )
-            ]
-        )
-    ];
+    sidebarButtonsConfigured: boolean = false;
+    sidebarButtons: SidebarButtonViewModel[] = [];
+    buttons: SidebarButtonViewModel[] = [];
 
-    constructor() { }
+    sidebarButtons$ = this.store.select(selectAllSidebarButtons);
+
+    constructor(private store: Store<AppState>,
+                private router: Router) { }
 
     ngOnInit(): void {
-        this.mapButtonsToSidebar();
+        this.url = this.router.url.replace('/', '');
+        this.activeSidebarButtonPath = this.url;
+
+        this.store.dispatch(loadSidebarButtons());
+
+        this.addDefaultSidebarButtons()
+
+        this.sidebarButtons$.subscribe(sidebarButtons => {
+            if (!this.sidebarButtonsConfigured) {
+                console.log (sidebarButtons)
+                this.configureSidebarButtons(sidebarButtons);
+            }
+            else {
+                console.log (sidebarButtons)
+            }
+        });
     }
 
     ngAfterViewInit(): void {
@@ -162,9 +70,82 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
             });
     }
 
+    private addDefaultSidebarButtons(): void {
+        this.buttons.push(
+            new SidebarButtonViewModel (
+                "Home",
+                '',
+                this.url === '',
+                null
+            ),
+            new SidebarButtonViewModel (
+                "Announcements",
+                'announcements',
+                this.url === 'announcements',
+                null
+            )
+        );
+    }
+
+    private configureSidebarButtons(sidebarButtons: SidebarButton[]): void {
+        let urlSplit = this.url.split('/');
+        let urlHasSubButton = urlSplit.length > 1;
+
+        if (sidebarButtons !== null && sidebarButtons.length > 0) {
+            this.sidebarButtonsConfigured = true;
+
+            sidebarButtons.forEach((sidebarButton) => {
+                if (sidebarButton.subButtons !== undefined && sidebarButton.subButtons.length > 0) {
+                    let subButtons = new Array<SidebarButtonViewModel>();
+
+                    //console.log (sidebarButton)
+                    sidebarButton.subButtons.forEach(subButton => {
+                        subButtons.push(
+                            new SidebarButtonViewModel(
+                                subButton.title,
+                                subButton.path,
+                                this.url === subButton.path,
+                                null
+                            )
+                        )
+                    });
+
+                    this.buttons.push(
+                        new SidebarButtonViewModel(
+                            sidebarButton.title,
+                            sidebarButton.path,
+                            urlSplit[0] === sidebarButton.path,
+                            subButtons
+                        )
+                    );
+                }
+                else {
+                    //console.log (sidebarButton)
+                    this.buttons.push(
+                        new SidebarButtonViewModel(
+                            sidebarButton.title,
+                            sidebarButton.path,
+                            this.url === sidebarButton.path,
+                            null
+                        )
+                    );
+                }
+            })
+
+            this.mapButtonsToSidebar();
+
+            window.setTimeout(()=> {
+
+                console.log (this.sidebarButtons)
+            }, 5000)
+        }
+    }
+
     private mapButtonsToSidebar(): void {
         this.sidebarButtons = [];
         var promise = Promise.resolve();
+
+        console.log (this.buttons)
 
         this.buttons.forEach((button) => {
             promise = promise.then(() => {
@@ -193,13 +174,13 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         this.sidebarButtons = [];
 
         for (let i = 0; i <= this.buttons.length - 1; i++) {
-            let button: SidebarButton = Object.assign({}, this.buttons[i]);
+            let button: SidebarButtonViewModel = Object.assign({}, this.buttons[i]);
 
             if (button.subButtons != null) {
                 let refinedSubButtons = [];
 
                 for (let j = 0; j <= button.subButtons.length - 1; j++) {
-                    let subButton: SidebarButton = Object.assign({}, button.subButtons[j]);
+                    let subButton: SidebarButtonViewModel = Object.assign({}, button.subButtons[j]);
 
                     var subButtonSearchSimilarity = stringSimilarity(searchTerm, subButton.title);
 
@@ -235,6 +216,8 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         this.emitActiveSidebarButtonPathToDeactivate();
 
         this.activeSidebarButtonPath = sidebarButtonClickedPath;
+
+        this.router.navigate([this.activeSidebarButtonPath]);
     }
 
     public emitActiveSidebarButtonPathToDeactivate(): void {

@@ -1,7 +1,7 @@
 <div class="form-group" [ngClass]="{'active': inputActive, 'populated': inputPopulated, 'has-error': hasError}">
     <div class="input-container">
         <label [for]="inputId">{{ inputTitle }}</label>
-        <input class="form-control" [id]="inputId + '-input'" [type]="inputType" [name]="inputName" [value]="inputValue"
+        <input class="form-control" [id]="inputId + '-input'" [type]="inputType" [name]="inputName" [value]="inputValue" [disabled]="disabled"
             (focus)="changeInputState(true)"
             (blur)="changeInputState(false)"
             (input)="inputChanged($event)">

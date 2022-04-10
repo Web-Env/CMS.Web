@@ -22,6 +22,7 @@ export class TextInputComponent implements ControlValueAccessor, OnInit {
     @Input() inputTitle!: string;
     @Input() inputType: string = 'text';
     @Input() inputErrorMessage!: string;
+    @Input() disabled: boolean = false;
 
     hasError: boolean = false;
     displayedErrorMessage: string = '';
@@ -36,7 +37,7 @@ export class TextInputComponent implements ControlValueAccessor, OnInit {
     inputPopulated: boolean = false;
 
     get formInput(): FormControl {
-        return this.parentForm?.get(this.inputName) as  FormControl;
+        return this.parentForm?.get(this.inputName) as FormControl;
     }
 
     constructor() { }

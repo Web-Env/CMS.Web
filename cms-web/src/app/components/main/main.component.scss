@@ -120,6 +120,9 @@
 
         .stage {
             width: calc(100% - $sidebar-desktop-width);
+
+            top: calc($header-desktop-height + $header-border-bottom-height + ($header-vertical-padding * 2));
+            left: $sidebar-desktop-width;
         }
     }
 }

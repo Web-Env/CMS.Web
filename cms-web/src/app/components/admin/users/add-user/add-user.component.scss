@@ -1,0 +1,56 @@
+@import "src/assets/scss/variables/colours";
+
+.add-user-form-container {
+    form {
+        .is-admin-form-group {
+            display: flex;
+
+            margin-bottom: 15px;
+
+            .checkbox {
+                width: 25px;
+                height: 25px;
+
+                filter: brightness(0) saturate(100%) invert(9%) sepia(3%) saturate(5811%) hue-rotate(178deg)
+                    brightness(96%) contrast(83%);
+                accent-color: $secondary-text-colour;
+
+                margin: 0;
+
+                border: none;
+                outline: none;
+
+                cursor: pointer;
+
+                &:checked {
+                    filter: none;
+                }
+            }
+
+            label {
+                max-height: 25px;
+
+                color: $tertiary-text-colour;
+
+                margin-left: 5px;
+
+                font-size: 1.3em;
+                line-height: 30px;
+
+                cursor: pointer;
+            }
+        }
+
+        .admin-warning {
+            color: $primary-negative-colour;
+        }
+    }
+
+    .add-user-form-error {
+        color: $primary-negative-colour;
+
+        margin: 15px 0 0 0;
+
+        text-align: center;
+    }
+}

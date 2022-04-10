@@ -52,10 +52,16 @@
 
     &:disabled {
         background: $secondary-text-colour-disabled;
+
+        .text {
+            color: $primary-text-colour;
+        }
     }
 
     .text {
         font-size: 1.5em;
+
+        color: $primary-background-colour;
     }
 
     .loading-icon {

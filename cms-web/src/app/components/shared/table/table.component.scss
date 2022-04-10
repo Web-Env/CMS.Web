@@ -1,0 +1,129 @@
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+@import "src/assets/scss/variables/paddings";
+
+@import "src/app/components/shared/buttons/loading-button/loading-button.component.scss";
+
+.table-container {
+    margin: 15px;
+
+    .table-name {
+        color: $secondary-text-colour;
+
+        margin-bottom: 15px;
+    }
+
+    .table-actions-container {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 15px;
+
+        .table-search-container {
+            width: 45%;
+
+            position: relative;
+
+            opacity: 0;
+
+            input {
+                width: calc(100% - ($sidebar-button-search-horizontal-padding * 2));
+                height: calc($sidebar-button-search-container-height - ($sidebar-button-search-vertical-padding * 2));
+
+                background-color: $tertiary-background-colour;
+                filter: brightness(calc(100% - $darkening-factor));
+                color: $primary-text-colour;
+
+                padding: 1px $sidebar-button-search-horizontal-padding;
+
+                border: none;
+                border-radius: 5px;
+                outline: none;
+
+                font-size: 1.5em;
+            }
+
+            .clear-icon {
+                color: $primary-text-colour;
+
+                position: absolute;
+                top: 5px;
+                right: 5px;
+
+                font-size: 1.5em;
+
+                cursor: pointer;
+            }
+        }
+
+        .add-to-table-button {
+            width: 10%;
+
+            color: $primary-background-colour;
+
+            padding: 5px;
+
+            font-size: 1.35em;
+        }
+    }
+
+    table {
+        width: 100%;
+
+        margin: auto;
+
+        border: none;
+        border-spacing: 0;
+        border-radius: $primary-border-radius;
+
+        font-size: 3em;
+
+        td {
+            border: 1px solid $tertiary-background-colour;
+        }
+
+        thead {
+            .table-header {
+                background-color: $tertiary-background-colour;
+
+                th {
+                    &:first-child {
+                        border-top-left-radius: $primary-border-radius;
+                    }
+
+                    &:last-child {
+                        border-top-right-radius: $primary-border-radius;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr:last-child::ng-deep {
+                td {
+                    border-bottom: none;
+
+                    &:first-child {
+                        border-bottom-left-radius: $primary-border-radius;
+                    }
+
+                    &:last-child {
+                        border-bottom-right-radius: $primary-border-radius;
+                    }
+                }
+            }
+
+            tr:nth-child(odd) {
+                ::ng-deep td {
+                    background-color: lighten($color: $secondary-background-colour, $amount: 1);
+                }
+            }
+
+            tr:nth-child(even) {
+                ::ng-deep td {
+                    background-color: darken($color: $secondary-background-colour, $amount: 1);
+                }
+            }
+        }
+    }
+}
