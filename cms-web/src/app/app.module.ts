@@ -44,6 +44,8 @@ import { ContentsComponent } from "./components/admin/content/contents.component
 import { ContentEffects } from "./ngrx/effects/content/content.effects";
 import { contentReducer } from "./ngrx/reducers/content/content.reducer";
 import { ContentCreateComponent } from './components/admin/content/content-create/content-create.component';
+import { sidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
+import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
 
 @NgModule({
     declarations: [
@@ -86,6 +88,7 @@ import { ContentCreateComponent } from './components/admin/content/content-creat
         StoreModule.forRoot({
             contents: contentReducer,
             sections: sectionReducer,
+            sidebarButtons: sidebarReducer,
             users: userReducer
         }),
         StoreDevtoolsModule.instrument({
@@ -96,6 +99,7 @@ import { ContentCreateComponent } from './components/admin/content/content-creat
         EffectsModule.forRoot([
             ContentEffects,
             SectionEffects,
+            SidebarEffects,
             UserEffects
         ])
 

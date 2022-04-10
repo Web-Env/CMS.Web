@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Store } from "@ngrx/store";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
-import { addSection, loadSections } from "src/app/ngrx/actions/section/section.actions";
+import { loadSections } from "src/app/ngrx/actions/section/section.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { Section } from "src/app/ngrx/models/section.model";
 import { selectAllSections } from "src/app/ngrx/selectors/section/section.selectors";

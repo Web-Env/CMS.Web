@@ -1,6 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as SectionActions from '../../actions/section/section.actions';
-import { AppState } from "../../app.state";
 import { Section } from "../../models/section.model";
 
 export interface SectionState {
