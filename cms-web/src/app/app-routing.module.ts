@@ -10,6 +10,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { MainComponent } from "./components/main/main.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { LoginComponent } from "./components/shared/user/login/login.component";
+import { RequestPasswordResetComponent } from "./components/shared/user/request-password-reset/request-password-reset.component";
 import { SetPasswordComponent } from "./components/shared/user/set-password/set-password.component";
 import { AuthGuardService } from "./services/auth/auth-guard.service";
 
@@ -28,6 +29,7 @@ const routes: Routes = [
     ]},
     {path: 'login', component: LoginComponent},
     {path: 'set-password', component: SetPasswordComponent},
+    {path: 'request-password-reset', component: RequestPasswordResetComponent},
     {path: "404", component: NotFoundComponent},
     {path: '', redirectTo: 'main/home', pathMatch: 'full'},
     {path: "**", redirectTo: "404"}];

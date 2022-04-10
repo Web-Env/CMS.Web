@@ -46,6 +46,7 @@ import { contentReducer } from "./ngrx/reducers/content/content.reducer";
 import { ContentCreateComponent } from './components/admin/content/content-create/content-create.component';
 import { sidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
 import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
+import { RequestPasswordResetComponent } from './components/shared/user/request-password-reset/request-password-reset.component';
 
 @NgModule({
     declarations: [
@@ -71,7 +72,8 @@ import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
         AddUserComponent,
         SetPasswordComponent,
         AddSectionComponent,
-        ContentCreateComponent
+        ContentCreateComponent,
+        RequestPasswordResetComponent
     ],
     imports: [
         AppRoutingModule,
