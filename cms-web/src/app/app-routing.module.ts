@@ -18,6 +18,7 @@ const routes: Routes = [
     {path: '', component: MainComponent, canActivate: [ AuthGuardService ], children: [
         {path: '', component: HomeComponent},
         {path: 'announcements', component: AnnouncementsComponent},
+        {path: 'content/:contentPath', component: ContentComponent},
         {path: 'content/:sectionId/:entryId', component: ContentComponent},
         {path: 'content/:announcementId', component: ContentComponent},
         {path: 'admin/content', component: ContentsComponent},

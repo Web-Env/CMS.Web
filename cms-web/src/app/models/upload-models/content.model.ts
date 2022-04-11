@@ -11,6 +11,6 @@ export class ContentUploadModel {
     ) {
         this.title = title;
         this.path = path;
-        this.content;
+        this.content = content;
     }
 }

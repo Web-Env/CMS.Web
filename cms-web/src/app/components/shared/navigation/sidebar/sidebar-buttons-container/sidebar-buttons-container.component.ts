@@ -38,8 +38,11 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                 private router: Router) { }
 
     ngOnInit(): void {
-        this.url = this.router.url.replace('/', '');
+        this.url = this.router.url.replace('content/', '');
+        this.url = this.url.replace('/', '');
         this.activeSidebarButtonPath = this.url;
+
+        console.log (this.url)
 
         this.store.dispatch(loadSidebarButtons());
 
@@ -99,7 +102,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                         subButtons.push(
                             new SidebarButtonViewModel(
                                 subButton.title,
-                                subButton.path,
+                                (sidebarButton.path !== 'admin' ? 'content/' : '') + subButton.path,
                                 this.url === subButton.path,
                                 null
                             )
@@ -120,7 +123,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                     this.buttons.push(
                         new SidebarButtonViewModel(
                             sidebarButton.title,
-                            sidebarButton.path,
+                            'content/' + sidebarButton.path,
                             this.url === sidebarButton.path,
                             null
                         )

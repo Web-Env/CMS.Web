@@ -13,7 +13,7 @@ import { SidebarButtonsContainerComponent } from './components/shared/navigation
 import { LoginComponent } from './components/shared/user/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
-import { ContentComponent } from './components/content/content.component';
+import { ContentComponent, SanitizeHtmlPipe } from './components/content/content.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuardService } from "./services/auth/auth-guard.service";
 import { AuthService } from "./services/auth/auth.service";
@@ -74,7 +74,9 @@ import { RequestPasswordResetComponent } from './components/shared/user/request-
         SetPasswordComponent,
         AddSectionComponent,
         ContentCreateComponent,
-        RequestPasswordResetComponent
+        RequestPasswordResetComponent,
+
+        SanitizeHtmlPipe
     ],
     imports: [
         AppRoutingModule,

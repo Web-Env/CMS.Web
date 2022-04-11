@@ -149,19 +149,19 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
                 newContentUploadModel.sectionId = addContentForm.section;
             }
 
-            //console.log (this.editor.getData())
+            console.log (newContentUploadModel)
 
-            // try {
-            //     this.store.dispatch(addContent(newContentUploadModel));
-            // }
-            // catch (err) {
-            //     this.addContentFormErrorMessage = 'An unexpected error occured, please try again';
+            try {
+                this.store.dispatch(addContent(newContentUploadModel));
+            }
+            catch (err) {
+                this.addContentFormErrorMessage = 'An unexpected error occured, please try again';
 
-            //     this.addContentFormErrorMessageVisible = true;
-            //     this.isLoading = false;
+                this.addContentFormErrorMessageVisible = true;
+                this.isLoading = false;
 
-            //     console.error(err);
-            // }
+                console.error(err);
+            }
         }
     }
 
