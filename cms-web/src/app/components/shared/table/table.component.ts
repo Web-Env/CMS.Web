@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from "rxjs";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
+import { DeleteConfirmationDialogComponent } from "../dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
 
 @Component({
     selector: 'app-table',
@@ -13,6 +15,8 @@ export class TableComponent implements AfterViewInit, OnInit {
     @Input() headers!: Array<TableColumn>;
     @Input() rows!: Array<TableRow>;
 
+    @Input() deleteStringBuilderFunction!: (tableRow: TableRow) => string;
+
     @Output() tableActionClicked: EventEmitter<string> = new EventEmitter();
 
     @ViewChild("searchTermInput") searchTermInput!: ElementRef;
@@ -21,7 +25,7 @@ export class TableComponent implements AfterViewInit, OnInit {
     searchTerm!: string | undefined;
     searchProcessed: boolean = false;
 
-    constructor() { }
+    constructor(private dialog: MatDialog) { }
 
     ngOnInit(): void {
     }
@@ -71,6 +75,28 @@ export class TableComponent implements AfterViewInit, OnInit {
 
     public emitTableActionClickedEvent(): void {
         this.tableActionClicked.emit(this.tableName);
+    }
+
+    public tableRowDeleteButtonClicked(tableRow: TableRow): void {
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = false;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = '90%';
+        dialogConfig.maxWidth = "800px";
+        dialogConfig.height = 'fit-content';
+        dialogConfig.closeOnNavigation = true;
+
+        let instance = this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+
+        instance.componentInstance.deletionSubject = this.tableName;
+        instance.componentInstance.deletionMessage = this.deleteStringBuilderFunction(tableRow);
+        instance.componentInstance.deleteConfirmedFunction = () => {
+            window.setTimeout(() => {
+                instance.close();
+            }, 5000);
+            
+        };
     }
 
 }

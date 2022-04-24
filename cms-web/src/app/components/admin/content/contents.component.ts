@@ -33,6 +33,9 @@ export class ContentsComponent implements OnInit {
         )
     ];
     rows: Array<TableRow> = [];
+    deleteStringBuilderFunction = (tableRow: TableRow): string => {
+        return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
+    }
 
     content$ = this.store.select(selectAllContents);
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { debounceTime, fromEvent, Subject, Subscription } from 'rxjs';
@@ -18,6 +18,8 @@ import { stringSimilarity } from "string-similarity-js";
 export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild("searchTermInput") searchTermInput!: ElementRef;
     searchTermInputSubscription!: Subscription;
+
+    @Output() deactivateSidebarEvent: EventEmitter<boolean> = new EventEmitter();
 
     url!: string;
 
@@ -41,8 +43,6 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         this.url = this.router.url.replace('content/', '');
         this.url = this.url.replace('/', '');
         this.activeSidebarButtonPath = this.url;
-
-        console.log (this.url)
 
         this.store.dispatch(loadSidebarButtons());
 
@@ -97,7 +97,6 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                 if (sidebarButton.subButtons !== undefined && sidebarButton.subButtons.length > 0) {
                     let subButtons = new Array<SidebarButtonViewModel>();
 
-                    //console.log (sidebarButton)
                     sidebarButton.subButtons.forEach(subButton => {
                         subButtons.push(
                             new SidebarButtonViewModel(
@@ -119,7 +118,6 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                     );
                 }
                 else {
-                    //console.log (sidebarButton)
                     this.buttons.push(
                         new SidebarButtonViewModel(
                             sidebarButton.title,
@@ -206,10 +204,11 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
 
     public sidebarButtonClicked(sidebarButtonClickedPath: string): void {
         this.emitActiveSidebarButtonPathToDeactivate();
+        this.deactivateSidebarEvent.emit();
 
-        this.activeSidebarButtonPath = sidebarButtonClickedPath;
+        this.activeSidebarButtonPath = sidebarButtonClickedPath.replace('content/', '');
 
-        this.router.navigate([this.activeSidebarButtonPath]);
+        this.router.navigate([sidebarButtonClickedPath]);
     }
 
     public emitActiveSidebarButtonPathToDeactivate(): void {

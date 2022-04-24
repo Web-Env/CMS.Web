@@ -48,6 +48,7 @@ import { ContentCreateComponent } from './components/admin/content/content-creat
 import { sidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
 import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
 import { RequestPasswordResetComponent } from './components/shared/user/request-password-reset/request-password-reset.component';
+import { DeleteConfirmationDialogComponent } from './components/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @NgModule({
     declarations: [
@@ -76,7 +77,8 @@ import { RequestPasswordResetComponent } from './components/shared/user/request-
         ContentCreateComponent,
         RequestPasswordResetComponent,
 
-        SanitizeHtmlPipe
+        SanitizeHtmlPipe,
+          DeleteConfirmationDialogComponent
     ],
     imports: [
         AppRoutingModule,

@@ -14,7 +14,7 @@
 
     &.active {
         .sidebar-button {
-            h3 {
+            .title {
                 color: $primary-hover-colour;
             }
 
@@ -46,7 +46,7 @@
         user-select: none;
 
         &:hover {
-            h3 {
+            .title {
                 color: $primary-hover-colour;
             }
 
@@ -57,7 +57,7 @@
             }
         }
 
-        h3 {
+        .title {
             max-width: 90%;
 
             color: $primary-text-colour;
@@ -119,7 +119,7 @@
         .sidebar-button-container {
             &.active {
                 div {
-                    h4 {
+                    .sub-title {
                         color: $primary-hover-colour;
                     }
                 }
@@ -130,7 +130,7 @@
                     color: $primary-hover-colour;
                 }
 
-                h4 {
+                .sub-title {
                     margin-top: 0;
                     margin-bottom: 0.5em;
 

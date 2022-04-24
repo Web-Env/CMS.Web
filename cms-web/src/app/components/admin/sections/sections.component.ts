@@ -26,6 +26,9 @@ export class SectionsComponent implements OnInit {
         )
     ];
     rows: Array<TableRow> = [];
+    deleteStringBuilderFunction = (tableRow: TableRow): string => {
+        return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
+    }
 
     sections$ = this.store.select(selectAllSections);
 

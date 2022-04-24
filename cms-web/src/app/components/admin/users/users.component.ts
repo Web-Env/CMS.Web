@@ -38,6 +38,9 @@ export class UsersComponent implements OnInit {
         ),
     ];
     rows: Array<TableRow> = [];
+    deleteStringBuilderFunction = (tableRow: TableRow): string => {
+        return `${tableRow.columns[0].data} ${tableRow.columns[1].data} (${tableRow.columns[2].data})`;
+    }
 
     users$ = this.store.select(selectAllUsers);
 
@@ -101,6 +104,6 @@ export class UsersComponent implements OnInit {
             if (user !== undefined) {
                 this.rows.push(this.castUserToTableRow(user));
             }
-        })
+        });
     }
 }

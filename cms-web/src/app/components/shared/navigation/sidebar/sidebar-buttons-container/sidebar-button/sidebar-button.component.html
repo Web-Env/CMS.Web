@@ -1,7 +1,7 @@
 <div class="sidebar-button-container" [ngClass]="{ 'active': isActive }" [@FadeIn]>
     <div class="sidebar-button" (click)="sidebarButtonClicked()">
-        <h3 *ngIf="!isSubButton">{{ title }}</h3>
-        <h4 *ngIf="isSubButton">{{ title }}</h4>
+        <h3 class="title" *ngIf="!isSubButton">{{ title }}</h3>
+        <h4 class="sub-title" *ngIf="isSubButton">{{ title }}</h4>
 
         <div class="sidebar-button-action-icon-container" *ngIf="hasSubButtons">
             <svg viewBox="0 0 451.847 451.847" xmlns="http://www.w3.org/2000/svg">

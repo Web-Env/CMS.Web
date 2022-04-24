@@ -1,0 +1,12 @@
+<div class="delete-confirmation-dialog">
+    <h1>Delete {{ deletionSubject }}</h1>
+    <p class="message">
+        Are you sure you want to delete this <b>{{ deletionSubject }}</b>?
+        <br><br>
+        <b>{{ deletionMessage }}</b>
+    </p>
+    
+    <div class="buttons-container">
+        <app-loading-button [isLoading]="isLoading" [buttonText]="'Delete'" [useNegativeColour]="true" (click)="deleteButtonClicked()"></app-loading-button>
+    </div>
+</div>

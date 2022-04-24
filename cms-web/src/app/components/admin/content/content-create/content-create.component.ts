@@ -125,19 +125,11 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         });
     }
 
-    public onChange( { editor }: any ) {
-        //const data = editor.getData();
-
-        //console.log( data );
-    }
-
     public async createContentAsync(addContentForm: any): Promise<void> {
         if(!this.isLoading) {
             this.addContentFormErrorMessageVisible = false;
             this.isLoading = true;
             this.saveClicked = true;
-
-            console.log (addContentForm.content)
 
             var newContentUploadModel = new ContentUploadModel(
                 addContentForm.title,
@@ -148,8 +140,6 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             if (addContentForm.section !== 'none') {
                 newContentUploadModel.sectionId = addContentForm.section;
             }
-
-            console.log (newContentUploadModel)
 
             try {
                 this.store.dispatch(addContent(newContentUploadModel));

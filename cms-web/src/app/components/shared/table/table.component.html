@@ -18,7 +18,7 @@
         </thead>
         
         <tbody>
-            <tr *ngFor="let row of rows" app-table-row [row]="row"></tr>
+            <tr *ngFor="let row of rows" app-table-row [row]="row" (deleteButtonClickedEvent)="tableRowDeleteButtonClicked($event)"></tr>
         </tbody>
     </table>
 </div>

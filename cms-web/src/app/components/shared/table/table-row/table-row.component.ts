@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableRow } from "src/app/models/view-models/table-row.model";
 
 @Component({
@@ -9,6 +9,12 @@ import { TableRow } from "src/app/models/view-models/table-row.model";
 export class TableRowComponent {
     @Input() row!: TableRow;
 
+    @Output() deleteButtonClickedEvent: EventEmitter<TableRow> = new EventEmitter<TableRow>();
+
     constructor() { }
+
+    public deleteButtonClicked(): void {
+        this.deleteButtonClickedEvent.emit(this.row);
+    }
 
 }
