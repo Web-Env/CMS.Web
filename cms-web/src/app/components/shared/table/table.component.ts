@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from "rxjs";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
@@ -10,7 +10,7 @@ import { DeleteConfirmationDialogComponent } from "../dialogs/delete-confirmatio
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements AfterViewInit, OnDestroy, OnInit {
+export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
     @Input() tableName!: string;
     @Input() headers!: Array<TableColumn>;
     @Input() rows!: Array<TableRow>;
@@ -45,6 +45,10 @@ export class TableComponent implements AfterViewInit, OnDestroy, OnInit {
                     this.processSearchTerm(searchTerm);
                 }
             });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.deleteDialogInstance?.close();
     }
 
     public searchTermChanged(searchInputEvent: any): void {

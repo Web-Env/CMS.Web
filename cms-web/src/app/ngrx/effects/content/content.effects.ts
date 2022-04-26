@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, from, of, map, switchMap } from "rxjs";
 import { DataService } from "src/app/services/data.service";
-import { addContent, addContentFailure, addContentSuccess, loadContents, loadContentsFailure, loadContentsSuccess } from "../../actions/content/content.actions";
+import { addContent, addContentFailure, addContentSuccess, loadContents, loadContentsFailure, loadContentsSuccess, removeContent, removeContentFailure, removeContentSuccess } from "../../actions/content/content.actions";
 import { Content } from "../../models/content.model";
 
 @Injectable()
@@ -29,6 +29,18 @@ export class ContentEffects {
                 from(this.dataService.postAsync<Content>('Content/Add', action.content, Content)).pipe(
                     map((content: any) => addContentSuccess(content)),
                     catchError((error) => of(addContentFailure(error)))
+                )
+            )
+        )
+    );
+
+    removeContent$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(removeContent),
+            switchMap((action) => 
+                from(this.dataService.deleteAsync(`Content/Remove?contentId=${action.contentId}`)).pipe(
+                    map(() => removeContentSuccess({ contentId: action.contentId })),
+                    catchError((error) => of(removeContentFailure(error)))
                 )
             )
         )

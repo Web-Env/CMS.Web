@@ -14,6 +14,8 @@ export const ADD_CONTENT = `${ACTION_TITLE} ${StoreActions.add} ${ACTION_SUBJECT
 export const ADD_CONTENT_SUCCESS = `${ADD_CONTENT} ${StoreActionStatuses.success}`;
 export const ADD_CONTENT_FAILURE = `${ADD_CONTENT} ${StoreActionStatuses.failure}`;
 export const REMOVE_CONTENT = `${ACTION_TITLE} ${StoreActions.remove} ${ACTION_SUBJECT}`;
+export const REMOVE_CONTENT_SUCCESS = `${REMOVE_CONTENT} ${StoreActionStatuses.success}`;
+export const REMOVE_CONTENT_FAILURE = `${REMOVE_CONTENT} ${StoreActionStatuses.failure}`;
 
 export const loadContents = createAction(LOAD_CONTENTS);
 
@@ -39,5 +41,20 @@ export const addContentSuccess = createAction(
 
 export const addContentFailure = createAction(
     ADD_CONTENT_FAILURE,
+    props<{ error: string }>()
+);
+
+export const removeContent = createAction(
+    REMOVE_CONTENT,
+    (contentId: string) => ({ contentId })
+);
+
+export const removeContentSuccess = createAction(
+    REMOVE_CONTENT_SUCCESS,
+    props<{ contentId: string }>()
+);
+
+export const removeContentFailure = createAction(
+    REMOVE_CONTENT_FAILURE,
     props<{ error: string }>()
 );
