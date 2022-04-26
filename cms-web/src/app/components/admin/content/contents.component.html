@@ -1,1 +1,7 @@
-<app-table [tableName]="'Content'" [headers]="headers" [rows]="rows" [deleteStringBuilderFunction]="deleteStringBuilderFunction" (tableActionClicked)="addContentClicked()"></app-table>
+<app-table 
+    [tableName]="'Content'" 
+    [headers]="headers" 
+    [rows]="rows"
+    [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
+    (tableActionClicked)="addContentClicked()"
+    (tableRowDeleteConfirmed)="deleteContent($event)"></app-table>

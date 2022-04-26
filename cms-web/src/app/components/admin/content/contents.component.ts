@@ -84,4 +84,8 @@ export class ContentsComponent implements OnInit {
         this.router.navigateByUrl('admin/content-create');
     }
 
+    public deleteContent(tableRow: TableRow): void {
+        console.log (tableRow)
+    }
+
 }

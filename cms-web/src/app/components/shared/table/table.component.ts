@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from "rxjs";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
@@ -10,7 +10,7 @@ import { DeleteConfirmationDialogComponent } from "../dialogs/delete-confirmatio
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements AfterViewInit, OnInit {
+export class TableComponent implements AfterViewInit, OnDestroy, OnInit {
     @Input() tableName!: string;
     @Input() headers!: Array<TableColumn>;
     @Input() rows!: Array<TableRow>;
@@ -18,6 +18,9 @@ export class TableComponent implements AfterViewInit, OnInit {
     @Input() deleteStringBuilderFunction!: (tableRow: TableRow) => string;
 
     @Output() tableActionClicked: EventEmitter<string> = new EventEmitter();
+    @Output() tableRowDeleteConfirmed: EventEmitter<TableRow> = new EventEmitter<TableRow>();
+
+    deleteDialogInstance!: MatDialogRef<DeleteConfirmationDialogComponent>;
 
     @ViewChild("searchTermInput") searchTermInput!: ElementRef;
     searchTermInputSubscription!: Subscription;
@@ -87,16 +90,17 @@ export class TableComponent implements AfterViewInit, OnInit {
         dialogConfig.height = 'fit-content';
         dialogConfig.closeOnNavigation = true;
 
-        let instance = this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+        this.deleteDialogInstance = this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
 
-        instance.componentInstance.deletionSubject = this.tableName;
-        instance.componentInstance.deletionMessage = this.deleteStringBuilderFunction(tableRow);
-        instance.componentInstance.deleteConfirmedFunction = () => {
-            window.setTimeout(() => {
-                instance.close();
-            }, 5000);
-            
+        this.deleteDialogInstance.componentInstance.deletionSubject = this.tableName;
+        this.deleteDialogInstance.componentInstance.deletionMessage = this.deleteStringBuilderFunction(tableRow);
+        this.deleteDialogInstance.componentInstance.deleteConfirmedFunction = () => {
+            this.tableRowDeleteConfirmed.emit(tableRow);
         };
+    }
+
+    public ngOnDestroy(): void {
+        this.searchTermInputSubscription.unsubscribe();
     }
 
 }
