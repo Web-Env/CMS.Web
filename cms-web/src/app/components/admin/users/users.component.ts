@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { Store } from "@ngrx/store";
+import { ofType } from "@ngrx/effects";
+import { ActionsSubject, Store } from "@ngrx/store";
+import { Subscription } from "rxjs";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
-import { loadUsers } from "src/app/ngrx/actions/user/user.actions";
+import { loadUsers, LOAD_USERS_SUCCESS } from "src/app/ngrx/actions/user/user.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { User } from "src/app/ngrx/models/user.model";
-import { selectAllUsers } from "src/app/ngrx/selectors/user/user.selectors";
 import { AddUserComponent } from "./add-user/add-user.component";
 
 @Component({
@@ -15,6 +16,7 @@ import { AddUserComponent } from "./add-user/add-user.component";
     styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+    isDataLoaded: boolean = false;
     headers: Array<TableColumn> = [
         new TableColumn(
             'First Name',
@@ -42,22 +44,32 @@ export class UsersComponent implements OnInit {
         return `${tableRow.columns[0].data} ${tableRow.columns[1].data} (${tableRow.columns[2].data})`;
     }
 
-    users$ = this.store.select(selectAllUsers);
+    loadUsersSuccessSubscription!: Subscription;
 
     constructor(private store: Store<AppState>,
-                private dialog: MatDialog) {}
+                private dialog: MatDialog,
+                private actions$: ActionsSubject) {}
 
     ngOnInit(): void {
         this.store.dispatch(loadUsers());
 
-        this.users$.subscribe(users => {
-            if (users !== null) {
-                users.forEach(user => {
-                    this.rows.push(
+        this.loadUsersSuccessSubscription = this.actions$.pipe(ofType(LOAD_USERS_SUCCESS)).subscribe((users: any) => {
+            let userRows = new Array<TableRow>();
+
+            if (users !== null && users.users !== null) {
+                
+                users.users.forEach((user: User) => {
+                    userRows.push(
                         this.castUserToTableRow(user)
                     );
                 });
+
+                
             }
+
+            this.rows = userRows;
+
+            this.isDataLoaded = true;
         });
     }
 
@@ -79,11 +91,11 @@ export class UsersComponent implements OnInit {
                 ),
                 new TableColumn(
                     '02/04/2022',
-                    5
+                    10
                 ),
                 new TableColumn(
                     'Adam Barry-O\'Donovan',
-                    25
+                    20
                 )
             ]
         );

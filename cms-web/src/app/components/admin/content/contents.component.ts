@@ -43,7 +43,6 @@ export class ContentsComponent implements OnDestroy, OnInit {
         return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
     }
 
-    content$ = this.store.select(selectAllContents);
     loadContentsSuccessSubscription!: Subscription;
     removeContentSuccessSubscription!: Subscription;
 
