@@ -5,4 +5,5 @@
     [rows]="rows"
     [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
     (tableActionClicked)="addContentClicked()"
+    (tableRowEditClicked)="editContent($event)"
     (tableRowDeleteConfirmed)="deleteContent($event)"></app-table>

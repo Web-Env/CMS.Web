@@ -16,6 +16,9 @@ import { Location } from "@angular/common";
 
 import Editor from 'src/assets/lib/ckeditor/build/ckeditor';
 import { EventsService } from "src/app/services/events.service";
+import { Router } from "@angular/router";
+import { DataService } from "src/app/services/data.service";
+import { ContentDownloadModel } from "src/app/models/download-models/content.model";
 
 @Component({
     selector: 'app-content-create',
@@ -25,6 +28,10 @@ import { EventsService } from "src/app/services/events.service";
 export class ContentCreateComponent implements OnDestroy, OnInit {
     @ViewChild('pathTextInputComponent')
     pathTextInputComponent!: TextInputComponent;
+
+    content!: ContentDownloadModel | undefined;
+    contentPath!: string;
+    url!: string;
     
     sections$ = this.store.select(selectAllSections);
     sections!: Array<Section>;
@@ -40,10 +47,12 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     addContentSuccessSubscription!: Subscription;
     addContentFailureSubscription!: Subscription;
 
-    constructor(private eventsService: EventsService,
+    constructor(private dataService: DataService,
+                private eventsService: EventsService,
                 private store: Store<AppState>,
                 private actions$: ActionsSubject,
-                private location: Location) {
+                private location: Location,
+                private router: Router) {
                     this.buildForm();
     }
 
@@ -55,6 +64,10 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
                 this.sections = sections;
             }
         });
+
+        let urlSplit = this.router.url.split('/');
+        console.log (urlSplit[urlSplit.length - 1])
+        this.getContentAsync();
 
         this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS)).subscribe(() => {
             if (this.saveClicked) {
@@ -90,6 +103,19 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             //this.addSectionFormErrorMessageVisible = true;
             this.isLoading = false;
         });
+    }
+    
+    public async getContentAsync(): Promise<void> {
+        this.content = undefined;
+        this.url = this.router.url;
+        let urlSplit = this.url.split('/');
+        this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
+
+        let contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
+
+        this.content = contentModel;
+
+        console.log (this.content)
     }
 
     public buildForm(): void {

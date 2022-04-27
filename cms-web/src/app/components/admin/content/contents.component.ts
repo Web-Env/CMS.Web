@@ -109,6 +109,10 @@ export class ContentsComponent implements OnDestroy, OnInit {
         this.router.navigateByUrl('admin/content-create');
     }
 
+    public editContent(tableRow: TableRow): void {
+        this.router.navigateByUrl(`admin/content-edit/${tableRow.columns[1].data}`);
+    }
+
     public deleteContent(deletedTableRow: TableRow): void {
         this.store.dispatch(removeContent(deletedTableRow.id));
     }

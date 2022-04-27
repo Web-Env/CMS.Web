@@ -18,7 +18,7 @@
         </thead>
         
         <tbody *ngIf="!isLoading && rows != null && rows.length > 0">
-            <tr *ngFor="let row of rows" app-table-row [row]="row" (deleteButtonClickedEvent)="tableRowDeleteButtonClicked($event)"></tr>
+            <tr *ngFor="let row of rows" app-table-row [row]="row" (editButtonClickedEvent)="tableRowEditButtonClicked($event)" (deleteButtonClickedEvent)="tableRowDeleteButtonClicked($event)"></tr>
         </tbody>
         
         <tbody *ngIf="!isLoading && rows != null && rows.length === 0">

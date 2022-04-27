@@ -20,6 +20,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnIn
     @Input() deleteStringBuilderFunction!: (tableRow: TableRow) => string;
 
     @Output() tableActionClicked: EventEmitter<string> = new EventEmitter();
+    @Output() tableRowEditClicked: EventEmitter<TableRow> = new EventEmitter<TableRow>();
     @Output() tableRowDeleteConfirmed: EventEmitter<TableRow> = new EventEmitter<TableRow>();
 
     deleteDialogInstance!: MatDialogRef<DeleteConfirmationDialogComponent> | undefined;
@@ -92,6 +93,10 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnIn
 
     public emitTableActionClickedEvent(): void {
         this.tableActionClicked.emit(this.tableName);
+    }
+
+    public tableRowEditButtonClicked(tableRow: TableRow): void {
+        this.tableRowEditClicked.emit(tableRow);
     }
 
     public tableRowDeleteButtonClicked(tableRow: TableRow): void {
