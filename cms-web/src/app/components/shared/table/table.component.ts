@@ -11,6 +11,8 @@ import { DeleteConfirmationDialogComponent } from "../dialogs/delete-confirmatio
     styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+    isLoading: boolean = true;
+    @Input() isDataLoaded!: boolean;
     @Input() tableName!: string;
     @Input() headers!: Array<TableColumn>;
     @Input() rows!: Array<TableRow>;
@@ -20,7 +22,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnIn
     @Output() tableActionClicked: EventEmitter<string> = new EventEmitter();
     @Output() tableRowDeleteConfirmed: EventEmitter<TableRow> = new EventEmitter<TableRow>();
 
-    deleteDialogInstance!: MatDialogRef<DeleteConfirmationDialogComponent>;
+    deleteDialogInstance!: MatDialogRef<DeleteConfirmationDialogComponent> | undefined;
 
     @ViewChild("searchTermInput") searchTermInput!: ElementRef;
     searchTermInputSubscription!: Subscription;
@@ -48,7 +50,15 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnIn
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.deleteDialogInstance?.close();
+        if (this.deleteDialogInstance !== undefined) {
+            this.deleteDialogInstance.close();
+
+            this.deleteDialogInstance = undefined;
+        }
+
+        if (this.isDataLoaded) {
+            this.isLoading = false;
+        }
     }
 
     public searchTermChanged(searchInputEvent: any): void {

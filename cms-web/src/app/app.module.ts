@@ -49,6 +49,7 @@ import { sidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
 import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
 import { RequestPasswordResetComponent } from './components/shared/user/request-password-reset/request-password-reset.component';
 import { DeleteConfirmationDialogComponent } from './components/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { DatePipe } from "@angular/common";
 
 @NgModule({
     declarations: [
@@ -78,7 +79,8 @@ import { DeleteConfirmationDialogComponent } from './components/shared/dialogs/d
         RequestPasswordResetComponent,
 
         SanitizeHtmlPipe,
-          DeleteConfirmationDialogComponent
+
+        DeleteConfirmationDialogComponent
     ],
     imports: [
         AppRoutingModule,
@@ -113,6 +115,7 @@ import { DeleteConfirmationDialogComponent } from './components/shared/dialogs/d
 
     ],
     providers: [
+        DatePipe,
         AuthService,
         AuthGuardService,
         DataService,

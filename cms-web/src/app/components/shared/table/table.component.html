@@ -17,8 +17,27 @@
             </tr>
         </thead>
         
-        <tbody>
+        <tbody *ngIf="!isLoading && rows != null && rows.length > 0">
             <tr *ngFor="let row of rows" app-table-row [row]="row" (deleteButtonClickedEvent)="tableRowDeleteButtonClicked($event)"></tr>
+        </tbody>
+        
+        <tbody *ngIf="!isLoading && rows != null && rows.length === 0">
+            <tr class="table-empty-row">
+                <td [attr.colspan]="headers.length + 1">
+                    <div class="table-empty-container">
+                        <h1>&#x2715;</h1>
+                        <p>No {{ tableName }}s found</p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        
+        <tbody *ngIf="isLoading || rows === null">
+            <tr class="loading-row">
+                <td [attr.colspan]="headers.length + 1">
+                    <div class="loading-icon icon"></div>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

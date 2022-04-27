@@ -64,6 +64,16 @@
     }
 }
 
+.loading-icon {
+    width: 100px;
+    height: 100px;
+
+    margin: auto;
+
+    background-image: url("../../../../../../assets/svg/loading-tertiary.svg");
+    background-size: contain;
+}
+
 @media screen and (min-width: $desktop-small-breakpoint) {
     .sidebar-buttons-container {
         height: calc(

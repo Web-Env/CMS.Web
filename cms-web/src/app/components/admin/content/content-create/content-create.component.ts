@@ -15,6 +15,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Location } from "@angular/common";
 
 import Editor from 'src/assets/lib/ckeditor/build/ckeditor';
+import { EventsService } from "src/app/services/events.service";
 
 @Component({
     selector: 'app-content-create',
@@ -39,7 +40,8 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     addContentSuccessSubscription!: Subscription;
     addContentFailureSubscription!: Subscription;
 
-    constructor(private store: Store<AppState>,
+    constructor(private eventsService: EventsService,
+                private store: Store<AppState>,
                 private actions$: ActionsSubject,
                 private location: Location) {
                     this.buildForm();
@@ -54,9 +56,9 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             }
         });
 
-        this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS)).subscribe((newSection) => {
+        this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS)).subscribe(() => {
             if (this.saveClicked) {
-                //this.dialogRef.close(newSection);
+                this.eventsService.refreshSidebarEvent.emit();
                 this.location.back();
             }
         });

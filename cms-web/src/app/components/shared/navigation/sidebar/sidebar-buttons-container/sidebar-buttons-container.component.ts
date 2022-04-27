@@ -1,14 +1,16 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { ActionsSubject, Store } from "@ngrx/store";
 import { debounceTime, fromEvent, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, first, take } from 'rxjs/operators';
 import { SidebarButtonViewModel } from "src/app/models/view-models/sidebar-button.model";
 import { SidebarButton } from "src/app/ngrx/models/sidebarbutton.model";
-import { loadSidebarButtons } from "src/app/ngrx/actions/sidebar/sidebar.actions";
+import { loadSidebarButtons, LOAD_SIDEBARBUTTONS_SUCCESS } from "src/app/ngrx/actions/sidebar/sidebar.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { selectAllSidebarButtons } from "src/app/ngrx/selectors/sidebar/sidebar.selectors";
 import { stringSimilarity } from "string-similarity-js";
+import { ofType } from "@ngrx/effects";
+import { EventsService } from "src/app/services/events.service";
 
 @Component({
     selector: 'app-sidebar-buttons-container',
@@ -18,9 +20,12 @@ import { stringSimilarity } from "string-similarity-js";
 export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild("searchTermInput") searchTermInput!: ElementRef;
     searchTermInputSubscription!: Subscription;
+    loadSidebarButtonsSuccessSubscription!: Subscription;
+    contentAddedSubscription!: Subscription;
 
     @Output() deactivateSidebarEvent: EventEmitter<boolean> = new EventEmitter();
 
+    isLoading: boolean = true;
     url!: string;
 
     activeSidebarButtonPath!: string;
@@ -36,8 +41,10 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
 
     sidebarButtons$ = this.store.select(selectAllSidebarButtons);
 
-    constructor(private store: Store<AppState>,
-                private router: Router) { }
+    constructor(private eventsService: EventsService,
+                private store: Store<AppState>,
+                private router: Router,
+                private actions$: ActionsSubject) { }
 
     ngOnInit(): void {
         this.url = this.router.url.replace('content/', '');
@@ -46,12 +53,18 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
 
         this.store.dispatch(loadSidebarButtons());
 
-        this.addDefaultSidebarButtons()
+        this.addDefaultSidebarButtons();
 
-        this.sidebarButtons$.subscribe(sidebarButtons => {
-            if (!this.sidebarButtonsConfigured) {
-                this.configureSidebarButtons(sidebarButtons);
+        this.loadSidebarButtonsSuccessSubscription = this.actions$.pipe(ofType(LOAD_SIDEBARBUTTONS_SUCCESS)).subscribe((sidebarButtons: any) => {
+            if (!this.sidebarButtonsConfigured && sidebarButtons != null && sidebarButtons.sidebarButtons != null) {
+                this.configureSidebarButtons(sidebarButtons.sidebarButtons);
+
+                this.isLoading = false;
             }
+        });
+
+        this.contentAddedSubscription = this.eventsService.refreshSidebarEvent.subscribe(() => {
+            this.refreshSidebarButtons();
         });
     }
 
@@ -67,6 +80,17 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                     this.processSearchTerm(searchTerm);
                 }
             });
+    }
+
+    private refreshSidebarButtons(): void {
+        this.isLoading = true;
+        this.buttons = [];
+        this.sidebarButtons = [];
+        this.sidebarButtonsConfigured = false;
+
+        this.addDefaultSidebarButtons();
+
+        this.store.dispatch(loadSidebarButtons());
     }
 
     private addDefaultSidebarButtons(): void {

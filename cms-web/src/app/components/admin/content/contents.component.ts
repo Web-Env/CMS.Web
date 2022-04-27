@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { ofType } from "@ngrx/effects";
 import { ActionsSubject, Store } from "@ngrx/store";
@@ -10,6 +10,8 @@ import { AppState } from "src/app/ngrx/app.state";
 import { Content } from "src/app/ngrx/models/content.model";
 import { selectAllContents } from "src/app/ngrx/selectors/content/content.selectors";
 import * as ContentActions from "src/app/ngrx/actions/content/content.actions";
+import { DatePipe } from "@angular/common";
+import { EventsService } from "src/app/services/events.service";
 
 @Component({
     selector: 'app-contents',
@@ -17,6 +19,7 @@ import * as ContentActions from "src/app/ngrx/actions/content/content.actions";
     styleUrls: ['./contents.component.scss']
 })
 export class ContentsComponent implements OnDestroy, OnInit {
+    isDataLoaded: boolean = false;
     headers: Array<TableColumn> = [
         new TableColumn(
             'Title',
@@ -28,40 +31,54 @@ export class ContentsComponent implements OnDestroy, OnInit {
         ),
         new TableColumn(
             'Created On',
-            5
+            10
         ),
         new TableColumn(
             'Created By',
-            25
+            20
         )
     ];
-    rows: Array<TableRow> = [];
+    rows!: Array<TableRow>;
     deleteStringBuilderFunction = (tableRow: TableRow): string => {
         return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
     }
 
     content$ = this.store.select(selectAllContents);
+    loadContentsSuccessSubscription!: Subscription;
     removeContentSuccessSubscription!: Subscription;
 
-    constructor(private store: Store<AppState>,
+    constructor(private eventsService: EventsService,
+                private store: Store<AppState>,
                 private router: Router,
-                private actions$: ActionsSubject) { }
+                private actions$: ActionsSubject,
+                private datePipe: DatePipe) { }
 
     ngOnInit(): void {
         this.store.dispatch(loadContents());
 
-        this.content$.subscribe(contents => {
-            if (contents !== null) {
-                contents.forEach(content => {
-                    this.rows.push(
+        this.loadContentsSuccessSubscription = this.actions$.pipe(ofType(ContentActions.LOAD_CONTENTS_SUCCESS)).subscribe((contents: any) => {
+            let contentRows = new Array<TableRow>();
+
+            if (contents !== null && contents.contents !== null) {
+                
+                contents.contents.forEach((content: Content) => {
+                    contentRows.push(
                         this.castContentToTableRow(content)
                     );
                 });
+
+                
             }
+
+            this.rows = contentRows;
+
+            this.isDataLoaded = true;
         });
 
         this.removeContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.REMOVE_CONTENT_SUCCESS)).subscribe((removeContentSuccessResult: any) => {
             this.rows = this.rows.filter((tableRow) => tableRow.id != removeContentSuccessResult.contentId);
+
+            this.eventsService.refreshSidebarEvent.emit();
         });
     }
 
@@ -78,11 +95,11 @@ export class ContentsComponent implements OnDestroy, OnInit {
                     30
                 ),
                 new TableColumn(
-                    content.createdOn.toString(),
+                    this.datePipe.transform(content.createdOn, 'dd/MM/yy') as string,
                     5
                 ),
                 new TableColumn(
-                    content.createdBy,
+                    `${content.createdBy.firstName} ${content.createdBy.lastName}`,
                     25
                 )
             ]
@@ -98,6 +115,7 @@ export class ContentsComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy(): void {
+        this.loadContentsSuccessSubscription.unsubscribe();
         this.removeContentSuccessSubscription.unsubscribe();
     }
 

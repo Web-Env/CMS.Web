@@ -99,6 +99,60 @@
         }
 
         tbody {
+            .loading-row,
+            .table-empty-row {
+                background-color: $secondary-background-colour;
+
+                padding: 15px;
+
+                td {
+                    border: none;
+                }
+            }
+
+            .loading-row {
+                td {
+                    .loading-icon {
+                        width: 100px;
+                        height: 100px;
+
+                        margin: 50px auto;
+
+                        background-image: url("../../../../assets/svg/loading-tertiary.svg");
+                        background-size: contain;
+                    }
+                }
+            }
+
+            .table-empty-row {
+                td {
+                    .table-empty-container {
+                        width: fit-content;
+
+                        margin: 30px auto;
+
+                        h1 {
+                            color: $tertiary-text-colour;
+
+                            margin: 0 0 15px 0;
+
+                            font-size: 2em;
+                            text-align: center;
+                            line-height: 1em;
+                        }
+
+                        p {
+                            color: $tertiary-text-colour;
+
+                            margin: 0;
+
+                            font-size: 0.75em;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+
             tr:last-child::ng-deep {
                 td {
                     border-bottom: none;
