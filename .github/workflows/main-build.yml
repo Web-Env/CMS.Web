@@ -55,7 +55,7 @@ jobs:
       run: npm run build
         
     - name: Run Tests and Generate Coverage Report
-      run: npm run test-coverage
+      run: npm run test:coverage
       
     - name: Deploy (Firebase)
       uses: FirebaseExtended/action-hosting-deploy@v0
