@@ -32,7 +32,7 @@ jobs:
       run: |
         npm cache clean --force
         npm i
-    - name: Install modules and Build for Production
+    - name: Build for Production
       run: npm run build
-    - name: Run Tests and Generate Coverage Report
+    - name: Run Tests
       run: npm run test

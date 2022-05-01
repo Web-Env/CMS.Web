@@ -11,13 +11,13 @@
 
     <table>
         <thead>
-            <tr class="table-header">
+            <tr *ngIf="headers !== undefined" class="table-header">
                 <th *ngFor="let header of headers" [style.width.%]="header.width" app-table-header [data]="header"></th>
                 <th></th>
             </tr>
         </thead>
         
-        <tbody *ngIf="!isLoading && rows != null && rows.length > 0">
+        <tbody *ngIf="!isLoading && rows !== undefined && rows?.length > 0">
             <tr *ngFor="let row of rows" app-table-row 
                 [row]="row" 
                 [viewButtonEnabled]="viewButtonEnabled" 
@@ -26,9 +26,9 @@
                 (actionButtonClickedEvent)="processTableRowActionButtonClicked($event)"></tr>
         </tbody>
         
-        <tbody *ngIf="!isLoading && rows != null && rows.length === 0">
+        <tbody *ngIf="!isLoading && rows !== undefined && rows?.length === 0">
             <tr class="table-empty-row">
-                <td [attr.colspan]="headers.length + 1">
+                <td [attr.colspan]="headers?.length + 1">
                     <div class="table-empty-container">
                         <h1>&#x2715;</h1>
                         <p>No {{ tableName }}s found</p>
@@ -37,9 +37,9 @@
             </tr>
         </tbody>
         
-        <tbody *ngIf="isLoading || rows === null">
+        <tbody *ngIf="isLoading || rows === undefined">
             <tr class="loading-row">
-                <td [attr.colspan]="headers.length + 1">
+                <td [attr.colspan]="headers?.length + 1">
                     <div class="loading-icon icon"></div>
                 </td>
             </tr>

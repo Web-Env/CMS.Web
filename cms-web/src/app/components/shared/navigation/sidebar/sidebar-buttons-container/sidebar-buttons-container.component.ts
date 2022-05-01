@@ -39,8 +39,6 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     sidebarButtons: SidebarButtonViewModel[] = [];
     buttons: SidebarButtonViewModel[] = [];
 
-    sidebarButtons$ = this.store.select(selectAllSidebarButtons);
-
     constructor(private eventsService: EventsService,
                 private store: Store<AppState>,
                 private router: Router,
