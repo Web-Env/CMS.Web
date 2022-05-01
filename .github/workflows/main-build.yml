@@ -4,13 +4,16 @@ on:
   push:
     branches: [ main ]
 
+env:
+  RUN_NUMBER: ${{ github.run_number }}
+
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./cms-Web
+        working-directory: ./cms-web
     strategy:
       matrix:
         node-version: [14.x]
@@ -34,6 +37,19 @@ jobs:
       run: |
         npm cache clean --force
         npm i
+          
+    - name: Extract version
+      id: extract_version
+      uses: Saionaro/extract-package-version@v1.1.1
+      with:
+          path: './cms-web'
+          
+    - name: Configure Version
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: './cms-web/package.json'
+      env:
+        version: ${{ steps.extract_version.outputs.version }}-CI-${{ env.RUN_NUMBER }}
         
     - name: Build for Production
       run: npm run build:prod
