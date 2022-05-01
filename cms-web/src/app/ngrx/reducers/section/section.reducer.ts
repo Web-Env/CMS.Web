@@ -14,7 +14,7 @@ export const initialState: SectionState = {
     status: 'pending'
 };
 
-export const sectionReducer = createReducer(
+export const SectionReducer = createReducer(
     initialState,
     on(SectionActions.loadSections, (state) => ({ ...state, status: 'loading' })),
     on(SectionActions.loadSectionsSuccess, (state, { sections }) => ({ 
@@ -42,5 +42,5 @@ export const sectionReducer = createReducer(
 );
 
 export function reducer(state: SectionState | undefined, action: Action): any {
-  return sectionReducer(state, action);
+  return SectionReducer(state, action);
 }

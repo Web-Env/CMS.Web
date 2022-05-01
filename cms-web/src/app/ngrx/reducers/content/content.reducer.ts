@@ -15,7 +15,7 @@ export const initialState: ContentState = {
     status: 'pending'
 };
 
-export const contentReducer = createReducer(
+export const ContentReducer = createReducer(
     initialState,
     on(ContentActions.loadContents, (state) => ({ ...state, status: 'loading' })),
     on(ContentActions.loadContentsSuccess, (state, { contents }) => ({ 
@@ -77,5 +77,5 @@ export const contentReducer = createReducer(
 );
 
 export function reducer(state: ContentState | undefined, action: Action): any {
-  return contentReducer(state, action);
+  return ContentReducer(state, action);
 }

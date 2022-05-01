@@ -14,7 +14,7 @@ export const initialState: SidebarButtonState = {
     status: 'pending'
 };
 
-export const sidebarReducer = createReducer(
+export const SidebarReducer = createReducer(
     initialState,
     on(SidebarActions.loadSidebarButtons, (state) => ({ ...state, status: 'loading' })),
     on(SidebarActions.loadSidebarButtonsSuccess, (state, { sidebarButtons }) => ({ 
@@ -25,5 +25,5 @@ export const sidebarReducer = createReducer(
 );
 
 export function reducer(state: SidebarButtonState | undefined, action: Action): any {
-  return sidebarReducer(state, action);
+  return SidebarReducer(state, action);
 }

@@ -15,7 +15,7 @@ export const initialState: UserState = {
     status: 'pending'
 };
 
-export const userReducer = createReducer(
+export const UserReducer = createReducer(
     initialState,
     on(UserActions.addUser,
         (state, { user }) => ({
@@ -51,5 +51,5 @@ export const userReducer = createReducer(
 
 24
 export function reducer(state: UserState | undefined, action: Action): any {
-    return userReducer(state, action);
+    return UserReducer(state, action);
 }
