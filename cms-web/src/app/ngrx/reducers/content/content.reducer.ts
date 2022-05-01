@@ -61,7 +61,7 @@ export const ContentReducer = createReducer(
         (state, {contentId}) => ({
             ...state,
             status: 'loading',
-            contents: state.contents.filter((content) => content.id != contentId)
+            contents: state.contents.filter((content) => content.id !== contentId)
         })
     ),
     on(ContentActions.removeContentSuccess, (state, {contentId}) => ({

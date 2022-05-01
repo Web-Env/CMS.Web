@@ -40,7 +40,7 @@ export class SectionsComponent implements OnDestroy, OnInit {
     rows: Array<TableRow> = [];
 
     loadSectionsSuccessSubscription!: Subscription;
-    
+
     deleteStringBuilderFunction = (tableRow: TableRow): string => {
         return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
     }
@@ -54,7 +54,7 @@ export class SectionsComponent implements OnDestroy, OnInit {
         this.store.dispatch(loadSections());
 
         this.loadSectionsSuccessSubscription = this.actions$.pipe(ofType(LOAD_SECTIONS_SUCCESS)).subscribe((sections: any) => {
-            let sectionRows = new Array<TableRow>();
+            const sectionRows = new Array<TableRow>();
 
             if (sections !== null && sections.sections !== null) {
                 

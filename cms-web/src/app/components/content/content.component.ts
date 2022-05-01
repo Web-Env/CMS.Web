@@ -24,7 +24,7 @@ export class ContentComponent implements OnDestroy, OnInit {
         private router: Router) {
         this.routerPathChangeSubscription = router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
-            ).subscribe((params) => {
+            ).subscribe(() => {
                 if (this.componentInitialised) {
                     this.getContentAsync();
                 }

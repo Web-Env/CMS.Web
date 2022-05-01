@@ -82,7 +82,7 @@ export class ContentsComponent implements OnDestroy, OnInit {
         });
 
         this.removeContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.REMOVE_CONTENT_SUCCESS)).subscribe((removeContentSuccessResult: any) => {
-            this.rows = this.rows.filter((tableRow) => tableRow.id != removeContentSuccessResult.contentId);
+            this.rows = this.rows.filter((tableRow) => tableRow.id !== removeContentSuccessResult.contentId);
 
             this.eventsService.refreshSidebarEvent.emit();
         });
