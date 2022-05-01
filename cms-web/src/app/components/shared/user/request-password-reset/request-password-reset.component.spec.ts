@@ -10,8 +10,8 @@ describe('RequestPasswordResetComponent', () => {
     let component: RequestPasswordResetComponent;
     let fixture: ComponentFixture<RequestPasswordResetComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [RequestPasswordResetComponent],
             imports: [
                 HttpClientModule,

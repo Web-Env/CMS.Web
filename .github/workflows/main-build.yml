@@ -1,0 +1,59 @@
+name: Main - Build, Test, Pack & Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./cms-Web
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+          
+    - name: Setup Node ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Clear Cache and Install modules
+      run: |
+        npm cache clean --force
+        npm i
+        
+    - name: Build for Production
+      run: npm run build:prod
+        
+    - name: Run Tests and Generate Coverage Report
+      run: npm run test-coverage
+      
+    - name: Deploy (Firebase)
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WEBENV_CMS }}'
+        projectId: webenv-cms
+        entryPoint: ./cms-Web
+        channelId: live
+      env:
+        FIREBASE_CLI_PREVIEWS: hostingchannels
+        
+    - name: Publish Coverage
+      uses: codacy/codacy-coverage-reporter-action@0.2.0
+      with:
+        project-token: ${{ secrets.CODACY_TOKEN }}
+        coverage-reports: coverage/cms-web/report-lcov

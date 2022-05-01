@@ -15,8 +15,8 @@ describe('SectionsComponent', () => {
     let component: SectionsComponent;
     let fixture: ComponentFixture<SectionsComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [SectionsComponent],
             imports: [
                 HttpClientModule,
