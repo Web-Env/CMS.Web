@@ -19,8 +19,8 @@ describe('SidebarButtonComponent', () => {
         null
     );
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [SidebarButtonComponent], 
             imports: [ BrowserAnimationsModule ]
         })

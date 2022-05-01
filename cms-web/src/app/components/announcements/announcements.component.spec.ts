@@ -6,8 +6,8 @@ describe('AnnouncementsComponent', () => {
     let component: AnnouncementsComponent;
     let fixture: ComponentFixture<AnnouncementsComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [AnnouncementsComponent]
         })
             .compileComponents();

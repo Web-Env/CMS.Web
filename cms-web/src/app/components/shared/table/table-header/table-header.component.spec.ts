@@ -11,8 +11,8 @@ describe('TableHeaderComponent', () => {
     let component: TableHeaderComponent;
     let fixture: ComponentFixture<TableHeaderComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [TableHeaderComponent],
             imports: [
                 HttpClientModule,

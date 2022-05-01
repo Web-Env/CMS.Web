@@ -13,8 +13,8 @@ describe('ContentCreateComponent', () => {
     let component: ContentCreateComponent;
     let fixture: ComponentFixture<ContentCreateComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [ContentCreateComponent],
             imports: [
                 HttpClientModule,

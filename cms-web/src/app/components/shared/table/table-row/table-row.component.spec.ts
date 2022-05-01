@@ -6,8 +6,8 @@ describe('TableRowComponent', () => {
     let component: TableRowComponent;
     let fixture: ComponentFixture<TableRowComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [TableRowComponent]
         })
             .compileComponents();
