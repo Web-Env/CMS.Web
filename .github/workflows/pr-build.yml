@@ -24,15 +24,19 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
+
     - name: Setup Node ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: Clear Cache and Install modules
       run: |
         npm cache clean --force
         npm i
+
     - name: Build for Production
       run: npm run build
+      
     - name: Run Tests
       run: npm run test
