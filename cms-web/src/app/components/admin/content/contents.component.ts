@@ -45,12 +45,13 @@ export class ContentsComponent implements OnDestroy, OnInit {
         )
     ];
     rows!: Array<TableRow>;
-    deleteStringBuilderFunction = (tableRow: TableRow): string => {
-        return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
-    }
 
     loadContentsSuccessSubscription!: Subscription;
     removeContentSuccessSubscription!: Subscription;
+
+    deleteStringBuilderFunction = (tableRow: TableRow): string => {
+        return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
+    }
 
     constructor(private eventsService: EventsService,
                 private store: Store<AppState>,
@@ -115,7 +116,7 @@ export class ContentsComponent implements OnDestroy, OnInit {
         )
     }
 
-    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent) {
+    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
         switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
             case TableRowActionButtonClickedAction.view:
                 this.viewContent(tableRowActionButtonClickedEvent.tableRow);

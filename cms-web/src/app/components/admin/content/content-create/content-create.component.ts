@@ -70,9 +70,15 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
                 this.sections = sections;
             }
         });
+        
+        this.url = this.router.url;
+        const urlSplit = this.url.split('/');
 
-        let urlSplit = this.router.url.split('/');
-        this.getContentAsync();
+        if (urlSplit[2] === 'content-edit') {
+            this.isEditing = true;
+
+            this.getContentAsync(urlSplit);
+        }
 
         this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS, ContentActions.UPDATE_CONTENT_SUCCESS)).subscribe(() => {
             if (this.saveClicked) {
@@ -110,26 +116,20 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         });
     }
     
-    public async getContentAsync(): Promise<void> {
+    public async getContentAsync(urlSplit: Array<string>): Promise<void> {
         this.content = undefined;
-        this.url = this.router.url;
-        let urlSplit = this.url.split('/');
 
-        if (urlSplit[2] === 'content-edit') {
-            this.isEditing = true;
+        this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
+        let contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
 
-            this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
-            let contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
+        this.content = contentModel.content;
+        this.contentId = contentModel.id;
+        this.contentTitle = contentModel.title;
+        this.contentPath = contentModel.path;
+        this.sectionId = contentModel.section?.id;
+        this.contentLoaded = true;
 
-            this.content = contentModel.content;
-            this.contentId = contentModel.id;
-            this.contentTitle = contentModel.title;
-            this.contentPath = contentModel.path;
-            this.sectionId = contentModel.section?.id;
-            this.contentLoaded = true;
-
-            this.buildForm();
-        }
+        this.buildForm();
     }
 
     public buildForm(): void {

@@ -38,11 +38,12 @@ export class SectionsComponent implements OnDestroy, OnInit {
         )
     ];
     rows: Array<TableRow> = [];
+
+    loadSectionsSuccessSubscription!: Subscription;
+    
     deleteStringBuilderFunction = (tableRow: TableRow): string => {
         return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
     }
-
-    loadSectionsSuccessSubscription!: Subscription;
 
     constructor(private store: Store<AppState>,
                 private dialog: MatDialog,

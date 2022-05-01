@@ -15,7 +15,7 @@ import { AddUserComponent } from "./add-user/add-user.component";
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnDestroy, OnInit {
     isDataLoaded: boolean = false;
     headers: Array<TableColumn> = [
         new TableColumn(
@@ -40,11 +40,12 @@ export class UsersComponent implements OnInit {
         ),
     ];
     rows: Array<TableRow> = [];
+
+    loadUsersSuccessSubscription!: Subscription;
+
     deleteStringBuilderFunction = (tableRow: TableRow): string => {
         return `${tableRow.columns[0].data} ${tableRow.columns[1].data} (${tableRow.columns[2].data})`;
     }
-
-    loadUsersSuccessSubscription!: Subscription;
 
     constructor(private store: Store<AppState>,
                 private dialog: MatDialog,
@@ -54,21 +55,17 @@ export class UsersComponent implements OnInit {
         this.store.dispatch(loadUsers());
 
         this.loadUsersSuccessSubscription = this.actions$.pipe(ofType(LOAD_USERS_SUCCESS)).subscribe((users: any) => {
-            let userRows = new Array<TableRow>();
+            const userRows = new Array<TableRow>();
 
             if (users !== null && users.users !== null) {
-                
                 users.users.forEach((user: User) => {
                     userRows.push(
                         this.castUserToTableRow(user)
                     );
                 });
-
-                
             }
 
             this.rows = userRows;
-
             this.isDataLoaded = true;
         });
     }
@@ -117,5 +114,9 @@ export class UsersComponent implements OnInit {
                 this.rows.push(this.castUserToTableRow(user));
             }
         });
+    }
+
+    ngOnDestroy(): void {
+        this.loadUsersSuccessSubscription.unsubscribe();
     }
 }
