@@ -40,6 +40,23 @@ export const contentReducer = createReducer(
         error: error,
         status: 'error'
     })),
+    on(ContentActions.updateContent,
+        (state) => ({
+            ...state,
+            status: 'loading'
+        })
+    ),
+    on(ContentActions.updateContentSuccess, (state, { content }) => ({
+        ...state,
+        content: content,
+        error: '',
+        status: 'success'
+    })),
+    on(ContentActions.updateContentFailure, (state, { error }) => ({
+        ...state,
+        error: error,
+        status: 'error'
+    })),
     on(ContentActions.removeContent,
         (state, {contentId}) => ({
             ...state,

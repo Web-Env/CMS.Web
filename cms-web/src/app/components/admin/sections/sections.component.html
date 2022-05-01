@@ -1,7 +1,8 @@
 <app-table 
-    [isDataLoaded]="isDataLoaded"
-    [tableName]="'Section'" 
+    [isDataLoaded]="isDataLoaded" 
+    [tableName]="'Section'"  
     [headers]="headers" 
-    [rows]="rows"
+    [rows]="rows" 
+    [viewButtonEnabled]="false" 
     [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
     (tableActionClicked)="addSectionClicked()"></app-table>

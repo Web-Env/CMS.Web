@@ -118,6 +118,32 @@ export class DataService {
         });
     }
 
+    public async putAsync<T>(endpoint: string, uploadModel: IUploadModel, type: { new(): T; }, blockToast: boolean = false): Promise<T> {
+        return new Promise((resolve, reject) => {
+            let url = `${environment.apiUrl}/${endpoint}`;
+
+            this.httpClient.put(url, uploadModel, this.createHttpOptions())
+                .subscribe(
+                    (data) => {
+                        var mappedData = new type();
+                        Object.assign(mappedData, data);
+                        resolve(mappedData as T);
+                    },
+                    (err) => {
+                        if (err instanceof HttpErrorResponse) {
+                            this.handleError(err, blockToast);
+                            
+                            reject(err);
+                        }
+                        else {
+                            this.toastr.error('There has been an error processing your request', 'Error');
+                            reject(err);
+                        }
+                    }
+                );
+        });
+    }
+
     public async postWithoutBodyAsync(endpoint: string, blockToast: boolean = false): Promise<any> {
         return new Promise((resolve, reject) => {
             let url = `${environment.apiUrl}/${endpoint}`;

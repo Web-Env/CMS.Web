@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from "rxjs";
+import { TableRowActionButtonClickedAction } from "src/app/consts/table-row-action-button-clicked-actions.const";
+import { TableRowActionButtonClickedEvent } from "src/app/events/table-row-action-button-clicked.event";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
 import { DeleteConfirmationDialogComponent } from "../dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
@@ -10,18 +12,21 @@ import { DeleteConfirmationDialogComponent } from "../dialogs/delete-confirmatio
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnInit {
+export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     isLoading: boolean = true;
     @Input() isDataLoaded!: boolean;
     @Input() tableName!: string;
     @Input() headers!: Array<TableColumn>;
     @Input() rows!: Array<TableRow>;
 
+    @Input() viewButtonEnabled: boolean = true;
+    @Input() editButtonEnabled: boolean = true;
+    @Input() deleteButtonEnabled: boolean = true;
+
     @Input() deleteStringBuilderFunction!: (tableRow: TableRow) => string;
 
     @Output() tableActionClicked: EventEmitter<string> = new EventEmitter();
-    @Output() tableRowEditClicked: EventEmitter<TableRow> = new EventEmitter<TableRow>();
-    @Output() tableRowDeleteConfirmed: EventEmitter<TableRow> = new EventEmitter<TableRow>();
+    @Output() tableRowActionButtonClickedEvent: EventEmitter<TableRowActionButtonClickedEvent> = new EventEmitter<TableRowActionButtonClickedEvent>();
 
     deleteDialogInstance!: MatDialogRef<DeleteConfirmationDialogComponent> | undefined;
 
@@ -32,9 +37,6 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnIn
     searchProcessed: boolean = false;
 
     constructor(private dialog: MatDialog) { }
-
-    ngOnInit(): void {
-    }
 
     ngAfterViewInit(): void {
         this.searchTermInputSubscription = fromEvent(this.searchTermInput.nativeElement, 'input')
@@ -95,8 +97,24 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnIn
         this.tableActionClicked.emit(this.tableName);
     }
 
-    public tableRowEditButtonClicked(tableRow: TableRow): void {
-        this.tableRowEditClicked.emit(tableRow);
+    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent) {
+        switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
+            case TableRowActionButtonClickedAction.view:
+                this.tableRowActionButtonClickedEvent.emit(
+                    new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.view, tableRowActionButtonClickedEvent.tableRow)
+                );
+                break;
+            case TableRowActionButtonClickedAction.edit:
+                this.tableRowActionButtonClickedEvent.emit(
+                    new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.edit, tableRowActionButtonClickedEvent.tableRow)
+                );
+                break;
+            case TableRowActionButtonClickedAction.delete:
+                this.tableRowDeleteButtonClicked(tableRowActionButtonClickedEvent.tableRow);
+                break;
+            default:
+                break;
+        }
     }
 
     public tableRowDeleteButtonClicked(tableRow: TableRow): void {
@@ -114,7 +132,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy, OnIn
         this.deleteDialogInstance.componentInstance.deletionSubject = this.tableName;
         this.deleteDialogInstance.componentInstance.deletionMessage = this.deleteStringBuilderFunction(tableRow);
         this.deleteDialogInstance.componentInstance.deleteConfirmedFunction = () => {
-            this.tableRowDeleteConfirmed.emit(tableRow);
+            this.tableRowActionButtonClickedEvent.emit(new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.delete, tableRow));
         };
     }
 

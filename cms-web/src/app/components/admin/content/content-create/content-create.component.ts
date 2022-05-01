@@ -5,7 +5,7 @@ import { ActionsSubject, Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
 import { TextInputComponent } from "src/app/components/shared/form-components/text-input/text-input.component";
 import { ContentUploadModel } from "src/app/models/upload-models/content.model";
-import { addContent } from "src/app/ngrx/actions/content/content.actions";
+import { addContent, updateContent } from "src/app/ngrx/actions/content/content.actions";
 import { loadSections } from "src/app/ngrx/actions/section/section.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { Section } from "src/app/ngrx/models/section.model";
@@ -33,6 +33,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     contentLoaded: boolean = false;
 
     content: string | undefined;
+    contentId: string | undefined;
     contentTitle: string | undefined;
     contentPath: string | undefined;
     sectionId: string | undefined;
@@ -73,14 +74,14 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         let urlSplit = this.router.url.split('/');
         this.getContentAsync();
 
-        this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS)).subscribe(() => {
+        this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS, ContentActions.UPDATE_CONTENT_SUCCESS)).subscribe(() => {
             if (this.saveClicked) {
                 this.eventsService.refreshSidebarEvent.emit();
                 this.location.back();
             }
         });
 
-        this.addContentFailureSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_FAILURE)).subscribe((data: any) => {
+        this.addContentFailureSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_FAILURE, ContentActions.UPDATE_CONTENT_FAILURE)).subscribe((data: any) => {
             if (data.name === 'HttpErrorResponse') {
                 let err = data as HttpErrorResponse;
 
@@ -113,24 +114,19 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         this.content = undefined;
         this.url = this.router.url;
         let urlSplit = this.url.split('/');
-        console.log (urlSplit)
 
         if (urlSplit[2] === 'content-edit') {
             this.isEditing = true;
 
             this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
-
             let contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
 
-            console.log (contentModel)
-
             this.content = contentModel.content;
+            this.contentId = contentModel.id;
             this.contentTitle = contentModel.title;
             this.contentPath = contentModel.path;
-            this.sectionId = contentModel.section.id;
+            this.sectionId = contentModel.section?.id;
             this.contentLoaded = true;
-
-            console.log (this.content)
 
             this.buildForm();
         }
@@ -150,7 +146,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
                 [Validators.required]
             ),
             content: new FormControl(
-                '',
+                this.content || '',
                 [Validators.required]
             )
         });
@@ -188,7 +184,13 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             }
 
             try {
-                this.store.dispatch(addContent(newContentUploadModel));
+                if (this.isEditing) {
+                    newContentUploadModel.id = this.contentId;
+                    this.store.dispatch(updateContent(newContentUploadModel));
+                }
+                else {
+                    this.store.dispatch(addContent(newContentUploadModel));
+                }
             }
             catch (err) {
                 this.addContentFormErrorMessage = 'An unexpected error occured, please try again';

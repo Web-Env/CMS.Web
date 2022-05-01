@@ -1,3 +1,5 @@
-<div class="content-container">
+<div *ngIf="!isLoading" class="content-container">
     <div *ngIf="content !== undefined" class="content" [innerHtml]="content.content | sanitizeHtml"></div>
 </div>
+
+<div *ngIf="isLoading" class="loading-icon"></div>

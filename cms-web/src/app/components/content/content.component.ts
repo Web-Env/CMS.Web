@@ -11,6 +11,8 @@ import { DataService } from "src/app/services/data.service";
     styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnDestroy, OnInit {
+    isLoading: boolean = true;
+
     componentInitialised: boolean = false;
     content!: ContentDownloadModel | undefined;
     url!: string;
@@ -88,6 +90,7 @@ export class ContentComponent implements OnDestroy, OnInit {
         `;
 
         this.content = contentModel;
+        this.isLoading = false;
     }
 
     ngOnDestroy(): void {

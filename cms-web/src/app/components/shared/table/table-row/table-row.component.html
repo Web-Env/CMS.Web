@@ -1,8 +1,8 @@
 <td *ngFor="let column of row.columns" [style.width.%]="column.width">{{ column.data }}</td>
 <td>
     <div class="action-buttons-container">
-        <div class="action-button"><img src="assets/images/view.png" alt="View"></div>
-        <div class="action-button"><img src="assets/images/edit.png" alt="Edit" (click)="editButtonClicked()"></div>
-        <div class="action-button"><img src="assets/images/remove.png" alt="Delete" (click)="deleteButtonClicked()"></div>
+        <div *ngIf="viewButtonEnabled" class="action-button"><img src="assets/images/view.png" alt="View" (click)="viewButtonClicked()"></div>
+        <div *ngIf="editButtonEnabled" class="action-button"><img src="assets/images/edit.png" alt="Edit" (click)="editButtonClicked()"></div>
+        <div *ngIf="deleteButtonEnabled" class="action-button"><img src="assets/images/remove.png" alt="Delete" (click)="deleteButtonClicked()"></div>
     </div>
 </td>

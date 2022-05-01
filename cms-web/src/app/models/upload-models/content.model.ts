@@ -1,4 +1,5 @@
 export class ContentUploadModel {
+    id: string | undefined;
     title!: string;
     path!: string;
     sectionId!: string;

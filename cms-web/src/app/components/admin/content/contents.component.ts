@@ -12,6 +12,8 @@ import { selectAllContents } from "src/app/ngrx/selectors/content/content.select
 import * as ContentActions from "src/app/ngrx/actions/content/content.actions";
 import { DatePipe } from "@angular/common";
 import { EventsService } from "src/app/services/events.service";
+import { TableRowActionButtonClickedEvent } from "src/app/events/table-row-action-button-clicked.event";
+import { TableRowActionButtonClickedAction } from "src/app/consts/table-row-action-button-clicked-actions.const";
 
 @Component({
     selector: 'app-contents',
@@ -23,11 +25,15 @@ export class ContentsComponent implements OnDestroy, OnInit {
     headers: Array<TableColumn> = [
         new TableColumn(
             'Title',
-            40
+            35
         ),
         new TableColumn(
             'Path',
-            30
+            20
+        ),
+        new TableColumn(
+            'Section',
+            15
         ),
         new TableColumn(
             'Created On',
@@ -87,11 +93,15 @@ export class ContentsComponent implements OnDestroy, OnInit {
             [
                 new TableColumn(
                     content.title,
-                    40
+                    35
                 ),
                 new TableColumn(
                     content.path,
-                    30
+                    20
+                ),
+                new TableColumn(
+                    content.section?.title || '-',
+                    15
                 ),
                 new TableColumn(
                     this.datePipe.transform(content.createdOn, 'dd/MM/yy') as string,
@@ -105,8 +115,31 @@ export class ContentsComponent implements OnDestroy, OnInit {
         )
     }
 
+    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent) {
+        switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
+            case TableRowActionButtonClickedAction.view:
+                this.viewContent(tableRowActionButtonClickedEvent.tableRow);
+                break;
+            case TableRowActionButtonClickedAction.edit:
+                this.editContent(tableRowActionButtonClickedEvent.tableRow);
+                break;
+            case TableRowActionButtonClickedAction.delete:
+                this.deleteContent(tableRowActionButtonClickedEvent.tableRow);
+                break;
+            default:
+                break;
+        }
+    }
+
     public addContentClicked(): void {
         this.router.navigateByUrl('admin/content-create');
+    }
+
+    public viewContent(tableRow: TableRow): void {
+        let sectionPath = tableRow.columns[2].data.toLowerCase().trim();
+        sectionPath = sectionPath.replaceAll(' ', '-');
+        
+        this.router.navigateByUrl(`content/${sectionPath}/${tableRow.columns[1].data}`);
     }
 
     public editContent(tableRow: TableRow): void {
