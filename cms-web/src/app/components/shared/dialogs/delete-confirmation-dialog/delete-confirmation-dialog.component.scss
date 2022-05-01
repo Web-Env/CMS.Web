@@ -1,0 +1,15 @@
+@import "src/assets/scss/variables/colours";
+
+.delete-confirmation-dialog {
+    h1 {
+        color: $primary-negative-colour;
+
+        margin-bottom: 5px;
+    }
+
+    p {
+        color: $primary-text-colour;
+
+        font-size: 1.3em;
+    }
+}

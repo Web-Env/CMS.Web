@@ -15,7 +15,7 @@ export const initialState: ContentState = {
     status: 'pending'
 };
 
-export const contentReducer = createReducer(
+export const ContentReducer = createReducer(
     initialState,
     on(ContentActions.loadContents, (state) => ({ ...state, status: 'loading' })),
     on(ContentActions.loadContentsSuccess, (state, { contents }) => ({ 
@@ -40,8 +40,42 @@ export const contentReducer = createReducer(
         error: error,
         status: 'error'
     })),
+    on(ContentActions.updateContent,
+        (state) => ({
+            ...state,
+            status: 'loading'
+        })
+    ),
+    on(ContentActions.updateContentSuccess, (state, { content }) => ({
+        ...state,
+        content: content,
+        error: '',
+        status: 'success'
+    })),
+    on(ContentActions.updateContentFailure, (state, { error }) => ({
+        ...state,
+        error: error,
+        status: 'error'
+    })),
+    on(ContentActions.removeContent,
+        (state, {contentId}) => ({
+            ...state,
+            status: 'loading',
+            contents: state.contents.filter((content) => content.id !== contentId)
+        })
+    ),
+    on(ContentActions.removeContentSuccess, (state, {contentId}) => ({
+        ...state,
+        error: '',
+        status: 'success'
+    })),
+    on(ContentActions.removeContentFailure, (state, { error }) => ({
+        ...state,
+        error: error,
+        status: 'error'
+    })),
 );
 
 export function reducer(state: ContentState | undefined, action: Action): any {
-  return contentReducer(state, action);
+  return ContentReducer(state, action);
 }

@@ -1,1 +1,10 @@
-<app-table [tableName]="'Content'" [headers]="headers" [rows]="rows" (tableActionClicked)="addContentClicked()"></app-table>
+<app-table 
+    [isDataLoaded]="isDataLoaded"
+    [tableName]="'Content'" 
+    [headers]="headers" 
+    [rows]="rows"
+    [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
+    (tableActionClicked)="addContentClicked()"
+    (tableRowActionButtonClickedEvent)="processTableRowActionButtonClicked($event)"
+    (tableRowEditClicked)="editContent($event)"
+    (tableRowDeleteConfirmed)="deleteContent($event)"></app-table>

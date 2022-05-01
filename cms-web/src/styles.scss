@@ -33,6 +33,16 @@ html {
         }
     }
 
+    .loading-icon {
+        width: 100px;
+        height: 100px;
+
+        margin: auto;
+
+        background-image: url("assets/svg/loading-tertiary.svg");
+        background-size: contain;
+    }
+
     .cdk-overlay-dark-backdrop {
         background: rgba(0, 0, 0, 0.85) !important;
     }

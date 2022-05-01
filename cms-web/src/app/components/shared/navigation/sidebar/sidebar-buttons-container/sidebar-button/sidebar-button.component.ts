@@ -29,7 +29,7 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
         this.hasSubButtons = this.subButtons != null;
 
         this.deactivateSidebarButtonSubscription = this.deactivateSidebarButtonObservable.subscribe((deactivatedSidebarButtonPath: string) => {
-            if (this.isActive && this.path === deactivatedSidebarButtonPath) {
+            if (this.isActive && this.path.replace('content/', '') === deactivatedSidebarButtonPath) {
                 this.deactivateButton();
             }
         });

@@ -3,9 +3,3 @@ declare module 'sha.js' {
     
     export = shajs;
 }
-
-declare module '@ckeditor/ckeditor5-build-classic' {
-    const ClassicEditor: any;
-
-    export = ClassicEditor;
-}

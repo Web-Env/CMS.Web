@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
@@ -7,6 +7,8 @@ import { AuthService } from "src/app/services/auth/auth.service";
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+    @Output() deactivateSidebarEvent: EventEmitter<boolean> = new EventEmitter();
+    
     userName!: string;
 
     constructor(private authService: AuthService) { }
@@ -20,6 +22,10 @@ export class SidebarComponent implements OnInit {
 
     public logOutButtonClicked(): void {
         this.authService.logOut();
+    }
+
+    public handleDeactivateSidebarEvent(): void {
+        this.deactivateSidebarEvent.emit();
     }
 
 }

@@ -1,1 +1,8 @@
-<app-table [tableName]="'Section'" [headers]="headers" [rows]="rows" (tableActionClicked)="addSectionClicked()"></app-table>
+<app-table 
+    [isDataLoaded]="isDataLoaded" 
+    [tableName]="'Section'"  
+    [headers]="headers" 
+    [rows]="rows" 
+    [viewButtonEnabled]="false" 
+    [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
+    (tableActionClicked)="addSectionClicked()"></app-table>

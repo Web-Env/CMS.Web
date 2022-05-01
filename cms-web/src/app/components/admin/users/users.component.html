@@ -1,1 +1,7 @@
-<app-table [tableName]="'User'" [headers]="headers" [rows]="rows" (tableActionClicked)="addUserClicked()"></app-table>
+<app-table 
+    [isDataLoaded]="isDataLoaded"
+    [tableName]="'User'" 
+    [headers]="headers" 
+    [rows]="rows"
+    [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
+    (tableActionClicked)="addUserClicked()"></app-table>

@@ -1,6 +1,6 @@
 <div class="add-content-form-container">
     <h1 class="table-name">Create Content</h1>
-    <form [formGroup]="addContentForm" (ngSubmit)="createContentAsync(addContentForm.value)">
+    <form [formGroup]="addContentForm" (ngSubmit)="createOrUpdateContentAsync(addContentForm.value)">
         <select id="section" formControlName="section">
             <option value="none"><i>No Section Selected</i></option>
             <option *ngFor="let section of sections" [value]="section.id">{{ section.title }}</option>
@@ -9,10 +9,10 @@
         <app-text-input formControlName="path" [parentForm]="addContentForm" [inputId]="'path'" [inputName]="'path'" [inputTitle]="'Path'" [inputType]="'text'" [disabled]="true" #pathTextInputComponent></app-text-input>
 
         <div class="content-editor-container">
-            <ckeditor id="editor" [editor]="editor" (change)="onChange($event)"></ckeditor>
+            <ckeditor *ngIf="!isEditing || (isEditing && contentLoaded)" id="editor" formControlName="content" [editor]="editor" [data]="content"></ckeditor>
         </div>
         
-        <app-loading-button [buttonText]="'Add Content'" [isLoading]="isLoading" [isDisabled]="!addContentForm.valid"></app-loading-button>
+        <app-loading-button [buttonText]="isEditing ? 'Update Content' : 'Add Content'" [isLoading]="isLoading" [isDisabled]="!addContentForm.valid"></app-loading-button>
     </form>
     
     <p class="add-content-form-error" *ngIf="addContentFormErrorMessageVisible">{{ addContentFormErrorMessage }}</p>

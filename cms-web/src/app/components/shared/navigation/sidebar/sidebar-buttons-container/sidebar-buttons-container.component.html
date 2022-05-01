@@ -2,19 +2,23 @@
     <input class="sidebar-button-search" placeholder="Search" (input)="searchTermChanged($event)" #searchTermInput>
     <span *ngIf="searchTermEntered" class="clear-icon" (click)="clearSearchInput()">&#x2715;</span>
 </div>
-<div class="sidebar-buttons-container">
-    <app-sidebar-button *ngFor="let button of sidebarButtons" 
-        [title]="button.title" 
-        [path]="button.path" 
-        [isActive]="button.isActive" 
-        [subButtons]="button.subButtons"
-        [deactivateSidebarButtonObservable]="deactivateSidebarButtonSubject.asObservable()" 
-        (sidebarButtonClickedEventEmitter)="sidebarButtonClicked($event)"></app-sidebar-button>
-    <div *ngIf="searchTermEntered && sidebarButtons.length === 0 && searchProcessed" class="sidebar-buttons-message-container">
-        <h1>&#x2715;</h1>
-        <h3>
-            No Search Results Returned For:<br><br>
-                    '{{ searchTerm }}'
-        </h3>
+<div *ngIf="!isLoading">
+    <div class="sidebar-buttons-container">
+        <app-sidebar-button *ngFor="let button of sidebarButtons" 
+            [title]="button.title" 
+            [path]="button.path" 
+            [isActive]="button.isActive" 
+            [subButtons]="button.subButtons"
+            [deactivateSidebarButtonObservable]="deactivateSidebarButtonSubject.asObservable()" 
+            (sidebarButtonClickedEventEmitter)="sidebarButtonClicked($event)"></app-sidebar-button>
+        <div *ngIf="searchTermEntered && sidebarButtons.length === 0 && searchProcessed" class="sidebar-buttons-message-container">
+            <h1>&#x2715;</h1>
+            <h3>
+                No Search Results Returned For:<br><br>
+                        '{{ searchTerm }}'
+            </h3>
+        </div>
     </div>
 </div>
+
+<div *ngIf="isLoading" class="loading-icon"></div>

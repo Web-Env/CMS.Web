@@ -1,14 +1,16 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { ActionsSubject, Store } from "@ngrx/store";
 import { debounceTime, fromEvent, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, first, take } from 'rxjs/operators';
 import { SidebarButtonViewModel } from "src/app/models/view-models/sidebar-button.model";
 import { SidebarButton } from "src/app/ngrx/models/sidebarbutton.model";
-import { loadSidebarButtons } from "src/app/ngrx/actions/sidebar/sidebar.actions";
+import { loadSidebarButtons, LOAD_SIDEBARBUTTONS_SUCCESS } from "src/app/ngrx/actions/sidebar/sidebar.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { selectAllSidebarButtons } from "src/app/ngrx/selectors/sidebar/sidebar.selectors";
 import { stringSimilarity } from "string-similarity-js";
+import { ofType } from "@ngrx/effects";
+import { EventsService } from "src/app/services/events.service";
 
 @Component({
     selector: 'app-sidebar-buttons-container',
@@ -18,7 +20,12 @@ import { stringSimilarity } from "string-similarity-js";
 export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild("searchTermInput") searchTermInput!: ElementRef;
     searchTermInputSubscription!: Subscription;
+    loadSidebarButtonsSuccessSubscription!: Subscription;
+    contentAddedSubscription!: Subscription;
 
+    @Output() deactivateSidebarEvent: EventEmitter<boolean> = new EventEmitter();
+
+    isLoading: boolean = true;
     url!: string;
 
     activeSidebarButtonPath!: string;
@@ -32,27 +39,30 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     sidebarButtons: SidebarButtonViewModel[] = [];
     buttons: SidebarButtonViewModel[] = [];
 
-    sidebarButtons$ = this.store.select(selectAllSidebarButtons);
-
-    constructor(private store: Store<AppState>,
-                private router: Router) { }
+    constructor(private eventsService: EventsService,
+                private store: Store<AppState>,
+                private router: Router,
+                private actions$: ActionsSubject) { }
 
     ngOnInit(): void {
-        this.url = this.router.url.replace('/', '');
+        this.url = this.router.url.replace('content/', '');
+        this.url = this.url.replace('/', '');
         this.activeSidebarButtonPath = this.url;
 
         this.store.dispatch(loadSidebarButtons());
 
-        this.addDefaultSidebarButtons()
+        this.addDefaultSidebarButtons();
 
-        this.sidebarButtons$.subscribe(sidebarButtons => {
-            if (!this.sidebarButtonsConfigured) {
-                console.log (sidebarButtons)
-                this.configureSidebarButtons(sidebarButtons);
+        this.loadSidebarButtonsSuccessSubscription = this.actions$.pipe(ofType(LOAD_SIDEBARBUTTONS_SUCCESS)).subscribe((sidebarButtons: any) => {
+            if (!this.sidebarButtonsConfigured && sidebarButtons != null && sidebarButtons.sidebarButtons != null) {
+                this.configureSidebarButtons(sidebarButtons.sidebarButtons);
+
+                this.isLoading = false;
             }
-            else {
-                console.log (sidebarButtons)
-            }
+        });
+
+        this.contentAddedSubscription = this.eventsService.refreshSidebarEvent.subscribe(() => {
+            this.refreshSidebarButtons();
         });
     }
 
@@ -68,6 +78,17 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                     this.processSearchTerm(searchTerm);
                 }
             });
+    }
+
+    private refreshSidebarButtons(): void {
+        this.isLoading = true;
+        this.buttons = [];
+        this.sidebarButtons = [];
+        this.sidebarButtonsConfigured = false;
+
+        this.addDefaultSidebarButtons();
+
+        this.store.dispatch(loadSidebarButtons());
     }
 
     private addDefaultSidebarButtons(): void {
@@ -98,12 +119,11 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                 if (sidebarButton.subButtons !== undefined && sidebarButton.subButtons.length > 0) {
                     let subButtons = new Array<SidebarButtonViewModel>();
 
-                    //console.log (sidebarButton)
                     sidebarButton.subButtons.forEach(subButton => {
                         subButtons.push(
                             new SidebarButtonViewModel(
                                 subButton.title,
-                                subButton.path,
+                                (sidebarButton.path !== 'admin' ? 'content/' : '') + subButton.path,
                                 this.url === subButton.path,
                                 null
                             )
@@ -120,11 +140,10 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                     );
                 }
                 else {
-                    //console.log (sidebarButton)
                     this.buttons.push(
                         new SidebarButtonViewModel(
                             sidebarButton.title,
-                            sidebarButton.path,
+                            'content/' + sidebarButton.path,
                             this.url === sidebarButton.path,
                             null
                         )
@@ -133,19 +152,12 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
             })
 
             this.mapButtonsToSidebar();
-
-            window.setTimeout(()=> {
-
-                console.log (this.sidebarButtons)
-            }, 5000)
         }
     }
 
     private mapButtonsToSidebar(): void {
         this.sidebarButtons = [];
         var promise = Promise.resolve();
-
-        console.log (this.buttons)
 
         this.buttons.forEach((button) => {
             promise = promise.then(() => {
@@ -214,10 +226,11 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
 
     public sidebarButtonClicked(sidebarButtonClickedPath: string): void {
         this.emitActiveSidebarButtonPathToDeactivate();
+        this.deactivateSidebarEvent.emit();
 
-        this.activeSidebarButtonPath = sidebarButtonClickedPath;
+        this.activeSidebarButtonPath = sidebarButtonClickedPath.replace('content/', '');
 
-        this.router.navigate([this.activeSidebarButtonPath]);
+        this.router.navigate([sidebarButtonClickedPath]);
     }
 
     public emitActiveSidebarButtonPathToDeactivate(): void {

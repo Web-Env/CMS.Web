@@ -6,10 +6,10 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../../environments/environment';
-import { contentReducer } from "./content/content.reducer";
-import { sectionReducer } from "./section/section.reducer";
-import { sidebarReducer } from "./sidebar/sidebar.reducer";
-import { userReducer } from "./user/user.reducer";
+import { ContentReducer } from "./content/content.reducer";
+import { SectionReducer } from "./section/section.reducer";
+import { SidebarReducer } from "./sidebar/sidebar.reducer";
+import { UserReducer } from "./user/user.reducer";
 
 
 export interface State {
@@ -17,10 +17,10 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-    content: contentReducer,
-    section: sectionReducer,
-    sidebarButtons: sidebarReducer,
-    user: userReducer
+    content: ContentReducer,
+    section: SectionReducer,
+    sidebarButtons: SidebarReducer,
+    user: UserReducer
 };
 
 

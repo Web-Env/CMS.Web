@@ -11,4 +11,5 @@ export class LoadingButtonComponent {
     @Input() buttonText!: string;
     @Input() isLoading!: boolean;
     @Input() isDisabled!: boolean;
+    @Input() useNegativeColour: boolean = false;
 }

@@ -18,13 +18,14 @@ const routes: Routes = [
     {path: '', component: MainComponent, canActivate: [ AuthGuardService ], children: [
         {path: '', component: HomeComponent},
         {path: 'announcements', component: AnnouncementsComponent},
+        {path: 'content/:contentPath', component: ContentComponent},
         {path: 'content/:sectionId/:entryId', component: ContentComponent},
         {path: 'content/:announcementId', component: ContentComponent},
         {path: 'admin/content', component: ContentsComponent},
         {path: 'admin/content-create', component: ContentCreateComponent},
+        {path: 'admin/content-edit/:entryId', component: ContentCreateComponent},
         {path: 'admin/sections', component: SectionsComponent},
         {path: 'admin/users', component: UsersComponent},
-        //{path: 'admin/edit-content/:contentId', component: ContentEditComponent},
         {path: "**", redirectTo: "404"}
     ]},
     {path: 'login', component: LoginComponent},

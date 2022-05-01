@@ -1,8 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from "@angular/router/testing";
+import { ToastrModule, ToastrService } from "ngx-toastr";
+import { StoreModule } from "@ngrx/store";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { DataService } from "src/app/services/data.service";
 
 import { SidebarButtonViewModel } from "src/app/models/view-models/sidebar-button.model";
 
 import { SidebarButtonsContainerComponent } from './sidebar-buttons-container.component';
+import { SidebarReducer } from "src/app/ngrx/reducers/sidebar/sidebar.reducer";
 
 describe('SidebarButtonsContainerComponent', () => {
     let component: SidebarButtonsContainerComponent;
@@ -23,9 +30,22 @@ describe('SidebarButtonsContainerComponent', () => {
         )
     ];
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            declarations: [SidebarButtonsContainerComponent]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [SidebarButtonsContainerComponent],
+            imports: [
+                HttpClientModule,
+                RouterTestingModule,
+                StoreModule.forRoot({
+                    sidebarButtons: SidebarReducer
+                }),
+                ToastrModule.forRoot()
+            ],
+            providers: [
+                AuthService,
+                DataService,
+                ToastrService
+            ]
         })
             .compileComponents();
     });
@@ -39,19 +59,21 @@ describe('SidebarButtonsContainerComponent', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('#mapButtonsToSidebar should push all elements from the buttons array to the sidebarButtons array', () => {
+    it('#mapButtonsToSidebar should push all elements from the buttons array to the sidebarButtons array', fakeAsync(() => {
         (component as any).mapButtonsToSidebar();
 
         //Timeout to allow promise resolution
-        window.setTimeout(() => {
-            expect(component.sidebarButtons).toEqual(component.buttons);
-        }, 150);
-        
-    });
+        tick(1500);
+        expect(component.sidebarButtons).toEqual(component.buttons);        
+    }));
 
     it('#searchTermChanged should call #resetSearch if search term is empty string', () => {
         component.searchTerm = 'Test';
