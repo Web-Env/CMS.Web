@@ -29,8 +29,13 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     @ViewChild('pathTextInputComponent')
     pathTextInputComponent!: TextInputComponent;
 
-    content!: ContentDownloadModel | undefined;
-    contentPath!: string;
+    isEditing: boolean = false;
+    contentLoaded: boolean = false;
+
+    content: string | undefined;
+    contentTitle: string | undefined;
+    contentPath: string | undefined;
+    sectionId: string | undefined;
     url!: string;
     
     sections$ = this.store.select(selectAllSections);
@@ -66,7 +71,6 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         });
 
         let urlSplit = this.router.url.split('/');
-        console.log (urlSplit[urlSplit.length - 1])
         this.getContentAsync();
 
         this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS)).subscribe(() => {
@@ -109,26 +113,40 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         this.content = undefined;
         this.url = this.router.url;
         let urlSplit = this.url.split('/');
-        this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
+        console.log (urlSplit)
 
-        let contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
+        if (urlSplit[2] === 'content-edit') {
+            this.isEditing = true;
 
-        this.content = contentModel;
+            this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
 
-        console.log (this.content)
+            let contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
+
+            console.log (contentModel)
+
+            this.content = contentModel.content;
+            this.contentTitle = contentModel.title;
+            this.contentPath = contentModel.path;
+            this.sectionId = contentModel.section.id;
+            this.contentLoaded = true;
+
+            console.log (this.content)
+
+            this.buildForm();
+        }
     }
 
     public buildForm(): void {
         this.addContentForm = new FormGroup({
             section: new FormControl(
-                'none'
+                this.sectionId || 'none'
             ),
             title: new FormControl(
-                '',
+                this.contentTitle || '',
                 [Validators.required]
             ),
             path: new FormControl(
-                '',
+                this.contentPath || '',
                 [Validators.required]
             ),
             content: new FormControl(
@@ -153,7 +171,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         });
     }
 
-    public async createContentAsync(addContentForm: any): Promise<void> {
+    public async createOrUpdateContentAsync(addContentForm: any): Promise<void> {
         if(!this.isLoading) {
             this.addContentFormErrorMessageVisible = false;
             this.isLoading = true;
@@ -184,7 +202,8 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy(): void {
-        
+        this.addContentSuccessSubscription.unsubscribe();
+        this.addContentFailureSubscription.unsubscribe();
     }
 
 }

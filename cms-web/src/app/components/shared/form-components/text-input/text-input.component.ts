@@ -74,6 +74,8 @@ export class TextInputComponent implements ControlValueAccessor, OnInit {
 
     public writeValue(value: string): void {
         this.inputValue = value;
+
+        this.inputPopulated = value !== '';
     }
 
     public registerOnChange(fn: any): void {

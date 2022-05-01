@@ -1,6 +1,7 @@
 export enum StoreActions {
     load = 'Load',
     add = 'Add',
+    update = 'Update',
     remove = 'Remove'
 }
 
