@@ -11,6 +11,10 @@ td {
 
     font-size: 0.55em;
 
+    &.centred {
+        text-align: center;
+    }
+
     &:last-child {
         border-right: none;
     }

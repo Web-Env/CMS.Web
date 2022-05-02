@@ -9,4 +9,8 @@ p {
     font-size: 0.5em;
     font-weight: 100;
     text-align: start;
+
+    &.centred {
+        text-align: center;
+    }
 }

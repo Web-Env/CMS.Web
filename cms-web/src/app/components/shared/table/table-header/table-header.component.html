@@ -1,1 +1,1 @@
-<p *ngIf="data !== undefined">{{ data.data }}</p>
+<p *ngIf="data !== undefined" [ngClass]="{'centred': data.dataType === 'number'}">{{ data.data }}</p>

@@ -4,5 +4,7 @@
     [headers]="headers" 
     [rows]="rows" 
     [viewButtonEnabled]="false" 
+    [validateToDeleteFunction]="validateToDeleteFunction"
     [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
-    (tableActionClicked)="addSectionClicked()"></app-table>
+    (tableActionClicked)="addSectionClicked()"
+    (tableRowActionButtonClickedEvent)="processTableRowActionButtonClicked($event)"></app-table>

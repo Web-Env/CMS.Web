@@ -1,0 +1,13 @@
+@import "src/assets/scss/variables/colours";
+
+.message-dialog.dialog {
+    h1 {
+        color: $secondary-text-colour;
+    }
+
+    p {
+        b {
+            text-decoration: underline;
+        }
+    }
+}

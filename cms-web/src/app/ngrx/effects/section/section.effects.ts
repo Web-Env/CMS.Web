@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, CreateEffectMetadata, ofType } from '@ngrx/effects';
 import { catchError, from, of, map, switchMap } from "rxjs";
 import { DataService } from "src/app/services/data.service";
-import { addSection, addSectionFailure, addSectionSuccess, loadSections, loadSectionsFailure, loadSectionsSuccess } from "../../actions/section/section.actions";
+import { addSection, addSectionFailure, addSectionSuccess, loadSections, loadSectionsFailure, loadSectionsSuccess, removeSection, removeSectionFailure, removeSectionSuccess } from "../../actions/section/section.actions";
 import { Section } from "../../models/section.model";
 
 @Injectable()
@@ -30,6 +30,17 @@ export class SectionEffects {
                     map((section: any) => addSectionSuccess(section)),
                     catchError((error) => of(addSectionFailure(error)))
                 )
+            )
+        )
+    );
+
+    removeSection$: CreateEffectMetadata = createEffect(() => 
+        this.actions$.pipe(
+            ofType(removeSection),
+            switchMap((action) => 
+                from(this.dataService.deleteAsync(`Section/Remove?sectionId=${action.sectionId}`)).pipe(
+                    map(() => removeSectionSuccess({ sectionId: action.sectionId })),
+                    catchError((error) => of(removeSectionFailure(error))))
             )
         )
     );

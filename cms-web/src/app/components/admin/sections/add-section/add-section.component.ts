@@ -105,15 +105,15 @@ export class AddSectionComponent implements OnDestroy, OnInit {
         this.dialogRef.disableClose = isLoading;
     }
 
-    public async createSectionAsync(addSectionForm: FormGroup): Promise<void> {
+    public async createSectionAsync(addSectionForm: any): Promise<void> {
         if(!this.isLoading) {
             this.addSectionFormErrorMessageVisible = false;
             this.toggleIsLoading(true);
             this.saveClicked = true;
 
             const newSectionUploadModel = new SectionUploadModel(
-                addSectionForm.controls['title'].value,
-                addSectionForm.controls['path'].value
+                addSectionForm.title,
+                addSectionForm.path
             );
 
             try {

@@ -70,7 +70,7 @@ export const ContentReducer = createReducer(
         ...state,
         error,
         status: 'error'
-    })),
+    }))
 );
 
 export const reducer = (state: ContentState | undefined, action: Action): any => {

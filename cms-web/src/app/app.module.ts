@@ -53,6 +53,7 @@ import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
 import { SidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
 import { UserEffects } from "./ngrx/effects/user/user.effects";
 import { UserReducer } from "./ngrx/reducers/user/user.reducer";
+import { MessageDialogComponent } from './components/shared/dialogs/message-dialog/message-dialog.component';
 
 @NgModule({
     declarations: [
@@ -83,7 +84,8 @@ import { UserReducer } from "./ngrx/reducers/user/user.reducer";
 
         SanitizeHtmlPipe,
 
-        DeleteConfirmationDialogComponent
+        DeleteConfirmationDialogComponent,
+          MessageDialogComponent
     ],
     imports: [
         AppRoutingModule,
