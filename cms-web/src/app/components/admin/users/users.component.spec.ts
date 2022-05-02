@@ -15,8 +15,8 @@ describe('UsersComponent', () => {
     let component: UsersComponent;
     let fixture: ComponentFixture<UsersComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [UsersComponent],
             imports: [
                 HttpClientModule,

@@ -6,8 +6,8 @@ describe('DeleteConfirmationDialogComponent', () => {
     let component: DeleteConfirmationDialogComponent;
     let fixture: ComponentFixture<DeleteConfirmationDialogComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [DeleteConfirmationDialogComponent]
         })
             .compileComponents();

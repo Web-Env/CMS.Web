@@ -6,8 +6,8 @@ describe('LoadingButtonComponent', () => {
     let component: LoadingButtonComponent;
     let fixture: ComponentFixture<LoadingButtonComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [LoadingButtonComponent]
         })
             .compileComponents();

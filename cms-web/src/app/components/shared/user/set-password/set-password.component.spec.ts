@@ -11,7 +11,7 @@ describe('SetPasswordComponent', () => {
     let component: SetPasswordComponent;
     let fixture: ComponentFixture<SetPasswordComponent>;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         TestBed.configureTestingModule({
             declarations: [SetPasswordComponent],
             imports: [

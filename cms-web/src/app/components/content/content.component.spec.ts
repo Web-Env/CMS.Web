@@ -11,8 +11,8 @@ describe('ContentComponent', () => {
     let component: ContentComponent;
     let fixture: ComponentFixture<ContentComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [ContentComponent],
             imports: [
                 HttpClientModule,

@@ -6,8 +6,8 @@ describe('TextInputComponent', () => {
     let component: TextInputComponent;
     let fixture: ComponentFixture<TextInputComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [TextInputComponent]
         })
             .compileComponents();
