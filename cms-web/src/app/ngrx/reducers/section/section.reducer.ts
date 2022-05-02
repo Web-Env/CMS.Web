@@ -19,7 +19,7 @@ export const SectionReducer = createReducer(
     on(SectionActions.loadSections, (state) => ({ ...state, status: 'loading' })),
     on(SectionActions.loadSectionsSuccess, (state, { sections }) => ({ 
         ...state,
-        sections: sections,
+        sections,
         error: '',
         status: 'success' })),
     on(SectionActions.addSection,
@@ -30,7 +30,7 @@ export const SectionReducer = createReducer(
     ),
     on(SectionActions.addSectionSuccess, (state, { section }) => ({
         ...state,
-        section: section,
+        section,
         error: '',
         status: 'success'
     })),
@@ -43,4 +43,4 @@ export const SectionReducer = createReducer(
 
 export const reducer = (state: SectionState | undefined, action: Action): any => {
   return SectionReducer(state, action);
-}
+};

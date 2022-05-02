@@ -19,7 +19,7 @@ export const ContentReducer = createReducer(
     on(ContentActions.loadContents, (state) => ({ ...state, status: 'loading' })),
     on(ContentActions.loadContentsSuccess, (state, { contents }) => ({ 
         ...state,
-        contents: contents,
+        contents,
         error: '',
         status: 'success' })),
     on(ContentActions.addContent, (state) => ({
@@ -28,7 +28,7 @@ export const ContentReducer = createReducer(
     })),
     on(ContentActions.addContentSuccess, (state, { content }) => ({
         ...state,
-        content: content,
+        content,
         error: '',
         status: 'success'
     })),
@@ -45,7 +45,7 @@ export const ContentReducer = createReducer(
     ),
     on(ContentActions.updateContentSuccess, (state, { content }) => ({
         ...state,
-        content: content,
+        content,
         error: '',
         status: 'success'
     })),
@@ -75,4 +75,4 @@ export const ContentReducer = createReducer(
 
 export const reducer = (state: ContentState | undefined, action: Action): any => {
   return ContentReducer(state, action);
-}
+};

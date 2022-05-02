@@ -28,11 +28,13 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
     ngOnInit(): void {
         this.hasSubButtons = this.subButtons != null;
 
-        this.deactivateSidebarButtonSubscription = this.deactivateSidebarButtonObservable.subscribe((deactivatedSidebarButtonPath: string) => {
-            if (this.isActive && this.path.replace('content/', '') === deactivatedSidebarButtonPath) {
-                this.deactivateButton();
+        this.deactivateSidebarButtonSubscription = this.deactivateSidebarButtonObservable
+            .subscribe((deactivatedSidebarButtonPath: string) => {
+                if (this.isActive && this.path.replace('content/', '') === deactivatedSidebarButtonPath) {
+                    this.deactivateButton();
+                }
             }
-        });
+        );
     }
 
     public sidebarButtonClicked(): void {

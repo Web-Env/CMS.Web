@@ -61,8 +61,6 @@ export class SectionsComponent implements OnDestroy, OnInit {
                         this.castSectionToTableRow(section)
                     );
                 });
-
-                
             }
 
             this.rows = sectionRows;
@@ -92,7 +90,7 @@ export class SectionsComponent implements OnDestroy, OnInit {
                     20
                 )
             ]
-        )
+        );
     }
 
     public addSectionClicked(): void {
@@ -105,12 +103,12 @@ export class SectionsComponent implements OnDestroy, OnInit {
         dialogConfig.height = 'fit-content';
         dialogConfig.closeOnNavigation = true;
 
-        let instance = this.dialog.open(AddSectionComponent, dialogConfig);
+        const instance = this.dialog.open(AddSectionComponent, dialogConfig);
         instance.afterClosed().subscribe((section: Section) => {
             if (section !== undefined) {
                 this.rows.push(this.castSectionToTableRow(section));
             }
-        })
+        });
     }
 
     ngOnDestroy(): void {

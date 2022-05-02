@@ -52,13 +52,15 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
 
         this.addDefaultSidebarButtons();
 
-        this.loadSidebarButtonsSuccessSubscription = this.actions$.pipe(ofType(LOAD_SIDEBARBUTTONS_SUCCESS)).subscribe((sidebarButtons: any) => {
-            if (!this.sidebarButtonsConfigured && sidebarButtons != null && sidebarButtons.sidebarButtons != null) {
-                this.configureSidebarButtons(sidebarButtons.sidebarButtons);
+        this.loadSidebarButtonsSuccessSubscription = this.actions$
+            .pipe(ofType(LOAD_SIDEBARBUTTONS_SUCCESS)).subscribe((sidebarButtons: any) => {
+                if (!this.sidebarButtonsConfigured && sidebarButtons != null && sidebarButtons.sidebarButtons != null) {
+                    this.configureSidebarButtons(sidebarButtons.sidebarButtons);
 
-                this.isLoading = false;
+                    this.isLoading = false;
+                }
             }
-        });
+        );
 
         this.contentAddedSubscription = this.eventsService.refreshSidebarEvent.subscribe(() => {
             this.refreshSidebarButtons();
@@ -125,7 +127,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                                 this.url === subButton.path,
                                 null
                             )
-                        )
+                        );
                     });
 
                     this.buttons.push(

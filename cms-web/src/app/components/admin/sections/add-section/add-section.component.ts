@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { ofType } from "@ngrx/effects";
@@ -15,7 +15,7 @@ import { HttpErrorResponse } from "@angular/common/http";
     selector: 'app-add-section',
     templateUrl: './add-section.component.html'
 })
-export class AddSectionComponent implements OnInit {
+export class AddSectionComponent implements OnDestroy, OnInit {
     @ViewChild('pathTextInputComponent')
     pathTextInputComponent!: TextInputComponent;
 

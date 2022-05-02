@@ -49,7 +49,7 @@ export class AddUserComponent implements OnDestroy, OnInit {
                 if (err.status === 403) {
                     this.addUserFormErrorMessage = 'An error occured, please check your password';
                 }
-                else if (err.status == 400) {
+                else if (err.status === 400) {
                     if (err.error !== null && err.error.errorMessage !== null) {
                         this.addUserFormErrorMessage = err.error.errorMessage;
                     }

@@ -22,11 +22,11 @@ export const SidebarReducer = createReducer(
     })),
     on(SidebarActions.loadSidebarButtonsSuccess, (state, { sidebarButtons }) => ({ 
         ...state,
-        sidebarButtons: sidebarButtons,
+        sidebarButtons,
         error: '',
         status: 'success' }))
 );
 
 export const reducer = (state: SidebarButtonState | undefined, action: Action): any => {
   return SidebarReducer(state, action);
-}
+};

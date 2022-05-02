@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ofType } from "@ngrx/effects";
 import { ActionsSubject, Store } from "@ngrx/store";
-import { Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { TextInputComponent } from "src/app/components/shared/form-components/text-input/text-input.component";
 import { ContentUploadModel } from "src/app/models/upload-models/content.model";
 import { addContent, updateContent } from "src/app/ngrx/actions/content/content.actions";
@@ -39,7 +39,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     sectionId: string | undefined;
     url!: string;
     
-    sections$ = this.store.select(selectAllSections);
+    sections$: Observable<Section[]> = this.store.select(selectAllSections);
     sections!: Array<Section>;
 
     addContentForm!: FormGroup;
@@ -50,6 +50,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     addContentFormErrorMessage: string = '';
     saveClicked: boolean = false;
 
+    loadSectionsSubscription!: Subscription;
     addContentSuccessSubscription!: Subscription;
     addContentFailureSubscription!: Subscription;
 
@@ -65,7 +66,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     ngOnInit(): void {
         this.store.dispatch(loadSections());
 
-        this.sections$.subscribe(sections => {
+        this.loadSectionsSubscription = this.sections$.subscribe((sections: Section[]) => {
             if (sections !== null) {
                 this.sections = sections;
             }
@@ -80,40 +81,44 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             this.getContentAsync(urlSplit);
         }
 
-        this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS, ContentActions.UPDATE_CONTENT_SUCCESS)).subscribe(() => {
-            if (this.saveClicked) {
-                this.eventsService.refreshSidebarEvent.emit();
-                this.location.back();
+        this.addContentSuccessSubscription = this.actions$
+            .pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS, ContentActions.UPDATE_CONTENT_SUCCESS)).subscribe(() => {
+                if (this.saveClicked) {
+                    this.eventsService.refreshSidebarEvent.emit();
+                    this.location.back();
+                }
             }
-        });
+        );
 
-        this.addContentFailureSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_FAILURE, ContentActions.UPDATE_CONTENT_FAILURE)).subscribe((data: any) => {
-            if (data.name === 'HttpErrorResponse') {
-                const err = data as HttpErrorResponse;
+        this.addContentFailureSubscription = this.actions$
+            .pipe(ofType(ContentActions.ADD_CONTENT_FAILURE, ContentActions.UPDATE_CONTENT_FAILURE)).subscribe((data: any) => {
+                if (data.name === 'HttpErrorResponse') {
+                    const err = data as HttpErrorResponse;
 
-                // if (err.status === 403) {
-                //     this.addSectionFormErrorMessage = 'An error occured, please check your password';
-                // }
-                // else if (err.status == 400) {
-                //     if (err.error !== null && err.error.errorMessage !== null) {
-                //         this.addSectionFormErrorMessage = err.error.errorMessage;
-                //     }
-                //     else {
-                //         this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-                //         throw err;
-                //     }
-                // }
-                // else {
-                //     this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-                // }
+                    // if (err.status === 403) {
+                    //     this.addSectionFormErrorMessage = 'An error occured, please check your password';
+                    // }
+                    // else if (err.status == 400) {
+                    //     if (err.error !== null && err.error.errorMessage !== null) {
+                    //         this.addSectionFormErrorMessage = err.error.errorMessage;
+                    //     }
+                    //     else {
+                    //         this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
+                    //         throw err;
+                    //     }
+                    // }
+                    // else {
+                    //     this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
+                    // }
+                }
+                else {
+                    //this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
+                }
+
+                //this.addSectionFormErrorMessageVisible = true;
+                this.isLoading = false;
             }
-            else {
-                //this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-            }
-
-            //this.addSectionFormErrorMessageVisible = true;
-            this.isLoading = false;
-        });
+        );
     }
     
     public async getContentAsync(urlSplit: Array<string>): Promise<void> {
@@ -204,6 +209,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy(): void {
+        this.loadSectionsSubscription.unsubscribe();
         this.addContentSuccessSubscription.unsubscribe();
         this.addContentFailureSubscription.unsubscribe();
     }
