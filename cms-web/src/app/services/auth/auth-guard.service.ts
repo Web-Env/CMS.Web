@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, Route,
-         CanActivate, CanActivateChild, CanLoad } from '@angular/router';
+import {
+    ActivatedRouteSnapshot, RouterStateSnapshot, Router, Route,
+    CanActivate, CanActivateChild, CanLoad
+} from '@angular/router';
 
 import { AuthService } from './auth.service';
 
@@ -8,7 +10,7 @@ import { AuthService } from './auth.service';
 export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad {
 
     constructor(private authService: AuthService,
-                private router: Router) { }
+        private router: Router) { }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
         return this.checkLoggedInAsync(state.url);
@@ -23,8 +25,8 @@ export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad 
     }
 
     public async checkLoggedInAsync(url: string | undefined): Promise<boolean> {
-        let isLoggedIn = this.authService.isLoggedIn();
-        
+        const isLoggedIn = this.authService.isLoggedIn();
+
         if (isLoggedIn) {
             return true;
         }

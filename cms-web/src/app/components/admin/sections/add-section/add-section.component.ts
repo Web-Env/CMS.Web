@@ -13,8 +13,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
     selector: 'app-add-section',
-    templateUrl: './add-section.component.html',
-    styleUrls: ['./add-section.component.scss']
+    templateUrl: './add-section.component.html'
 })
 export class AddSectionComponent implements OnInit {
     @ViewChild('pathTextInputComponent')
@@ -46,7 +45,7 @@ export class AddSectionComponent implements OnInit {
 
         this.addSectionFailureSubscription = this.actions$.pipe(ofType(SectionActions.ADD_SECTION_FAILURE)).subscribe((data: any) => {
             if (data.name === 'HttpErrorResponse') {
-                let err = data as HttpErrorResponse;
+                const err = data as HttpErrorResponse;
 
                 if (err.status === 403) {
                     this.addSectionFormErrorMessage = 'An error occured, please check your password';
@@ -101,20 +100,20 @@ export class AddSectionComponent implements OnInit {
         });
     }
 
-    private toggleIsLoading(isLoading: boolean) {
+    private toggleIsLoading(isLoading: boolean): void {
         this.isLoading = isLoading;
         this.dialogRef.disableClose = isLoading;
     }
 
-    public async createSectionAsync(addSectionForm: any): Promise<void> {
+    public async createSectionAsync(addSectionForm: FormGroup): Promise<void> {
         if(!this.isLoading) {
             this.addSectionFormErrorMessageVisible = false;
             this.toggleIsLoading(true);
             this.saveClicked = true;
 
-            var newSectionUploadModel = new SectionUploadModel(
-                addSectionForm.title,
-                addSectionForm.path
+            const newSectionUploadModel = new SectionUploadModel(
+                addSectionForm.controls['title'].value,
+                addSectionForm.controls['path'].value
             );
 
             try {

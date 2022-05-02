@@ -44,7 +44,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
                 debounceTime(1000),
                 distinctUntilChanged())
             .subscribe(() => {
-                let searchTerm = this.searchTermInput.nativeElement.value;
+                const searchTerm = this.searchTermInput.nativeElement.value;
 
                 if (searchTerm !== '') {
                     this.processSearchTerm(searchTerm);
@@ -65,7 +65,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     public searchTermChanged(searchInputEvent: any): void {
-        let searchTerm = searchInputEvent.target.value;
+        const searchTerm = searchInputEvent.target.value;
 
         if (searchTerm === '') {
             this.resetSearch();
@@ -97,7 +97,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.tableActionClicked.emit(this.tableName);
     }
 
-    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent) {
+    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
         switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
             case TableRowActionButtonClickedAction.view:
                 this.tableRowActionButtonClickedEvent.emit(

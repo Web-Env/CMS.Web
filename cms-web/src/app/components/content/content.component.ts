@@ -21,14 +21,14 @@ export class ContentComponent implements OnDestroy, OnInit {
     routerPathChangeSubscription!: Subscription;
 
     constructor(private dataService: DataService,
-        private router: Router) {
+                private router: Router) {
         this.routerPathChangeSubscription = router.events.pipe(
-                filter((event) => event instanceof NavigationEnd)
-            ).subscribe(() => {
-                if (this.componentInitialised) {
-                    this.getContentAsync();
-                }
+            filter((event) => event instanceof NavigationEnd)
+        ).subscribe(() => {
+            if (this.componentInitialised) {
+                this.getContentAsync();
             }
+        }
         );
     }
 
@@ -40,10 +40,10 @@ export class ContentComponent implements OnDestroy, OnInit {
     public async getContentAsync(): Promise<void> {
         this.content = undefined;
         this.url = this.router.url;
-        let urlSplit = this.url.split('/');
+        const urlSplit = this.url.split('/');
         this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
 
-        let contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
+        const contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
         contentModel.content = `
             <style scoped>
                 .content p,
@@ -103,7 +103,6 @@ export class ContentComponent implements OnDestroy, OnInit {
     name: 'sanitizeHtml'
 })
 export class SanitizeHtmlPipe implements PipeTransform {
-
     constructor(private sanitizer: DomSanitizer) {
     }
 

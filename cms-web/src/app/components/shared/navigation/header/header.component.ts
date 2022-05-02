@@ -17,8 +17,8 @@ export class HeaderComponent implements OnInit {
     constructor(private authService: AuthService) { }
 
     ngOnInit(): void {
-        let firstName = localStorage.getItem('FirstName');
-        let lastName = localStorage.getItem('LastName');
+        const firstName = localStorage.getItem('FirstName');
+        const lastName = localStorage.getItem('LastName');
         this.initializeUserComponent(`${firstName} ${lastName}`);
     }
 

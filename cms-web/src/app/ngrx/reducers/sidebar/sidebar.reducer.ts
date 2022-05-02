@@ -16,7 +16,10 @@ export const initialState: SidebarButtonState = {
 
 export const SidebarReducer = createReducer(
     initialState,
-    on(SidebarActions.loadSidebarButtons, (state) => ({ ...state, status: 'loading' })),
+    on(SidebarActions.loadSidebarButtons, (state) => ({ 
+        ...state, 
+        status: 'loading' 
+    })),
     on(SidebarActions.loadSidebarButtonsSuccess, (state, { sidebarButtons }) => ({ 
         ...state,
         sidebarButtons: sidebarButtons,
@@ -24,6 +27,6 @@ export const SidebarReducer = createReducer(
         status: 'success' }))
 );
 
-export function reducer(state: SidebarButtonState | undefined, action: Action): any {
+export const reducer = (state: SidebarButtonState | undefined, action: Action): any => {
   return SidebarReducer(state, action);
 }

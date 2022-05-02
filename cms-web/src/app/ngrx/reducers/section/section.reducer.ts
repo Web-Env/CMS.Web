@@ -41,6 +41,6 @@ export const SectionReducer = createReducer(
     })),
 );
 
-export function reducer(state: SectionState | undefined, action: Action): any {
+export const reducer = (state: SectionState | undefined, action: Action): any => {
   return SectionReducer(state, action);
 }

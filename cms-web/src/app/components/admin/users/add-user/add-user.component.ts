@@ -44,7 +44,7 @@ export class AddUserComponent implements OnDestroy, OnInit {
 
         this.addUserFailureSubscription = this.actions$.pipe(ofType(UserActions.ADD_USER_FAILURE)).subscribe((data: any) => {
             if (data.name === 'HttpErrorResponse') {
-                let err = data as HttpErrorResponse;
+                const err = data as HttpErrorResponse;
 
                 if (err.status === 403) {
                     this.addUserFormErrorMessage = 'An error occured, please check your password';
@@ -100,7 +100,7 @@ export class AddUserComponent implements OnDestroy, OnInit {
         }
     }
 
-    private toggleIsLoading(isLoading: boolean) {
+    private toggleIsLoading(isLoading: boolean): void {
         this.isLoading = isLoading;
         this.dialogRef.disableClose = isLoading;
     }
@@ -111,7 +111,7 @@ export class AddUserComponent implements OnDestroy, OnInit {
             this.toggleIsLoading(true);
             this.saveClicked = true;
 
-            var newUserUploadModel = new UserUploadModel(
+            const newUserUploadModel = new UserUploadModel(
                 addUserForm.firstName,
                 addUserForm.lastName,
                 addUserForm.email,
@@ -119,7 +119,7 @@ export class AddUserComponent implements OnDestroy, OnInit {
             );
 
             if (this.isAdminChecked) {
-                var hashedAdminPassword = shajs('sha256').update(addUserForm.password).digest('hex');
+                const hashedAdminPassword = shajs('sha256').update(addUserForm.password).digest('hex');
                 newUserUploadModel.adminPassword = hashedAdminPassword;
             }
 

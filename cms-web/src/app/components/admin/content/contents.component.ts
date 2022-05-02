@@ -17,8 +17,7 @@ import { TableRowActionButtonClickedAction } from "src/app/consts/table-row-acti
 
 @Component({
     selector: 'app-contents',
-    templateUrl: './contents.component.html',
-    styleUrls: ['./contents.component.scss']
+    templateUrl: './contents.component.html'
 })
 export class ContentsComponent implements OnDestroy, OnInit {
     isDataLoaded: boolean = false;
@@ -63,7 +62,7 @@ export class ContentsComponent implements OnDestroy, OnInit {
         this.store.dispatch(loadContents());
 
         this.loadContentsSuccessSubscription = this.actions$.pipe(ofType(ContentActions.LOAD_CONTENTS_SUCCESS)).subscribe((contents: any) => {
-            let contentRows = new Array<TableRow>();
+            const contentRows = new Array<TableRow>();
 
             if (contents !== null && contents.contents !== null) {
                 

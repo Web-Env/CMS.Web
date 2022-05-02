@@ -14,8 +14,7 @@ import { AddSectionComponent } from "./add-section/add-section.component";
 
 @Component({
     selector: 'app-sections',
-    templateUrl: './sections.component.html',
-    styleUrls: ['./sections.component.scss']
+    templateUrl: './sections.component.html'
 })
 export class SectionsComponent implements OnDestroy, OnInit {
     isDataLoaded: boolean = false;

@@ -1,8 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, CreateEffectMetadata, ofType } from '@ngrx/effects';
 import { catchError, from, of, map, switchMap } from "rxjs";
 import { DataService } from "src/app/services/data.service";
-import { addContent, addContentFailure, addContentSuccess, loadContents, loadContentsFailure, loadContentsSuccess, removeContent, removeContentFailure, removeContentSuccess, updateContent, updateContentFailure, updateContentSuccess } from "../../actions/content/content.actions";
+import { 
+    addContent, 
+    addContentFailure, 
+    addContentSuccess, 
+    loadContents, 
+    loadContentsFailure, 
+    loadContentsSuccess, 
+    removeContent, 
+    removeContentFailure, 
+    removeContentSuccess, 
+    updateContent, 
+    updateContentFailure, 
+    updateContentSuccess } from "../../actions/content/content.actions";
 import { Content } from "../../models/content.model";
 
 @Injectable()
@@ -10,7 +22,7 @@ export class ContentEffects {
     constructor(private actions$: Actions,
                 private dataService: DataService) { }
 
-    loadContents$ = createEffect(() =>
+    loadContents$: CreateEffectMetadata = createEffect(() =>
         this.actions$.pipe(
             ofType(loadContents),
             switchMap(() =>
@@ -22,10 +34,10 @@ export class ContentEffects {
         )
     );
 
-    addContent$ = createEffect(() => 
+    addContent$: CreateEffectMetadata = createEffect(() =>
         this.actions$.pipe(
             ofType(addContent),
-            switchMap((action) => 
+            switchMap((action) =>
                 from(this.dataService.postAsync<Content>('Content/Add', action.content, Content)).pipe(
                     map((content: any) => addContentSuccess(content)),
                     catchError((error) => of(addContentFailure(error)))
@@ -34,10 +46,10 @@ export class ContentEffects {
         )
     );
 
-    updateContent$ = createEffect(() => 
+    updateContent$: CreateEffectMetadata = createEffect(() =>
         this.actions$.pipe(
             ofType(updateContent),
-            switchMap((action) => 
+            switchMap((action) =>
                 from(this.dataService.putAsync<Content>('Content/Update', action.content, Content)).pipe(
                     map((content: any) => updateContentSuccess(content)),
                     catchError((error) => of(updateContentFailure(error)))
@@ -46,10 +58,10 @@ export class ContentEffects {
         )
     );
 
-    removeContent$ = createEffect(() => 
+    removeContent$: CreateEffectMetadata = createEffect(() =>
         this.actions$.pipe(
             ofType(removeContent),
-            switchMap((action) => 
+            switchMap((action) =>
                 from(this.dataService.deleteAsync(`Content/Remove?contentId=${action.contentId}`)).pipe(
                     map(() => removeContentSuccess({ contentId: action.contentId })),
                     catchError((error) => of(removeContentFailure(error)))

@@ -17,16 +17,14 @@ export const initialState: UserState = {
 
 export const UserReducer = createReducer(
     initialState,
-    on(UserActions.addUser,
-        (state, { user }) => ({
-            ...state,
-            users: state.users
-        })
-    ),
+    on(UserActions.addUser, (state, { user }) => ({
+        ...state,
+        users: state.users
+    })),
     on(UserActions.loadUsers, (state) => ({ ...state, status: 'loading' })),
     on(UserActions.loadUsersSuccess, (state, { users }) => ({
         ...state,
-        users: users,
+        users,
         error: '',
         status: 'success'
     })),
@@ -38,18 +36,18 @@ export const UserReducer = createReducer(
     on(UserActions.addUser, (state) => ({ ...state, status: 'loading' })),
     on(UserActions.addUserSuccess, (state, { user }) => ({
         ...state,
-        user: user,
+        user,
         error: '',
         status: 'success'
     })),
     on(UserActions.addUserFailure, (state, { error }) => ({
         ...state,
-        error: error,
+        error,
         status: 'error'
     })),
 );
 
 24
-export function reducer(state: UserState | undefined, action: Action): any {
+export const reducer = (state: UserState | undefined, action: Action): any => {
     return UserReducer(state, action);
 }

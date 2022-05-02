@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from "@ngrx/store";
+import { Actions, createEffect, CreateEffectMetadata, ofType } from '@ngrx/effects';
 import { catchError, from, of, map, switchMap } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import { addUser, addUserFailure, addUserSuccess, loadUsers, loadUsersFailure, loadUsersSuccess } from "../../actions/user/user.actions";
-import { AppState } from "../../app.state";
 import { User } from "../../models/user.model";
 
 @Injectable()
 export class UserEffects {
     constructor(private actions$: Actions,
-        private store: Store<AppState>,
-        private dataService: DataService) { }
+                private dataService: DataService) { }
 
-    loadUsers$ = createEffect(() =>
+    loadUsers$: CreateEffectMetadata = createEffect(() =>
         this.actions$.pipe(
             ofType(loadUsers),
             switchMap(() =>
@@ -25,7 +22,7 @@ export class UserEffects {
         )
     );
 
-    addUser$ = createEffect(() => 
+    addUser$: CreateEffectMetadata = createEffect(() => 
         this.actions$.pipe(
             ofType(addUser),
             switchMap((action) => 

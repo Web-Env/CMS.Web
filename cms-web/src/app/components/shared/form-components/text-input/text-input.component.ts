@@ -86,7 +86,7 @@ export class TextInputComponent implements ControlValueAccessor, OnInit {
         this.touched = fn;
     }
 
-    public setDisabledState(isDisabled: boolean) {
+    public setDisabledState(isDisabled: boolean): void {
         this.isDisabled = isDisabled;
     }
 

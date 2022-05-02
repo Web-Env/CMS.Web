@@ -72,7 +72,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                 debounceTime(1000),
                 distinctUntilChanged())
             .subscribe(() => {
-                let searchTerm = this.searchTermInput.nativeElement.value;
+                const searchTerm = this.searchTermInput.nativeElement.value;
 
                 if (searchTerm !== '') {
                     this.processSearchTerm(searchTerm);
@@ -109,15 +109,14 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     }
 
     private configureSidebarButtons(sidebarButtons: SidebarButton[]): void {
-        let urlSplit = this.url.split('/');
-        let urlHasSubButton = urlSplit.length > 1;
+        const urlSplit = this.url.split('/');
 
         if (sidebarButtons !== null && sidebarButtons.length > 0) {
             this.sidebarButtonsConfigured = true;
 
             sidebarButtons.forEach((sidebarButton) => {
                 if (sidebarButton.subButtons !== undefined && sidebarButton.subButtons.length > 0) {
-                    let subButtons = new Array<SidebarButtonViewModel>();
+                    const subButtons = new Array<SidebarButtonViewModel>();
 
                     sidebarButton.subButtons.forEach(subButton => {
                         subButtons.push(
@@ -162,7 +161,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         this.buttons.forEach((button) => {
             promise = promise.then(() => {
                 this.sidebarButtons.push(button);
-                return new Promise(function (resolve) {
+                return new Promise((resolve) => {
                     setTimeout(resolve, 75);
                 });
             });
@@ -170,7 +169,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     }
 
     public searchTermChanged(searchInputEvent: any): void {
-        let searchTerm = searchInputEvent.target.value;
+        const searchTerm = searchInputEvent.target.value;
 
         if (searchTerm === '') {
             this.resetSearch();
@@ -186,17 +185,17 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         this.sidebarButtons = [];
 
         for (let i = 0; i <= this.buttons.length - 1; i++) {
-            let button: SidebarButtonViewModel = Object.assign({}, this.buttons[i]);
+            const button: SidebarButtonViewModel = Object.assign({}, this.buttons[i]);
 
             if (button.subButtons != null) {
-                let refinedSubButtons = [];
+                const refinedSubButtons = [];
 
                 for (let j = 0; j <= button.subButtons.length - 1; j++) {
-                    let subButton: SidebarButtonViewModel = Object.assign({}, button.subButtons[j]);
+                    const subButton: SidebarButtonViewModel = Object.assign({}, button.subButtons[j]);
 
-                    var subButtonSearchSimilarity = stringSimilarity(searchTerm, subButton.title);
+                    const subButtonSearchSimilarity = stringSimilarity(searchTerm, subButton.title);
 
-                    if (subButtonSearchSimilarity >= 0.35) {
+                    if (subButtonSearchSimilarity >= 0.25) {
                         refinedSubButtons.push(subButton);
                     }
                 }
@@ -210,9 +209,9 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
                 }
             }
 
-            var buttonSearchSimilarity = stringSimilarity(searchTerm, button.title);
+            const buttonSearchSimilarity = stringSimilarity(searchTerm, button.title);
 
-            if ((searchTerm.length < 3 && buttonSearchSimilarity >= 0.05) || (searchTerm.length >= 3 && buttonSearchSimilarity >= 0.35)) {
+            if ((searchTerm.length < 3 && buttonSearchSimilarity >= 0.05) || (searchTerm.length >= 3 && buttonSearchSimilarity >= 0.25)) {
                 if (button.subButtons != null) {
                     button.isActive = true;
                 }
