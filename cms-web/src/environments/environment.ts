@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost/CMS.API',
-  environmentUrl: 'localhost:4200'
+  environmentUrl: 'localhost:4200',
+  rollbarAccessToken: '<ROLLBAR_ACCESS_TOKEN>'
 };
 
 /*
