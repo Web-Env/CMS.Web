@@ -57,6 +57,10 @@ jobs:
     - name: Run Tests and Generate Coverage Report
       run: npm run test:coverage
         
+    - name: Echo LS
+      run: |
+        ls -lA cms-web-coverage
+        
     - name: Publish Coverage
       uses: codacy/codacy-coverage-reporter-action@0.2.0
       with:
