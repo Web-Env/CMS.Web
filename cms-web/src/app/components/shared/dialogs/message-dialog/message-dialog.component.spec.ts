@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from "@angular/material/dialog";
 
-import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
+import { MessageDialogComponent } from './message-dialog.component';
 
-describe('DeleteConfirmationDialogComponent', () => {
-    let component: DeleteConfirmationDialogComponent;
-    let fixture: ComponentFixture<DeleteConfirmationDialogComponent>;
+describe('MessageDialogComponent', () => {
+    let component: MessageDialogComponent;
+    let fixture: ComponentFixture<MessageDialogComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [DeleteConfirmationDialogComponent],
+            declarations: [MessageDialogComponent],
             providers: [
                 {
                     provide: MatDialogRef,
@@ -21,13 +21,9 @@ describe('DeleteConfirmationDialogComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DeleteConfirmationDialogComponent);
+        fixture = TestBed.createComponent(MessageDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
-
-    afterEach(() => {
-        fixture.destroy();
     });
 
     it('should create', () => {

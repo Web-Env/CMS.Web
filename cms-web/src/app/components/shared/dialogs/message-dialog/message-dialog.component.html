@@ -1,0 +1,9 @@
+<div class="message-dialog dialog">
+    <h1>{{ messageTitle }}</h1>
+    <p class="message" [innerHtml]="message">
+    </p>
+    
+    <div class="buttons-container">
+        <app-loading-button [buttonText]="'Ok'" (click)="okButtonClicked()"></app-loading-button>
+    </div>
+</div>

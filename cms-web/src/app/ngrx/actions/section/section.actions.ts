@@ -14,6 +14,8 @@ export const ADD_SECTION = `${ACTION_TITLE} ${StoreActions.add} ${ACTION_SUBJECT
 export const ADD_SECTION_SUCCESS = `${ADD_SECTION} ${StoreActionStatuses.success}`;
 export const ADD_SECTION_FAILURE = `${ADD_SECTION} ${StoreActionStatuses.failure}`;
 export const REMOVE_SECTION = `${ACTION_TITLE} ${StoreActions.remove} ${ACTION_SUBJECT}`;
+export const REMOVE_SECTION_SUCCESS = `${REMOVE_SECTION} ${StoreActionStatuses.success}`;
+export const REMOVE_SECTION_FAILURE = `${REMOVE_SECTION} ${StoreActionStatuses.failure}`;
 
 export const loadSections = createAction(LOAD_SECTIONS);
 
@@ -39,5 +41,20 @@ export const addSectionSuccess = createAction(
 
 export const addSectionFailure = createAction(
     ADD_SECTION_FAILURE,
+    props<{ error: string }>()
+);
+
+export const removeSection = createAction(
+    REMOVE_SECTION,
+    (sectionId: string) => ({ sectionId })
+);
+
+export const removeSectionSuccess = createAction(
+    REMOVE_SECTION_SUCCESS,
+    props<{ sectionId: string }>()
+);
+
+export const removeSectionFailure = createAction(
+    REMOVE_SECTION_FAILURE,
     props<{ error: string }>()
 );

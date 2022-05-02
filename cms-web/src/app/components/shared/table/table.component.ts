@@ -23,6 +23,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input() editButtonEnabled: boolean = true;
     @Input() deleteButtonEnabled: boolean = true;
 
+    @Input() validateToDeleteFunction!: (tableRow: TableRow) => boolean | undefined;
     @Input() deleteStringBuilderFunction!: (tableRow: TableRow) => string;
 
     @Output() tableActionClicked: EventEmitter<string> = new EventEmitter();
@@ -111,7 +112,17 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
                 );
                 break;
             case TableRowActionButtonClickedAction.delete:
-                this.tableRowDeleteButtonClicked(tableRowActionButtonClickedEvent.tableRow);
+                if (this.validateToDeleteFunction !== undefined) {
+                    const tableRowValidToDelete = this.validateToDeleteFunction(tableRowActionButtonClickedEvent.tableRow);
+
+                    if (tableRowValidToDelete) {
+                        this.tableRowDeleteButtonClicked(tableRowActionButtonClickedEvent.tableRow);
+                    }
+                }
+                else {
+                    this.tableRowDeleteButtonClicked(tableRowActionButtonClickedEvent.tableRow);
+                }
+                
                 break;
             default:
                 break;

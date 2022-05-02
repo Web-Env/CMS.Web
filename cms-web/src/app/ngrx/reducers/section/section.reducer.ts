@@ -39,6 +39,23 @@ export const SectionReducer = createReducer(
         error: error,
         status: 'error'
     })),
+    on(SectionActions.removeSection,
+        (state, {sectionId}) => ({
+            ...state,
+            status: 'loading',
+            sections: state.sections.filter((section) => section.id !== sectionId)
+        })
+    ),
+    on(SectionActions.removeSectionSuccess, (state, {sectionId}) => ({
+        ...state,
+        error: '',
+        status: 'success'
+    })),
+    on(SectionActions.removeSectionFailure, (state, { error }) => ({
+        ...state,
+        error,
+        status: 'error'
+    }))
 );
 
 export const reducer = (state: SectionState | undefined, action: Action): any => {
