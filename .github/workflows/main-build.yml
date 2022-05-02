@@ -60,7 +60,7 @@ jobs:
     - name: Echo LS
       run: |
         pwd
-        ls -lrA
+        ls coverage -lRA
 
     - name: Publish Coverage
       uses: codacy/codacy-coverage-reporter-action@v1
