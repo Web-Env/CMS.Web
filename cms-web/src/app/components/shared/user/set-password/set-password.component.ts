@@ -81,6 +81,7 @@ export class SetPasswordComponent implements OnInit {
         }
         catch (err) {
             this.isSetTokenValid = false;
+
             throw err;
         }
         finally {
@@ -118,6 +119,7 @@ export class SetPasswordComponent implements OnInit {
                 await this.checkResetTokenValidAsync(this.passwordSetToken);
 
                 this.setPasswordFormErrorMessageVisible = true;
+                
                 throw err;
             }
             finally {

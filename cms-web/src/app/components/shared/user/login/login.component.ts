@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
                 }
 
                 this.loginFormErrorMessageVisible = true;
+                
                 throw err;
             }
             finally {

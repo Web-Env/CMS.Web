@@ -132,7 +132,7 @@ export class AddUserComponent implements OnDestroy, OnInit {
                 this.addUserFormErrorMessageVisible = true;
                 this.toggleIsLoading(false);
 
-                console.error(err);
+                throw err;
             }
         }
     }
