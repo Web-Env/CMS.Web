@@ -56,6 +56,12 @@ jobs:
         
     - name: Run Tests and Generate Coverage Report
       run: npm run test:coverage
+
+    - name: Publish Coverage
+      uses: codacy/codacy-coverage-reporter-action@v1
+      with:
+        project-token: ${{ secrets.CODACY_TOKEN }}
+        coverage-reports: cms-web/coverage/cms-web/lcov.info
       
     - name: Deploy (Firebase)
       uses: FirebaseExtended/action-hosting-deploy@v0
@@ -63,13 +69,7 @@ jobs:
         repoToken: '${{ secrets.GITHUB_TOKEN }}'
         firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WEBENV_CMS }}'
         projectId: webenv-cms
-        entryPoint: ./dist/cms-Web
+        entryPoint: ./cms-web
         channelId: live
       env:
         FIREBASE_CLI_PREVIEWS: hostingchannels
-        
-    - name: Publish Coverage
-      uses: codacy/codacy-coverage-reporter-action@0.2.0
-      with:
-        project-token: ${{ secrets.CODACY_TOKEN }}
-        coverage-reports: coverage/cms-web/report-lcov
