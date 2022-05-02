@@ -24,7 +24,8 @@ export const SidebarReducer = createReducer(
         ...state,
         sidebarButtons,
         error: '',
-        status: 'success' }))
+        status: 'success' 
+    }))
 );
 
 export const reducer = (state: SidebarButtonState | undefined, action: Action): any => {

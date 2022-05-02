@@ -43,7 +43,7 @@ export const UserReducer = createReducer(
         ...state,
         error,
         status: 'error'
-    })),
+    }))
 );
 
 24
