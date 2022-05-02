@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { ofType } from "@ngrx/effects";
 import { ActionsSubject, Store } from "@ngrx/store";
@@ -8,7 +8,6 @@ import { TableRow } from "src/app/models/view-models/table-row.model";
 import { loadContents, removeContent } from "src/app/ngrx/actions/content/content.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { Content } from "src/app/ngrx/models/content.model";
-import { selectAllContents } from "src/app/ngrx/selectors/content/content.selectors";
 import * as ContentActions from "src/app/ngrx/actions/content/content.actions";
 import { DatePipe } from "@angular/common";
 import { EventsService } from "src/app/services/events.service";
@@ -17,8 +16,7 @@ import { TableRowActionButtonClickedAction } from "src/app/consts/table-row-acti
 
 @Component({
     selector: 'app-contents',
-    templateUrl: './contents.component.html',
-    styleUrls: ['./contents.component.scss']
+    templateUrl: './contents.component.html'
 })
 export class ContentsComponent implements OnDestroy, OnInit {
     isDataLoaded: boolean = false;
@@ -63,7 +61,7 @@ export class ContentsComponent implements OnDestroy, OnInit {
         this.store.dispatch(loadContents());
 
         this.loadContentsSuccessSubscription = this.actions$.pipe(ofType(ContentActions.LOAD_CONTENTS_SUCCESS)).subscribe((contents: any) => {
-            let contentRows = new Array<TableRow>();
+            const contentRows = new Array<TableRow>();
 
             if (contents !== null && contents.contents !== null) {
                 

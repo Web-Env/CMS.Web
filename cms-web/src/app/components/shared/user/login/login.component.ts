@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit {
     }
 
     async ngOnInit(): Promise<void> {
-        var token = localStorage.getItem('Token');
+        const token = localStorage.getItem('Token');
         if (token !== null && token !== '') {
-            var tokenIsValid = await this.authService.checkTokenValidAsync();
+            const tokenIsValid = await this.authService.checkTokenValidAsync();
 
             if (tokenIsValid) {
                 this.router.navigate(['']);
@@ -48,13 +48,13 @@ export class LoginComponent implements OnInit {
     }
 
     public async loginAsync(loginForm: any): Promise<void> {
-        if(!this.isLoading) {
+        if (!this.isLoading) {
             this.loginFormErrorMessageVisible = false;
             this.isLoading = true;
 
-            var hashedPassword = shajs('sha256').update(loginForm['password']).digest('hex');
+            const hashedPassword = shajs('sha256').update(loginForm['password']).digest('hex');
 
-            var authRequestModel = new AuthRequestUploadModel(
+            const authRequestModel = new AuthRequestUploadModel(
                 loginForm['email'],
                 hashedPassword
             );
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
                 else {
                     this.loginFormErrorMessage = 'An unexpected error occured, please try again';
                 }
-                
+
                 this.loginFormErrorMessageVisible = true;
                 throw err;
             }

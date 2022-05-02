@@ -1,6 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ContentActions from '../../actions/content/content.actions';
-import { AppState } from "../../app.state";
 import { Content } from "../../models/content.model";
 
 export interface ContentState {
@@ -23,12 +22,10 @@ export const ContentReducer = createReducer(
         contents: contents,
         error: '',
         status: 'success' })),
-    on(ContentActions.addContent,
-        (state) => ({
-            ...state,
-            status: 'loading'
-        })
-    ),
+    on(ContentActions.addContent, (state) => ({
+        ...state,
+        status: 'loading'
+    })),
     on(ContentActions.addContentSuccess, (state, { content }) => ({
         ...state,
         content: content,
@@ -37,7 +34,7 @@ export const ContentReducer = createReducer(
     })),
     on(ContentActions.addContentFailure, (state, { error }) => ({
         ...state,
-        error: error,
+        error,
         status: 'error'
     })),
     on(ContentActions.updateContent,
@@ -54,7 +51,7 @@ export const ContentReducer = createReducer(
     })),
     on(ContentActions.updateContentFailure, (state, { error }) => ({
         ...state,
-        error: error,
+        error,
         status: 'error'
     })),
     on(ContentActions.removeContent,
@@ -71,11 +68,11 @@ export const ContentReducer = createReducer(
     })),
     on(ContentActions.removeContentFailure, (state, { error }) => ({
         ...state,
-        error: error,
+        error,
         status: 'error'
     })),
 );
 
-export function reducer(state: ContentState | undefined, action: Action): any {
+export const reducer = (state: ContentState | undefined, action: Action): any => {
   return ContentReducer(state, action);
 }

@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ContentCreateComponent } from "./components/admin/content/content-create/content-create.component";
-import { ContentsComponent } from "./components/admin/content/contents.component";
-import { SectionsComponent } from "./components/admin/sections/sections.component";
-import { UsersComponent } from "./components/admin/users/users.component";
+
+import { AuthGuardService } from "./services/auth/auth-guard.service";
+
 import { AnnouncementsComponent } from "./components/announcements/announcements.component";
 import { ContentComponent } from "./components/content/content.component";
+import { ContentCreateComponent } from "./components/admin/content/content-create/content-create.component";
+import { ContentsComponent } from "./components/admin/content/contents.component";
 import { HomeComponent } from "./components/home/home.component";
+import { LoginComponent } from "./components/shared/user/login/login.component";
 import { MainComponent } from "./components/main/main.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
-import { LoginComponent } from "./components/shared/user/login/login.component";
 import { RequestPasswordResetComponent } from "./components/shared/user/request-password-reset/request-password-reset.component";
+import { SectionsComponent } from "./components/admin/sections/sections.component";
 import { SetPasswordComponent } from "./components/shared/user/set-password/set-password.component";
-import { AuthGuardService } from "./services/auth/auth-guard.service";
+import { UsersComponent } from "./components/admin/users/users.component";
 
 const routes: Routes = [
     {path: '', component: MainComponent, canActivate: [ AuthGuardService ], children: [

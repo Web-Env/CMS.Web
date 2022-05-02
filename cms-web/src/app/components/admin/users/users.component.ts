@@ -12,8 +12,7 @@ import { AddUserComponent } from "./add-user/add-user.component";
 
 @Component({
     selector: 'app-users',
-    templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss']
+    templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnDestroy, OnInit {
     isDataLoaded: boolean = false;
@@ -108,7 +107,7 @@ export class UsersComponent implements OnDestroy, OnInit {
         dialogConfig.height = 'fit-content';
         dialogConfig.closeOnNavigation = true;
 
-        let instance = this.dialog.open(AddUserComponent, dialogConfig);
+        const instance = this.dialog.open(AddUserComponent, dialogConfig);
         instance.afterClosed().subscribe((user: User) => {
             if (user !== undefined) {
                 this.rows.push(this.castUserToTableRow(user));

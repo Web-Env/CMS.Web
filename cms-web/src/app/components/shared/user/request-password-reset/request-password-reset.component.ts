@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { DataService } from "src/app/services/data.service";
 
@@ -10,7 +10,7 @@ import { DataService } from "src/app/services/data.service";
         '../../../../../assets/scss/shared/user-details-card.scss'
     ]
 })
-export class RequestPasswordResetComponent implements OnInit {
+export class RequestPasswordResetComponent {
     passwordResetRequestedSuccessfully: boolean = false;
 
     requestPasswordResetForm!: FormGroup;
@@ -20,9 +20,6 @@ export class RequestPasswordResetComponent implements OnInit {
 
     constructor(private dataService: DataService) {
         this.buildForm();
-    }
-
-    ngOnInit(): void {
     }
 
     public buildForm(): void {

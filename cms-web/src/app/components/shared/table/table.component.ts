@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from "rxjs";
 import { TableRowActionButtonClickedAction } from "src/app/consts/table-row-action-button-clicked-actions.const";
@@ -44,7 +44,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
                 debounceTime(1000),
                 distinctUntilChanged())
             .subscribe(() => {
-                let searchTerm = this.searchTermInput.nativeElement.value;
+                const searchTerm = this.searchTermInput.nativeElement.value;
 
                 if (searchTerm !== '') {
                     this.processSearchTerm(searchTerm);
@@ -65,7 +65,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     public searchTermChanged(searchInputEvent: any): void {
-        let searchTerm = searchInputEvent.target.value;
+        const searchTerm = searchInputEvent.target.value;
 
         if (searchTerm === '') {
             this.resetSearch();
@@ -97,7 +97,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.tableActionClicked.emit(this.tableName);
     }
 
-    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent) {
+    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
         switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
             case TableRowActionButtonClickedAction.view:
                 this.tableRowActionButtonClickedEvent.emit(

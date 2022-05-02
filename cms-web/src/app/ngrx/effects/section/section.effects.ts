@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, CreateEffectMetadata, ofType } from '@ngrx/effects';
 import { catchError, from, of, map, switchMap } from "rxjs";
 import { DataService } from "src/app/services/data.service";
 import { addSection, addSectionFailure, addSectionSuccess, loadSections, loadSectionsFailure, loadSectionsSuccess } from "../../actions/section/section.actions";
@@ -8,9 +8,9 @@ import { Section } from "../../models/section.model";
 @Injectable()
 export class SectionEffects {
     constructor(private actions$: Actions,
-        private dataService: DataService) { }
+                private dataService: DataService) { }
 
-    loadSections$ = createEffect(() =>
+    loadSections$: CreateEffectMetadata = createEffect(() =>
         this.actions$.pipe(
             ofType(loadSections),
             switchMap(() =>
@@ -22,7 +22,7 @@ export class SectionEffects {
         )
     );
 
-    addSection$ = createEffect(() => 
+    addSection$: CreateEffectMetadata = createEffect(() => 
         this.actions$.pipe(
             ofType(addSection),
             switchMap((action) => 

@@ -16,7 +16,7 @@ describe('SidebarButtonsContainerComponent', () => {
     let component: SidebarButtonsContainerComponent;
     let fixture: ComponentFixture<SidebarButtonsContainerComponent>;
 
-    let buttons: Array<SidebarButtonViewModel> = [
+    const buttons: Array<SidebarButtonViewModel> = [
         new SidebarButtonViewModel (
             'Home',
             'home',
@@ -98,7 +98,7 @@ describe('SidebarButtonsContainerComponent', () => {
     });
 
     it('#searchTermChanged should set searchTermEntered and searchTerm properties', () => {
-        let searchTerm = 'Test';
+        const searchTerm = 'Test';
 
         component.searchTermChanged({
             target: {
@@ -111,7 +111,7 @@ describe('SidebarButtonsContainerComponent', () => {
     });
 
     it('#processSearchTerm should return no items if search term doesn\'t match any buttons', () => {
-        let searchTerm = 'xyz';
+        const searchTerm = 'xyz';
         component.searchTerm = searchTerm;
 
         (component as any).processSearchTerm(searchTerm);
@@ -120,7 +120,7 @@ describe('SidebarButtonsContainerComponent', () => {
     });
 
     it('#processSearchTerm should return no items if search term doesn\'t match any buttons', () => {
-        let searchTerm = 'xyz';
+        const searchTerm = 'xyz';
         component.searchTerm = searchTerm;
 
         (component as any).processSearchTerm(searchTerm);
@@ -129,7 +129,7 @@ describe('SidebarButtonsContainerComponent', () => {
     });
 
     it('#processSearchTerm should return items if search term matches any button', () => {
-        let searchTerm = 'Home';
+        const searchTerm = 'Home';
         component.searchTerm = searchTerm;
 
         (component as any).processSearchTerm(searchTerm);
@@ -138,7 +138,7 @@ describe('SidebarButtonsContainerComponent', () => {
     });
 
     it('#processSearchTerm should return items if search term matches any sub-button', () => {
-        var newButtons = buttons.concat(new SidebarButtonViewModel (
+        const newButtons = buttons.concat(new SidebarButtonViewModel (
             'Test Sidebar Button 3',
             'test-button-3',
             false,
@@ -152,7 +152,7 @@ describe('SidebarButtonsContainerComponent', () => {
             ]
         ));
         component.buttons = newButtons;
-        let searchTerm = 'Sub-butt';
+        const searchTerm = 'Sub-butt';
         component.searchTerm = searchTerm;
 
         (component as any).processSearchTerm(searchTerm);
@@ -176,14 +176,16 @@ describe('SidebarButtonsContainerComponent', () => {
     });
 
     it('#clearSearchInput should clear input and call #resetSearch', () => {
-        let inputElement = document.querySelector('.sidebar-button-search');
-        inputElement!.innerHTML = 'Test';
-        spyOn(component, 'resetSearch').and.callThrough();
+        const inputElement = document.querySelector('.sidebar-button-search');
+        if (inputElement !== undefined && inputElement !== null) {
+            inputElement.innerHTML = 'Test';
+            spyOn(component, 'resetSearch').and.callThrough();
 
-        component.clearSearchInput();
+            component.clearSearchInput();
 
-        expect(inputElement!.innerHTML).toBe('');
-        expect(component.resetSearch).toHaveBeenCalled();
+            expect(inputElement.innerHTML).toBe('');
+            expect(component.resetSearch).toHaveBeenCalled();
+        }
     });
 
     it('#clearSearchInput should clear input and call #resetSearch', () => {

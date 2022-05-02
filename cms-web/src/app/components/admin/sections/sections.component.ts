@@ -9,13 +9,11 @@ import { TableRow } from "src/app/models/view-models/table-row.model";
 import { loadSections, LOAD_SECTIONS_SUCCESS } from "src/app/ngrx/actions/section/section.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { Section } from "src/app/ngrx/models/section.model";
-import { selectAllSections } from "src/app/ngrx/selectors/section/section.selectors";
 import { AddSectionComponent } from "./add-section/add-section.component";
 
 @Component({
     selector: 'app-sections',
-    templateUrl: './sections.component.html',
-    styleUrls: ['./sections.component.scss']
+    templateUrl: './sections.component.html'
 })
 export class SectionsComponent implements OnDestroy, OnInit {
     isDataLoaded: boolean = false;

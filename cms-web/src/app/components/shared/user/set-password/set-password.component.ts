@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -6,7 +5,15 @@ import * as shajs from "sha.js";
 import { SetPasswordUploadModel } from "src/app/models/upload-models/set-password.model";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { DataService } from "src/app/services/data.service";
-import { TextInputComponent } from "../../form-components/text-input/text-input.component";
+
+export const passwordMatchingValidatior: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+
+    const passwordsMatch = password?.value === confirmPassword?.value;
+
+    return passwordsMatch ? null : { notmatched: true };
+};
 
 @Component({
     selector: 'app-set-password',
@@ -35,7 +42,7 @@ export class SetPasswordComponent implements OnInit {
     }
 
     async ngOnInit(): Promise<void> {
-        var queryParams = this.route.snapshot.queryParams;
+        const queryParams = this.route.snapshot.queryParams;
 
         if (queryParams && Object.keys(queryParams).length !== 0 &&
             queryParams.constructor === Object &&
@@ -44,7 +51,6 @@ export class SetPasswordComponent implements OnInit {
             this.checkResetTokenValidAsync(this.passwordSetToken);
         }
         else {
-            //this.isRequesting = true;
             this.isSetTokenValid = false;
         }
     }
@@ -66,7 +72,11 @@ export class SetPasswordComponent implements OnInit {
         this.isLoading = true;
 
         try {
-            await this.dataService.getAsync(`User/ForgotPassword/Validate?passwordResetToken=${encodeURIComponent(resetToken)}`, undefined, true);
+            await this.dataService.getAsync(
+                `User/ForgotPassword/Validate?passwordResetToken=${encodeURIComponent(resetToken)}`, 
+                undefined, 
+                true
+            );
             this.isSetTokenValid = true;
         }
         catch (err) {
@@ -83,9 +93,9 @@ export class SetPasswordComponent implements OnInit {
             this.setPasswordFormErrorMessageVisible = false;
             this.isLoading = true;
 
-            var hashedPassword = shajs('sha256').update(setPasswordForm['password']).digest('hex');
+            const hashedPassword = shajs('sha256').update(setPasswordForm['password']).digest('hex');
 
-            var setPasswordUploadModel = new SetPasswordUploadModel(
+            const setPasswordUploadModel = new SetPasswordUploadModel(
                 this.passwordSetToken,
                 hashedPassword
             );
@@ -117,12 +127,3 @@ export class SetPasswordComponent implements OnInit {
     }
 
 }
-
-export const passwordMatchingValidatior: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-
-    let passwordsMatch = password?.value === confirmPassword?.value;
-
-    return passwordsMatch ? null : { notmatched: true };
-};

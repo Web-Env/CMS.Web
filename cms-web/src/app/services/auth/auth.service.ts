@@ -23,7 +23,7 @@ export class AuthService {
     }
 
     public async checkTokenValidAsync(): Promise<boolean> {
-        let endpoint ='Auth/validate';
+        const endpoint ='Auth/validate';
 
         try {
             await this.dataService.getAsync(endpoint);
@@ -40,10 +40,10 @@ export class AuthService {
     }
 
     public async loginAsync(authRequestModel: AuthRequestUploadModel): Promise<void> {
-        let endpoint ='Auth/auth';
+        const endpoint ='Auth/auth';
 
         try {
-            let authResponse = await this.dataService.postAsync<AuthResponseDownloadModel>(endpoint, authRequestModel, AuthResponseDownloadModel, true);
+            const authResponse = await this.dataService.postAsync<AuthResponseDownloadModel>(endpoint, authRequestModel, AuthResponseDownloadModel, true);
             if (authResponse !== null) {
                 localStorage.setItem('FirstName', authResponse.firstName);
                 localStorage.setItem('LastName', authResponse.lastName);

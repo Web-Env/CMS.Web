@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup, NgModel, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
     selector: 'app-text-input',
@@ -86,7 +86,7 @@ export class TextInputComponent implements ControlValueAccessor, OnInit {
         this.touched = fn;
     }
 
-    public setDisabledState(isDisabled: boolean) {
+    public setDisabledState(isDisabled: boolean): void {
         this.isDisabled = isDisabled;
     }
 

@@ -9,10 +9,10 @@ describe('SidebarButtonComponent', () => {
     let component: SidebarButtonComponent;
     let fixture: ComponentFixture<SidebarButtonComponent>;
 
-    let buttonTitle: string = "Test Sidebar Button";
-    let buttonPath: string = "content/test-button";
+    const buttonTitle: string = "Test Sidebar Button";
+    const buttonPath: string = "content/test-button";
 
-    let subButton: SidebarButtonViewModel = new SidebarButtonViewModel (
+    const subButton: SidebarButtonViewModel = new SidebarButtonViewModel (
         "Test Sidebar Sub-Button",
         "content/test-sub-button",
         false,

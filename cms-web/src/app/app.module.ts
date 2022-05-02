@@ -51,8 +51,8 @@ import { SectionEffects } from './ngrx/effects/section/section.effects';
 import { SectionReducer } from "./ngrx/reducers/section/section.reducer";
 import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
 import { SidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
-import { UserReducer } from "./ngrx/reducers/user/user.reducer";
 import { UserEffects } from "./ngrx/effects/user/user.effects";
+import { UserReducer } from "./ngrx/reducers/user/user.reducer";
 
 @NgModule({
     declarations: [

@@ -11,7 +11,7 @@ export class MainComponent {
 
     menuOpen: boolean = false;
 
-    public menuButtonClicked(menuState: boolean) {
+    public menuButtonClicked(menuState: boolean): void {
         this.menuOpen = menuState;
     }
 

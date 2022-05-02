@@ -89,7 +89,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
 
         this.addContentFailureSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_FAILURE, ContentActions.UPDATE_CONTENT_FAILURE)).subscribe((data: any) => {
             if (data.name === 'HttpErrorResponse') {
-                let err = data as HttpErrorResponse;
+                const err = data as HttpErrorResponse;
 
                 // if (err.status === 403) {
                 //     this.addSectionFormErrorMessage = 'An error occured, please check your password';
@@ -120,7 +120,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         this.content = undefined;
 
         this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
-        let contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
+        const contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
 
         this.content = contentModel.content;
         this.contentId = contentModel.id;
@@ -173,7 +173,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             this.isLoading = true;
             this.saveClicked = true;
 
-            var newContentUploadModel = new ContentUploadModel(
+            const newContentUploadModel = new ContentUploadModel(
                 addContentForm.title,
                 addContentForm.path,
                 addContentForm.content
