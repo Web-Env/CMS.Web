@@ -1,6 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ContentActions from '../../actions/content/content.actions';
-import { AppState } from "../../app.state";
 import { Content } from "../../models/content.model";
 
 export interface ContentState {

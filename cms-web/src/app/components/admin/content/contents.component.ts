@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { ofType } from "@ngrx/effects";
 import { ActionsSubject, Store } from "@ngrx/store";
@@ -8,7 +8,6 @@ import { TableRow } from "src/app/models/view-models/table-row.model";
 import { loadContents, removeContent } from "src/app/ngrx/actions/content/content.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { Content } from "src/app/ngrx/models/content.model";
-import { selectAllContents } from "src/app/ngrx/selectors/content/content.selectors";
 import * as ContentActions from "src/app/ngrx/actions/content/content.actions";
 import { DatePipe } from "@angular/common";
 import { EventsService } from "src/app/services/events.service";

@@ -2,12 +2,11 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, 
 import { Router } from "@angular/router";
 import { ActionsSubject, Store } from "@ngrx/store";
 import { debounceTime, fromEvent, Subject, Subscription } from 'rxjs';
-import { distinctUntilChanged, first, take } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { SidebarButtonViewModel } from "src/app/models/view-models/sidebar-button.model";
 import { SidebarButton } from "src/app/ngrx/models/sidebarbutton.model";
 import { loadSidebarButtons, LOAD_SIDEBARBUTTONS_SUCCESS } from "src/app/ngrx/actions/sidebar/sidebar.actions";
 import { AppState } from "src/app/ngrx/app.state";
-import { selectAllSidebarButtons } from "src/app/ngrx/selectors/sidebar/sidebar.selectors";
 import { stringSimilarity } from "string-similarity-js";
 import { ofType } from "@ngrx/effects";
 import { EventsService } from "src/app/services/events.service";
