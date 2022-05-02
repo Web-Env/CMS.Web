@@ -46,6 +46,7 @@ export class RequestPasswordResetComponent {
             catch (err) {
                 
                 this.requestPasswordResetFormErrorMessageVisible = true;
+                
                 throw err;
             }
             finally {

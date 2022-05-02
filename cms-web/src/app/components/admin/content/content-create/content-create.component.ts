@@ -203,7 +203,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
                 this.addContentFormErrorMessageVisible = true;
                 this.isLoading = false;
 
-                console.error(err);
+                throw err;
             }
         }
     }

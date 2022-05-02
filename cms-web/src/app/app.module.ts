@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, Inject, Injectable, InjectionToken, NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ToastrModule } from "ngx-toastr";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
+import * as Rollbar from 'rollbar';
 
 import { environment } from '../environments/environment';
 
@@ -54,6 +55,27 @@ import { SidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
 import { UserEffects } from "./ngrx/effects/user/user.effects";
 import { UserReducer } from "./ngrx/reducers/user/user.reducer";
 import { MessageDialogComponent } from './components/shared/dialogs/message-dialog/message-dialog.component';
+
+const rollbarConfig = {
+    accessToken: environment.rollbarAccessToken,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+};
+
+export const RollbarService = new InjectionToken<Rollbar>('rollbar');
+
+@Injectable()
+export class RollbarErrorHandler implements ErrorHandler {
+    constructor(@Inject(RollbarService) private rollbar: Rollbar) { }
+
+    handleError(err: any): void {
+        this.rollbar.error(err.originalError || err);
+    }
+}
+
+export function rollbarFactory() {
+    return new Rollbar(rollbarConfig);
+}
 
 @NgModule({
     declarations: [
@@ -127,6 +149,9 @@ import { MessageDialogComponent } from './components/shared/dialogs/message-dial
             provide: MatDialogRef,
             useValue: {}
         },
+        { provide: ErrorHandler, useClass: RollbarErrorHandler },
+        { provide: RollbarService, useFactory: rollbarFactory },
+
         DatePipe
     ],
     bootstrap: [AppComponent],

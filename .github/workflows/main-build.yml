@@ -50,6 +50,14 @@ jobs:
         files: './cms-web/package.json'
       env:
         version: ${{ steps.extract_version.outputs.version }}-CI-${{ env.RUN_NUMBER }}
+
+    - name: Configure Environment Variables
+      run: |
+        rm src/environments/environment.prod.ts
+        echo $ENVIRONMENT_QA_SECRET > src/environments/environment.prod.ts
+      shell: bash
+      env:
+        ENVIRONMENT_QA_SECRET: ${{ secrets.ENVIRONMENT_QA }}
         
     - name: Build for Production
       run: npm run build

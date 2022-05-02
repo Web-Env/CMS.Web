@@ -125,7 +125,7 @@ export class AddSectionComponent implements OnDestroy, OnInit {
                 this.addSectionFormErrorMessageVisible = true;
                 this.toggleIsLoading(false);
 
-                console.error(err);
+                throw err;
             }
         }
     }
