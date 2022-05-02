@@ -29,6 +29,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoadingButtonComponent } from './components/shared/buttons/loading-button/loading-button.component';
 import { LoginComponent } from './components/shared/user/login/login.component';
 import { MainComponent } from './components/main/main.component';
+import { MessageDialogComponent } from './components/shared/dialogs/message-dialog/message-dialog.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RequestPasswordResetComponent } from './components/shared/user/request-password-reset/request-password-reset.component';
 import { SectionsComponent } from './components/admin/sections/sections.component';
@@ -41,6 +42,7 @@ import { TableRowComponent } from './components/shared/table/table-row/table-row
 import { TableHeaderComponent } from './components/shared/table/table-header/table-header.component';
 import { TextInputComponent } from './components/shared/form-components/text-input/text-input.component';
 import { UsersComponent } from './components/admin/users/users.component';
+import { UserDetailsComponent } from './components/admin/users/user-details/user-details.component';
 
 import { AuthGuardService } from "./services/auth/auth-guard.service";
 import { AuthService } from "./services/auth/auth.service";
@@ -54,7 +56,6 @@ import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
 import { SidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
 import { UserEffects } from "./ngrx/effects/user/user.effects";
 import { UserReducer } from "./ngrx/reducers/user/user.reducer";
-import { MessageDialogComponent } from './components/shared/dialogs/message-dialog/message-dialog.component';
 
 const rollbarConfig = {
     accessToken: environment.rollbarAccessToken,
@@ -103,11 +104,12 @@ export function rollbarFactory() {
         TableRowComponent,
         TextInputComponent,
         UsersComponent,
-
-        SanitizeHtmlPipe,
+        UserDetailsComponent,
 
         DeleteConfirmationDialogComponent,
-          MessageDialogComponent
+        MessageDialogComponent,
+
+        SanitizeHtmlPipe
     ],
     imports: [
         AppRoutingModule,
