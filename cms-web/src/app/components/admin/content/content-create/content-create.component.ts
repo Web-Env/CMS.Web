@@ -65,7 +65,7 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
     ngOnInit(): void {
         this.store.dispatch(loadSections());
 
-        this.sections$.subscribe(sections => {
+        this.sections$.subscribe((sections: Section[]) => {
             if (sections !== null) {
                 this.sections = sections;
             }
@@ -80,40 +80,44 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
             this.getContentAsync(urlSplit);
         }
 
-        this.addContentSuccessSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS, ContentActions.UPDATE_CONTENT_SUCCESS)).subscribe(() => {
-            if (this.saveClicked) {
-                this.eventsService.refreshSidebarEvent.emit();
-                this.location.back();
+        this.addContentSuccessSubscription = this.actions$
+            .pipe(ofType(ContentActions.ADD_CONTENT_SUCCESS, ContentActions.UPDATE_CONTENT_SUCCESS)).subscribe(() => {
+                if (this.saveClicked) {
+                    this.eventsService.refreshSidebarEvent.emit();
+                    this.location.back();
+                }
             }
-        });
+        );
 
-        this.addContentFailureSubscription = this.actions$.pipe(ofType(ContentActions.ADD_CONTENT_FAILURE, ContentActions.UPDATE_CONTENT_FAILURE)).subscribe((data: any) => {
-            if (data.name === 'HttpErrorResponse') {
-                const err = data as HttpErrorResponse;
+        this.addContentFailureSubscription = this.actions$
+            .pipe(ofType(ContentActions.ADD_CONTENT_FAILURE, ContentActions.UPDATE_CONTENT_FAILURE)).subscribe((data: any) => {
+                if (data.name === 'HttpErrorResponse') {
+                    const err = data as HttpErrorResponse;
 
-                // if (err.status === 403) {
-                //     this.addSectionFormErrorMessage = 'An error occured, please check your password';
-                // }
-                // else if (err.status == 400) {
-                //     if (err.error !== null && err.error.errorMessage !== null) {
-                //         this.addSectionFormErrorMessage = err.error.errorMessage;
-                //     }
-                //     else {
-                //         this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-                //         throw err;
-                //     }
-                // }
-                // else {
-                //     this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-                // }
+                    // if (err.status === 403) {
+                    //     this.addSectionFormErrorMessage = 'An error occured, please check your password';
+                    // }
+                    // else if (err.status == 400) {
+                    //     if (err.error !== null && err.error.errorMessage !== null) {
+                    //         this.addSectionFormErrorMessage = err.error.errorMessage;
+                    //     }
+                    //     else {
+                    //         this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
+                    //         throw err;
+                    //     }
+                    // }
+                    // else {
+                    //     this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
+                    // }
+                }
+                else {
+                    //this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
+                }
+
+                //this.addSectionFormErrorMessageVisible = true;
+                this.isLoading = false;
             }
-            else {
-                //this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-            }
-
-            //this.addSectionFormErrorMessageVisible = true;
-            this.isLoading = false;
-        });
+        );
     }
     
     public async getContentAsync(urlSplit: Array<string>): Promise<void> {

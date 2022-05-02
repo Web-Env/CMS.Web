@@ -11,9 +11,8 @@
                 width: 25px;
                 height: 25px;
 
-                filter: 
-                    brightness(0) saturate(100%) invert(9%) sepia(3%) saturate(5811%) 
-                    hue-rotate(178deg) brightness(96%) contrast(83%);
+                filter: brightness(0) saturate(100%) invert(9%) sepia(3%) saturate(5811%) hue-rotate(178deg)
+                    brightness(96%) contrast(83%);
                 accent-color: $secondary-text-colour;
 
                 margin: 0;

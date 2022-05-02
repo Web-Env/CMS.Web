@@ -49,4 +49,4 @@ export const UserReducer = createReducer(
 24
 export const reducer = (state: UserState | undefined, action: Action): any => {
     return UserReducer(state, action);
-}
+};

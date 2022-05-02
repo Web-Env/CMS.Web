@@ -61,8 +61,6 @@ export class SectionsComponent implements OnDestroy, OnInit {
                         this.castSectionToTableRow(section)
                     );
                 });
-
-                
             }
 
             this.rows = sectionRows;
@@ -92,7 +90,7 @@ export class SectionsComponent implements OnDestroy, OnInit {
                     20
                 )
             ]
-        )
+        );
     }
 
     public addSectionClicked(): void {
@@ -110,7 +108,7 @@ export class SectionsComponent implements OnDestroy, OnInit {
             if (section !== undefined) {
                 this.rows.push(this.castSectionToTableRow(section));
             }
-        })
+        });
     }
 
     ngOnDestroy(): void {

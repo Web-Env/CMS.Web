@@ -172,8 +172,8 @@
                     width: $header-user-action-icon-dimensions;
                     height: $header-user-action-icon-dimensions;
 
-                    -webkit-transition: -webkit-transform $standard-transition-time ease,
-                        fill $standard-transition-time ease;
+                    -webkit-transition: 
+                        -webkit-transform $standard-transition-time ease,fill $standard-transition-time ease;
                     -moz-transition: -moz-transform $standard-transition-time ease, fill $standard-transition-time ease;
                     -ms-transition: -ms-transform $standard-transition-time ease, fill $standard-transition-time ease;
                     -o-transition: -o-transform $standard-transition-time ease, fill $standard-transition-time ease;

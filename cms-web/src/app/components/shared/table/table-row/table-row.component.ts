@@ -15,20 +15,27 @@ export class TableRowComponent {
     @Input() editButtonEnabled: boolean = true;
     @Input() deleteButtonEnabled: boolean = true;
 
-    @Output() actionButtonClickedEvent: EventEmitter<TableRowActionButtonClickedEvent> = new EventEmitter<TableRowActionButtonClickedEvent>();
+    @Output() actionButtonClickedEvent: EventEmitter<TableRowActionButtonClickedEvent> = 
+        new EventEmitter<TableRowActionButtonClickedEvent>();
 
     constructor() { }
 
     public viewButtonClicked(): void {
-        this.actionButtonClickedEvent.emit(new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.view, this.row));
+        this.actionButtonClickedEvent.emit(
+            new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.view, this.row)
+        );
     }
 
     public editButtonClicked(): void {
-        this.actionButtonClickedEvent.emit(new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.edit, this.row));
+        this.actionButtonClickedEvent.emit(
+            new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.edit, this.row)
+        );
     }
 
     public deleteButtonClicked(): void {
-        this.actionButtonClickedEvent.emit(new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.delete, this.row));
+        this.actionButtonClickedEvent.emit(
+            new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.delete, this.row)
+        );
     }
 
 }

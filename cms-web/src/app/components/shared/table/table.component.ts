@@ -26,7 +26,8 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input() deleteStringBuilderFunction!: (tableRow: TableRow) => string;
 
     @Output() tableActionClicked: EventEmitter<string> = new EventEmitter();
-    @Output() tableRowActionButtonClickedEvent: EventEmitter<TableRowActionButtonClickedEvent> = new EventEmitter<TableRowActionButtonClickedEvent>();
+    @Output() tableRowActionButtonClickedEvent: EventEmitter<TableRowActionButtonClickedEvent> = 
+        new EventEmitter<TableRowActionButtonClickedEvent>();
 
     deleteDialogInstance!: MatDialogRef<DeleteConfirmationDialogComponent> | undefined;
 
@@ -132,7 +133,9 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.deleteDialogInstance.componentInstance.deletionSubject = this.tableName;
         this.deleteDialogInstance.componentInstance.deletionMessage = this.deleteStringBuilderFunction(tableRow);
         this.deleteDialogInstance.componentInstance.deleteConfirmedFunction = () => {
-            this.tableRowActionButtonClickedEvent.emit(new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.delete, tableRow));
+            this.tableRowActionButtonClickedEvent.emit(
+                new TableRowActionButtonClickedEvent(TableRowActionButtonClickedAction.delete, tableRow)
+            );
         };
     }
 
