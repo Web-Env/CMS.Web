@@ -72,4 +72,4 @@ jobs:
       uses: codacy/codacy-coverage-reporter-action@0.2.0
       with:
         project-token: ${{ secrets.CODACY_TOKEN }}
-        coverage-reports: CMS.Web/cms-web/coverage/cms-web/report-lcov
+        coverage-reports: CMS.Web/CMS.Web/cms-web/coverage/cms-web/report-lcov
