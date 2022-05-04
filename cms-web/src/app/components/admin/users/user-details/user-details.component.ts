@@ -46,7 +46,7 @@ export class UserDetailsComponent implements OnDestroy, OnInit {
                 private urlHelperService: UrlHelperService) {}
 
     ngOnInit(): void {
-        var routeParams = this.activatedRoute.snapshot.params;
+        const routeParams = this.activatedRoute.snapshot.params;
 
         if (this.urlHelperService.isRouteParamObjectValid(routeParams) &&
             this.urlHelperService.isRouteParamValid(routeParams['userId'])) {
@@ -54,32 +54,34 @@ export class UserDetailsComponent implements OnDestroy, OnInit {
             this.store.dispatch(new loadUserById(routeParams['userId']));
             this.store.dispatch(new loadContentTimeTrackingsByUserId(routeParams['userId']));
 
-            this.loadDataSubscription = this.actions$.pipe(ofType(LOAD_USER_BY_ID_SUCCESS, LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS)).subscribe((data: any) => {
-                if (data !== undefined && data.type !== undefined) {
-                    if (data.type === LOAD_USER_BY_ID_SUCCESS) {
-                        this.user = data.user;
+            this.loadDataSubscription = this.actions$.pipe(ofType(LOAD_USER_BY_ID_SUCCESS, LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS))
+                .subscribe((data: any) => {
+                    if (data !== undefined && data.type !== undefined) {
+                        if (data.type === LOAD_USER_BY_ID_SUCCESS) {
+                            this.user = data.user;
 
-                        this.buildForm();
+                            this.buildForm();
 
-                        this.userIsLoading = false;
-                    }
-                    else if (data.type === LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS) {
-
-                        const contentTimeTrackingRows = new Array<TableRow>();
-
-                        if (data.contentTimeTrackings !== null) {
-                            data.contentTimeTrackings.forEach((contentTimeTracking: ContentTimeTracking) => {
-                                contentTimeTrackingRows.push(
-                                    this.mapContentTimeTrackingToTableRow(contentTimeTracking)
-                                );
-                            });
+                            this.userIsLoading = false;
                         }
+                        else if (data.type === LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS) {
 
-                        this.contentTimeTrackings = contentTimeTrackingRows;
-                        this.isContentTimeTrackingLoaded = true;
+                            const contentTimeTrackingRows = new Array<TableRow>();
+
+                            if (data.contentTimeTrackings !== null) {
+                                data.contentTimeTrackings.forEach((contentTimeTracking: ContentTimeTracking) => {
+                                    contentTimeTrackingRows.push(
+                                        this.mapContentTimeTrackingToTableRow(contentTimeTracking)
+                                    );
+                                });
+                            }
+
+                            this.contentTimeTrackings = contentTimeTrackingRows;
+                            this.isContentTimeTrackingLoaded = true;
+                        }
                     }
                 }
-            });
+            );
         }
     }
 

@@ -17,9 +17,11 @@ export class ContentTimeTrackingEffects {
         this.actions$.pipe(
             ofType(LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID),
             switchMap((action: any) =>
-                from(this.dataService.getArrayAsync<ContentTimeTracking>(`Content/ContentTimeTracking/GetAllByUserId?userId=${action.userId}`, ContentTimeTracking)).pipe(
-                    map((contentTimeTrackings) => loadContentTimeTrackingsByUserIdSuccess({ contentTimeTrackings: contentTimeTrackings })),
-                    catchError((error) => of(loadContentTimeTrackingsByUserIdFailure({ error })))
+                from(this.dataService.getArrayAsync<ContentTimeTracking>(
+                    `Content/ContentTimeTracking/GetAllByUserId?userId=${action.userId}`, ContentTimeTracking)).pipe(
+                        map((contentTimeTrackings) => loadContentTimeTrackingsByUserIdSuccess({ contentTimeTrackings })),
+                        catchError((error) => of(loadContentTimeTrackingsByUserIdFailure({ error }))
+                    )
                 )
             )
         )

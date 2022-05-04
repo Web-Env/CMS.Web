@@ -48,7 +48,7 @@ export class ContentComponent implements OnDestroy, OnInit {
         this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
 
         if (this.intervalId !== undefined) {
-            clearInterval(this.intervalId)
+            clearInterval(this.intervalId);
         }
 
         const contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);

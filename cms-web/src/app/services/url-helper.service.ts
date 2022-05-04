@@ -12,7 +12,7 @@ export class UrlHelperService {
     }
 
     public isRouteParamValid(routeParam: string): boolean {
-        if (routeParam == null ||  routeParam === '') {
+        if (routeParam == null || routeParam === '') {
             return false;
         }
 

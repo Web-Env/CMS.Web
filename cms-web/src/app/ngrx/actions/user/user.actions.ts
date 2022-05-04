@@ -31,9 +31,9 @@ export const loadUsersFailure = createAction(
 );
 
 export class loadUserById implements Action {
-    readonly type = LOAD_USER_BY_ID;
+    readonly type: string = LOAD_USER_BY_ID;
     constructor(public userId: string) {}
-};
+}
 
 export const loadUserByIdSuccess = createAction(
     LOAD_USER_BY_ID_SUCCESS,
