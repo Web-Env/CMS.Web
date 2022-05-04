@@ -1,5 +1,5 @@
 <td *ngFor="let column of row?.columns" [ngClass]="{'centred': column.dataType === 'number'}" [style.width.%]="column?.width">{{ column.data }}</td>
-<td *ngIf="viewButtonEnabled && editButtonEnabled && deleteButtonEnabled">
+<td *ngIf="viewButtonEnabled || editButtonEnabled || deleteButtonEnabled">
     <div class="action-buttons-container">
         <div *ngIf="viewButtonEnabled" class="action-button"><img src="assets/images/view.png" alt="View" (click)="viewButtonClicked()"></div>
         <div *ngIf="editButtonEnabled" class="action-button"><img src="assets/images/edit.png" alt="Edit" (click)="editButtonClicked()"></div>

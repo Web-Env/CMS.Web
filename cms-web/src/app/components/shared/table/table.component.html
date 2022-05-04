@@ -13,7 +13,7 @@
         <thead>
             <tr *ngIf="headers !== undefined" class="table-header">
                 <th *ngFor="let header of headers" [style.width.%]="header.width" app-table-header [data]="header"></th>
-                <th *ngIf="viewButtonEnabled && editButtonEnabled && deleteButtonEnabled"></th>
+                <th *ngIf="viewButtonEnabled || editButtonEnabled || deleteButtonEnabled"></th>
             </tr>
         </thead>
         
