@@ -120,7 +120,6 @@ export class UsersComponent implements OnDestroy, OnInit {
     }
 
     public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
-        console.log ("Test")
         switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
             case TableRowActionButtonClickedAction.view:
                 this.router.navigateByUrl(`admin/users/user-details/${tableRowActionButtonClickedEvent.tableRow.id}`);
