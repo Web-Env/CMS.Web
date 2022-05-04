@@ -18,6 +18,10 @@ export class ContentComponent implements OnDestroy, OnInit {
     url!: string;
     contentPath!: string;
 
+    interval: number = 15;
+    intervalId!: number;
+    trackedTime: number = 0;
+
     routerPathChangeSubscription!: Subscription;
 
     constructor(private dataService: DataService,
@@ -42,6 +46,10 @@ export class ContentComponent implements OnDestroy, OnInit {
         this.url = this.router.url;
         const urlSplit = this.url.split('/');
         this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
+
+        if (this.intervalId !== undefined) {
+            clearInterval(this.intervalId);
+        }
 
         const contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
         contentModel.content = `
@@ -91,10 +99,27 @@ export class ContentComponent implements OnDestroy, OnInit {
 
         this.content = contentModel;
         this.isLoading = false;
+
+        this.intervalId = window.setInterval(() => {
+            this.recordUserViewTime();
+        }, 1000);
+    }
+
+    public recordUserViewTime(): void {
+        if (document.hasFocus()) {
+            this.trackedTime += 1;
+            
+            if (this.trackedTime === this.interval) {
+                this.dataService.postWithoutBodyAsync(`Content/ContentTimeTracking/Record?contentId=${this.content?.id}&interval=${this.interval}`);
+
+                this.trackedTime = 0;
+            }
+        }
     }
 
     ngOnDestroy(): void {
         this.routerPathChangeSubscription.unsubscribe();
+        clearInterval(this.intervalId);
     }
 
 }

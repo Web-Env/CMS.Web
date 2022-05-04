@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 import { ofType } from "@ngrx/effects";
 import { ActionsSubject, Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
+import { TableRowActionButtonClickedAction } from "src/app/consts/table-row-action-button-clicked-actions.const";
+import { TableRowActionButtonClickedEvent } from "src/app/events/table-row-action-button-clicked.event";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
 import { loadUsers, LOAD_USERS_SUCCESS } from "src/app/ngrx/actions/user/user.actions";
@@ -36,7 +39,7 @@ export class UsersComponent implements OnDestroy, OnInit {
         new TableColumn(
             'Created By',
             25
-        ),
+        )
     ];
     rows: Array<TableRow> = [];
 
@@ -48,7 +51,8 @@ export class UsersComponent implements OnDestroy, OnInit {
 
     constructor(private store: Store<AppState>,
                 private dialog: MatDialog,
-                private actions$: ActionsSubject) {}
+                private actions$: ActionsSubject,
+                private router: Router) {}
 
     ngOnInit(): void {
         this.store.dispatch(loadUsers());
@@ -59,7 +63,7 @@ export class UsersComponent implements OnDestroy, OnInit {
             if (users !== null && users.users !== null) {
                 users.users.forEach((user: User) => {
                     userRows.push(
-                        this.castUserToTableRow(user)
+                        this.mapUserToTableRow(user)
                     );
                 });
             }
@@ -69,7 +73,7 @@ export class UsersComponent implements OnDestroy, OnInit {
         });
     }
 
-    private castUserToTableRow(user: User): TableRow {
+    private mapUserToTableRow(user: User): TableRow {
         return new TableRow(
             user.id,
             [
@@ -110,9 +114,24 @@ export class UsersComponent implements OnDestroy, OnInit {
         const instance = this.dialog.open(AddUserComponent, dialogConfig);
         instance.afterClosed().subscribe((user: User) => {
             if (user !== undefined) {
-                this.rows.push(this.castUserToTableRow(user));
+                this.rows.push(this.mapUserToTableRow(user));
             }
         });
+    }
+
+    public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
+        switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
+            case TableRowActionButtonClickedAction.view:
+                this.router.navigateByUrl(`admin/users/user-details/${tableRowActionButtonClickedEvent.tableRow.id}`);
+                break;
+            case TableRowActionButtonClickedAction.edit:
+                break;
+            case TableRowActionButtonClickedAction.delete:
+                //this.deleteSection(tableRowActionButtonClickedEvent.tableRow);
+                break;
+            default:
+                break;
+        }
     }
 
     ngOnDestroy(): void {

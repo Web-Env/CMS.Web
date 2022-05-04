@@ -19,6 +19,8 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input() headers!: Array<TableColumn>;
     @Input() rows!: Array<TableRow>;
 
+    @Input() searchEnabled: boolean = true;
+    @Input() actionButtonEnabled: boolean = true;
     @Input() viewButtonEnabled: boolean = true;
     @Input() editButtonEnabled: boolean = true;
     @Input() deleteButtonEnabled: boolean = true;
@@ -41,17 +43,20 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     constructor(private dialog: MatDialog) { }
 
     ngAfterViewInit(): void {
-        this.searchTermInputSubscription = fromEvent(this.searchTermInput.nativeElement, 'input')
-            .pipe(
-                debounceTime(1000),
-                distinctUntilChanged())
-            .subscribe(() => {
-                const searchTerm = this.searchTermInput.nativeElement.value;
+        if (this.searchTermInput !== undefined) {
+            this.searchTermInputSubscription = fromEvent(this.searchTermInput.nativeElement, 'input')
+                .pipe(
+                    debounceTime(1000),
+                    distinctUntilChanged())
+                .subscribe(() => {
+                    const searchTerm = this.searchTermInput.nativeElement.value;
 
-                if (searchTerm !== '') {
-                    this.processSearchTerm(searchTerm);
+                    if (searchTerm !== '') {
+                        this.processSearchTerm(searchTerm);
+                    }
                 }
-            });
+            );
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -151,7 +156,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.searchTermInputSubscription.unsubscribe();
+        this.searchTermInputSubscription?.unsubscribe();
     }
 
 }

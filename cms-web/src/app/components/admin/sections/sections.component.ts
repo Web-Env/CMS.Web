@@ -136,8 +136,6 @@ export class SectionsComponent implements OnDestroy, OnInit {
         );
     }
 
-    
-
     public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
         switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
             case TableRowActionButtonClickedAction.edit:

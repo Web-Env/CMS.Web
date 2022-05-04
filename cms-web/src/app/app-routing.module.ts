@@ -15,6 +15,7 @@ import { RequestPasswordResetComponent } from "./components/shared/user/request-
 import { SectionsComponent } from "./components/admin/sections/sections.component";
 import { SetPasswordComponent } from "./components/shared/user/set-password/set-password.component";
 import { UsersComponent } from "./components/admin/users/users.component";
+import { UserDetailsComponent } from "./components/admin/users/user-details/user-details.component";
 
 const routes: Routes = [
     {path: '', component: MainComponent, canActivate: [ AuthGuardService ], children: [
@@ -28,6 +29,7 @@ const routes: Routes = [
         {path: 'admin/content-edit/:entryId', component: ContentCreateComponent},
         {path: 'admin/sections', component: SectionsComponent},
         {path: 'admin/users', component: UsersComponent},
+        {path: 'admin/users/user-details/:userId', component: UserDetailsComponent},
         {path: "**", redirectTo: "404"}
     ]},
     {path: 'login', component: LoginComponent},

@@ -4,4 +4,5 @@
     [headers]="headers" 
     [rows]="rows"
     [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
-    (tableActionClicked)="addUserClicked()"></app-table>
+    (tableActionClicked)="addUserClicked()"
+    (tableRowActionButtonClickedEvent)="processTableRowActionButtonClicked($event)"></app-table>

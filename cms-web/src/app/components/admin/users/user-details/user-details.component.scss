@@ -1,0 +1,78 @@
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+
+.user-details-container {
+    margin: 15px auto;
+
+    h1 {
+        color: $secondary-text-colour;
+
+        margin: 0 15px 15px 15px;
+    }
+
+    .user-container {
+        form {
+            margin: 0 15px 15px 15px;
+
+            .is-admin-form-group {
+                display: flex;
+
+                margin-bottom: 15px;
+
+                .checkbox {
+                    width: 25px;
+                    height: 25px;
+
+                    filter: brightness(0) saturate(100%) invert(9%) sepia(3%) saturate(5811%) hue-rotate(178deg)
+                        brightness(96%) contrast(83%);
+                    accent-color: $secondary-text-colour;
+
+                    margin: 0;
+
+                    border: none;
+                    outline: none;
+
+                    cursor: pointer;
+
+                    &:checked {
+                        filter: none;
+                    }
+                }
+
+                label {
+                    max-height: 25px;
+
+                    color: $tertiary-text-colour;
+
+                    margin-left: 5px;
+
+                    font-size: 1.3em;
+                    line-height: 30px;
+
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: $tablet-breakpoint) {
+    .user-details-container {
+        .user-container {
+            form {
+                .name-fieldset {
+                    padding: 0;
+
+                    display: flex;
+                    justify-content: space-between;
+
+                    border: none;
+
+                    .form-control-container {
+                        width: calc(50% - 7.5px);
+                    }
+                }
+            }
+        }
+    }
+}
