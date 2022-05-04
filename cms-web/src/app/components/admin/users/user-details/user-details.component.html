@@ -1,9 +1,38 @@
-<div class="user-details-container">
-    <div class="user-container">
+<div *ngIf="!userIsLoading && isContentTimeTrackingLoaded" class="user-details-container">
+    <h1>User Details</h1>
 
+    <div class="user-container">
+        <form [formGroup]="disabledUserForm">
+            <fieldset class="name-fieldset">
+                <div class="form-control-container">
+                    <app-text-input formControlName="firstName" [disabled]="true" [parentForm]="disabledUserForm" [inputId]="'first-name'" [inputName]="'firstName'" [inputTitle]="'First Name'" [inputType]="'text'"></app-text-input>
+                </div>
+
+                <div class="form-control-container">
+                    <app-text-input formControlName="lastName" [disabled]="true" [parentForm]="disabledUserForm" [inputId]="'last-name'" [inputName]="'lastName'" [inputTitle]="'Last Name'" [inputType]="'text'"></app-text-input>
+                </div>
+            </fieldset>
+            
+            <app-text-input formControlName="email" [disabled]="true" [parentForm]="disabledUserForm" [inputId]="'email'" [inputName]="'email'" [inputTitle]="'Email'" [inputType]="'email'"></app-text-input>
+            <div *ngIf="user.isAdmin" class="is-admin-form-group">
+                <input type="checkbox" class="checkbox" id="is-admin" formControlName="isAdmin" disabled>
+                <label for="is-admin">User is an Administrator</label>
+            </div>
+        </form>
     </div>
 
     <div class="time-tracking-container">
-        
+        <app-table 
+            [isDataLoaded]="isContentTimeTrackingLoaded"
+            [tableName]="'Time Tracking'" 
+            [headers]="headers" 
+            [rows]="contentTimeTrackings"
+            [searchEnabled]="false"
+            [actionButtonEnabled]="false"
+            [viewButtonEnabled]="false"
+            [editButtonEnabled]="false"
+            [deleteButtonEnabled]="false"></app-table>
     </div>
 </div>
+
+<div *ngIf="userIsLoading && !isContentTimeTrackingLoaded" class="loading-icon"></div>

@@ -41,6 +41,7 @@ export class DataService {
     public async getAsync<T>(endpoint: string, type: { new(): T; } | null = null, blockToast: boolean = false): Promise<T> {
         return new Promise((resolve, reject) => {
             const url = `${environment.apiUrl}/${endpoint}`;
+            console.log (url)
 
             this.httpClient.get<T>(url, this.createHttpOptions())
                 .subscribe(

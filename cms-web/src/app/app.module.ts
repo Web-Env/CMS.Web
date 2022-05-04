@@ -1,4 +1,4 @@
-import { ErrorHandler, Inject, Injectable, InjectionToken, NgModule } from '@angular/core';
+import { ErrorHandler, Inject, Injectable, InjectionToken, isDevMode, NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -47,9 +47,12 @@ import { UserDetailsComponent } from './components/admin/users/user-details/user
 import { AuthGuardService } from "./services/auth/auth-guard.service";
 import { AuthService } from "./services/auth/auth.service";
 import { DataService } from "./services/data.service";
+import { UrlHelperService } from "./services/url-helper.service";
 
 import { ContentEffects } from "./ngrx/effects/content/content.effects";
 import { ContentReducer } from "./ngrx/reducers/content/content.reducer";
+import { ContentTimeTrackingEffects } from "./ngrx/effects/content-time-tracking/content-time-tracking.effects";
+import { ContentTimeTrackingReducer } from "./ngrx/reducers/content-time-tracking/content-time-tracking.reducer";
 import { SectionEffects } from './ngrx/effects/section/section.effects';
 import { SectionReducer } from "./ngrx/reducers/section/section.reducer";
 import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
@@ -70,7 +73,12 @@ export class RollbarErrorHandler implements ErrorHandler {
     constructor(@Inject(RollbarService) private rollbar: Rollbar) { }
 
     handleError(err: any): void {
-        this.rollbar.error(err.originalError || err);
+        if (isDevMode()) {
+            console.error(err.originalError || err);
+        }
+        else {
+            this.rollbar.error(err.originalError || err);
+        }
     }
 }
 
@@ -127,6 +135,7 @@ export function rollbarFactory() {
 
         StoreModule.forRoot({
             contents: ContentReducer,
+            contentTimeTrackings: ContentTimeTrackingReducer,
             sections: SectionReducer,
             sidebarButtons: SidebarReducer,
             users: UserReducer
@@ -138,6 +147,7 @@ export function rollbarFactory() {
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         EffectsModule.forRoot([
             ContentEffects,
+            ContentTimeTrackingEffects,
             SectionEffects,
             SidebarEffects,
             UserEffects
@@ -147,6 +157,7 @@ export function rollbarFactory() {
         AuthService,
         AuthGuardService,
         DataService,
+        UrlHelperService,
         {
             provide: MatDialogRef,
             useValue: {}

@@ -7,3 +7,13 @@ export const selectAllUsers = createSelector(
     selectUsers,
     (state: UserState) => state.users
 );
+export const selectUserById = (id: string) => createSelector(selectUsers, (state: UserState) => {
+    if (state !== undefined) {
+        return state.users.find((user) => 
+            user.id = id
+        );
+    }
+    else {
+        return {};
+    }
+});

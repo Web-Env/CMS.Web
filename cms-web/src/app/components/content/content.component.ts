@@ -110,7 +110,7 @@ export class ContentComponent implements OnDestroy, OnInit {
             this.trackedTime += 1;
             
             if (this.trackedTime === this.interval) {
-                this.dataService.postWithoutBodyAsync(`Content/TrackUserTime?contentId=${this.content?.id}&interval=${this.interval}`);
+                this.dataService.postWithoutBodyAsync(`Content/ContentTimeTracking/Record?contentId=${this.content?.id}&interval=${this.interval}`);
 
                 this.trackedTime = 0;
             }
