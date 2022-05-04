@@ -6,7 +6,7 @@ import { ActionsSubject, Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
-import { loadContentTimeTrackings, LOAD_CONTENT_TIME_TRACKINGS_SUCCESS } from "src/app/ngrx/actions/content-time-tracking/content-time-tracking.actions";
+import { loadContentTimeTrackings, LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS } from "src/app/ngrx/actions/content-time-tracking/content-time-tracking.actions";
 import { loadUserById, LOAD_USER_BY_ID_SUCCESS } from "src/app/ngrx/actions/user/user.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { ContentTimeTracking } from "src/app/ngrx/models/content-time-tracking.model";
@@ -52,9 +52,9 @@ export class UserDetailsComponent implements OnDestroy, OnInit {
             this.urlHelperService.isRouteParamValid(routeParams['userId'])) {
 
             this.store.dispatch(new loadUserById(routeParams['userId']));
-            this.store.dispatch(loadContentTimeTrackings());
+            this.store.dispatch(new loadContentTimeTrackings(routeParams['userId']));
 
-            this.loadDataSubscription = this.actions$.pipe(ofType(LOAD_USER_BY_ID_SUCCESS, LOAD_CONTENT_TIME_TRACKINGS_SUCCESS)).subscribe((data: any) => {
+            this.loadDataSubscription = this.actions$.pipe(ofType(LOAD_USER_BY_ID_SUCCESS, LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS)).subscribe((data: any) => {
                 if (data !== undefined && data.type !== undefined) {
                     if (data.type === LOAD_USER_BY_ID_SUCCESS) {
                         this.user = data.user;
@@ -63,7 +63,7 @@ export class UserDetailsComponent implements OnDestroy, OnInit {
 
                         this.userIsLoading = false;
                     }
-                    else if (data.type === LOAD_CONTENT_TIME_TRACKINGS_SUCCESS) {
+                    else if (data.type === LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS) {
 
                         const contentTimeTrackingRows = new Array<TableRow>();
 
