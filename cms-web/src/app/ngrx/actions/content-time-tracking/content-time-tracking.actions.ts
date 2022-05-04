@@ -10,17 +10,17 @@ export const LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID = `${ACTION_TITLE} ${StoreAc
 export const LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS = `${LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID} ${StoreActionStatuses.success}`;
 export const LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_FAILURE = `${LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID} ${StoreActionStatuses.failure}`;
 
-export class loadContentTimeTrackings implements Action {
+export class loadContentTimeTrackingsByUserId implements Action {
     readonly type = LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID;
     constructor(public userId: string) {}
 }
 
-export const loadContentTimeTrackingsSuccess = createAction(
+export const loadContentTimeTrackingsByUserIdSuccess = createAction(
     LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS,
     props<{ contentTimeTrackings: ContentTimeTracking[] }>()
 );
 
-export const loadContentTimeTrackingsFailure = createAction(
+export const loadContentTimeTrackingsByUserIdFailure = createAction(
     LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_FAILURE,
     props<{ error: string }>()
 );

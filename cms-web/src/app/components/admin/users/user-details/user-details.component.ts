@@ -6,7 +6,7 @@ import { ActionsSubject, Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
-import { loadContentTimeTrackings, LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS } from "src/app/ngrx/actions/content-time-tracking/content-time-tracking.actions";
+import { loadContentTimeTrackingsByUserId, LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS } from "src/app/ngrx/actions/content-time-tracking/content-time-tracking.actions";
 import { loadUserById, LOAD_USER_BY_ID_SUCCESS } from "src/app/ngrx/actions/user/user.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { ContentTimeTracking } from "src/app/ngrx/models/content-time-tracking.model";
@@ -48,11 +48,11 @@ export class UserDetailsComponent implements OnDestroy, OnInit {
     ngOnInit(): void {
         var routeParams = this.activatedRoute.snapshot.params;
 
-        if (this.urlHelperService.isRouteParamObjectValid(routeParams) && 
+        if (this.urlHelperService.isRouteParamObjectValid(routeParams) &&
             this.urlHelperService.isRouteParamValid(routeParams['userId'])) {
 
             this.store.dispatch(new loadUserById(routeParams['userId']));
-            this.store.dispatch(new loadContentTimeTrackings(routeParams['userId']));
+            this.store.dispatch(new loadContentTimeTrackingsByUserId(routeParams['userId']));
 
             this.loadDataSubscription = this.actions$.pipe(ofType(LOAD_USER_BY_ID_SUCCESS, LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS)).subscribe((data: any) => {
                 if (data !== undefined && data.type !== undefined) {
@@ -118,7 +118,7 @@ export class UserDetailsComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy(): void {
-        this.loadDataSubscription.unsubscribe();
+        this.loadDataSubscription?.unsubscribe();
     }
 
 }

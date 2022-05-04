@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { loadContentTimeTrackings, loadContentTimeTrackingsSuccess } from "../../actions/content-time-tracking/content-time-tracking.actions";
+import { loadContentTimeTrackingsByUserIdFailure, loadContentTimeTrackingsByUserIdSuccess } from "../../actions/content-time-tracking/content-time-tracking.actions";
 import { ContentTimeTracking } from "../../models/content-time-tracking.model";
 
 export interface ContentTimeTrackingState {
@@ -16,13 +16,17 @@ export const initialState: ContentTimeTrackingState = {
 
 export const ContentTimeTrackingReducer = createReducer(
     initialState,
-    //on(loadContentTimeTrackings, (state) => ({ ...state, status: 'loading' })),
-    on(loadContentTimeTrackingsSuccess, (state, { contentTimeTrackings }) => ({ 
+    on(loadContentTimeTrackingsByUserIdSuccess, (state, { contentTimeTrackings }) => ({ 
         ...state,
         contentTimeTrackings,
         error: '',
         status: 'success' 
-    }))
+    })),
+    on(loadContentTimeTrackingsByUserIdFailure, (state, error) => ({
+        ...state,
+        error: error.error,
+        status: 'error'
+    })),
 );
 
 export const reducer = (state: ContentTimeTrackingState | undefined, action: Action): any => {
