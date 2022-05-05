@@ -11,7 +11,7 @@ export const LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_SUCCESS = `${LOAD_CONTENT_TI
 export const LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID_FAILURE = `${LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID} ${StoreActionStatuses.failure}`;
 
 export class loadContentTimeTrackingsByUserId implements Action {
-    readonly type = LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID;
+    readonly type: string = LOAD_CONTENT_TIME_TRACKINGS_BY_USER_ID;
     constructor(public userId: string) {}
 }
 

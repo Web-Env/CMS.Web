@@ -44,6 +44,11 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
 
     addContentForm!: FormGroup;
     editor = Editor;
+    htmlEditorConfig = {
+        mediaEmbed: {
+            previewsInData: true
+        }
+    }
 
     isLoading: boolean = false;
     addContentFormErrorMessageVisible: boolean = false;
