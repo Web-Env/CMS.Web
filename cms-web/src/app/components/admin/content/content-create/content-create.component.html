@@ -5,7 +5,7 @@
             <option value="none"><i>No Section Selected</i></option>
             <option *ngFor="let section of sections" [value]="section.id">{{ section.title }}</option>
         </select>
-        <app-text-input formControlName="title" [parentForm]="addContentForm" [inputId]="'title'" [inputName]="'title'" [inputTitle]="'Title'" [inputType]="'text'"></app-text-input>
+        <app-text-input formControlName="title" [parentForm]="addContentForm" [inputId]="'title'" [inputName]="'title'" [inputTitle]="'Title'" [inputType]="'text'" [disabled]="contentId === '00000000-0000-0000-0000-000000000000'"></app-text-input>
         <app-text-input formControlName="path" [parentForm]="addContentForm" [inputId]="'path'" [inputName]="'path'" [inputTitle]="'Path'" [inputType]="'text'" [disabled]="true" #pathTextInputComponent></app-text-input>
 
         <div class="content-editor-container">

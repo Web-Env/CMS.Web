@@ -61,7 +61,36 @@ export class ContentsComponent implements OnDestroy, OnInit {
         this.store.dispatch(loadContents());
 
         this.loadContentsSuccessSubscription = this.actions$.pipe(ofType(ContentActions.LOAD_CONTENTS_SUCCESS)).subscribe((contents: any) => {
-            const contentRows = new Array<TableRow>();
+            const contentRows = new Array<TableRow>(
+                new TableRow(
+                    '00000000-0000-0000-0000-000000000000',
+                    [
+                        new TableColumn(
+                            'Home',
+                            35
+                        ),
+                        new TableColumn(
+                            '-',
+                            20
+                        ),
+                        new TableColumn(
+                            '-',
+                            15
+                        ),
+                        new TableColumn(
+                            '-',
+                            5
+                        ),
+                        new TableColumn(
+                            '-',
+                            25
+                        )
+                    ],
+                    false,
+                    true,
+                    false
+                )
+            );
 
             if (contents !== null && contents.contents !== null) {
                 
@@ -142,7 +171,8 @@ export class ContentsComponent implements OnDestroy, OnInit {
     }
 
     public editContent(tableRow: TableRow): void {
-        this.router.navigateByUrl(`admin/content-edit/${tableRow.columns[1].data}`);
+        const contentPath = tableRow.id !== '00000000-0000-0000-0000-000000000000' ? tableRow.columns[1].data : '';
+        this.router.navigateByUrl(`admin/content-edit/${contentPath}`);
     }
 
     public deleteContent(deletedTableRow: TableRow): void {

@@ -138,8 +138,14 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         this.contentPath = contentModel.path;
         this.sectionId = contentModel.section?.id;
         this.contentLoaded = true;
-
-        this.buildForm();
+        
+        this.addContentForm.controls['section'].setValue(this.sectionId);
+        if (this.contentId === '00000000-0000-0000-0000-000000000000') {
+            this.addContentForm.controls['section'].disable();
+        }
+        this.addContentForm.controls['title'].setValue(this.contentTitle);
+        this.addContentForm.controls['path'].setValue(this.contentPath || '-');
+        this.addContentForm.controls['content'].setValue(this.content);
     }
 
     public buildForm(): void {
@@ -162,17 +168,19 @@ export class ContentCreateComponent implements OnDestroy, OnInit {
         });
 
         this.addContentForm.get('title')?.valueChanges.subscribe((data) => {
-            let titleData = data.toLowerCase().trim();
-            titleData = titleData.replaceAll(' ', '-');
-
-            this.pathTextInputComponent.writeValue(titleData);
-            this.pathTextInputComponent.changed(titleData);
-
-            if (titleData.length > 0) {
-                this.pathTextInputComponent.inputPopulated = true;
-            }
-            else {
-                this.pathTextInputComponent.inputPopulated = false;
+            if (data !== undefined && data !== null) {
+                let titleData = data.toLowerCase().trim();
+                titleData = titleData.replaceAll(' ', '-');
+    
+                this.pathTextInputComponent.writeValue(titleData);
+                this.pathTextInputComponent.changed(titleData);
+    
+                if (titleData.length > 0) {
+                    this.pathTextInputComponent.inputPopulated = true;
+                }
+                else {
+                    this.pathTextInputComponent.inputPopulated = false;
+                }
             }
         });
     }

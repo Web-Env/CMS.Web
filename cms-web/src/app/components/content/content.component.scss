@@ -2,7 +2,7 @@
 @import "src/assets/scss/variables/typeface";
 
 .content-container {
-    width: 90%;
+    width: calc(100% - 60px);
 
     margin: auto;
 }
