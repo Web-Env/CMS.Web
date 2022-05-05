@@ -14,6 +14,12 @@
         form {
             margin: 0 15px 15px 15px;
 
+            .name-fieldset {
+                padding: 0;
+                
+                border: none;
+            }
+
             .is-admin-form-group {
                 display: flex;
 
@@ -61,12 +67,8 @@
         .user-container {
             form {
                 .name-fieldset {
-                    padding: 0;
-
                     display: flex;
                     justify-content: space-between;
-
-                    border: none;
 
                     .form-control-container {
                         width: calc(50% - 7.5px);
