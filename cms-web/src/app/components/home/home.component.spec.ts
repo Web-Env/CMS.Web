@@ -1,5 +1,6 @@
 import { HttpClientModule } from "@angular/common/http";
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from "@angular/router/testing";
 import { ToastrModule, ToastrService } from "ngx-toastr";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { DataService } from "src/app/services/data.service";
@@ -15,6 +16,7 @@ describe('HomeComponent', () => {
             declarations: [HomeComponent],
             imports: [
                 HttpClientModule,
+                RouterTestingModule,
                 ToastrModule.forRoot()
             ],
             providers: [
