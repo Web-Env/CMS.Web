@@ -41,10 +41,10 @@
 
 .sidebar-buttons-container {
     height: calc(
-        100% -
+        100vh -
             (
                 $sidebar-header-mobile-height + $sidebar-button-search-container-height +
-                    $sidebar-button-search-margin-bottom
+                $sidebar-button-search-margin-bottom + $header-mobile-height + ($header-vertical-padding * 2) + $header-border-bottom-height
             )
     );
 
@@ -67,11 +67,14 @@
 @media screen and (min-width: $desktop-small-breakpoint) {
     .sidebar-buttons-container {
         height: calc(
-            100% -
+            100vh -
                 (
                     $sidebar-header-desktop-height + $sidebar-button-search-container-height +
-                        $sidebar-button-search-margin-bottom
+                    $sidebar-button-search-margin-bottom
                 )
         );
+
+        margin: 0 5px 0 $sidebar-buttons-container-horizontal-margin;
+        padding-right: 20px;
     }
 }
