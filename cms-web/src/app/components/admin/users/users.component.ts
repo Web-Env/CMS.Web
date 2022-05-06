@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common";
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Router } from "@angular/router";
@@ -52,7 +53,8 @@ export class UsersComponent implements OnDestroy, OnInit {
     constructor(private store: Store<AppState>,
                 private dialog: MatDialog,
                 private actions$: ActionsSubject,
-                private router: Router) {}
+                private router: Router,
+                private datePipe: DatePipe) {}
 
     ngOnInit(): void {
         this.store.dispatch(loadUsers());
@@ -90,11 +92,11 @@ export class UsersComponent implements OnDestroy, OnInit {
                     30
                 ),
                 new TableColumn(
-                    '02/04/2022',
+                    this.datePipe.transform(user.createdOn, 'dd/MM/yy') as string,
                     10
                 ),
                 new TableColumn(
-                    'Adam Barry-O\'Donovan',
+                    user.createdBy || '-',
                     20
                 )
             ]
