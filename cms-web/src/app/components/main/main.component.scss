@@ -126,3 +126,23 @@
         }
     }
 }
+
+@media screen and (min-width: $desktop-large-breakpoint) {
+    .app-stage {
+        .header-container {
+            width: calc(100% - $sidebar-desktop-large-width);
+
+            left: $sidebar-desktop-large-width;
+        }
+
+        .sidebar-container {
+            width: $sidebar-desktop-large-width;
+        }
+
+        .stage {
+            width: calc(100% - $sidebar-desktop-large-width);
+
+            left: $sidebar-desktop-large-width;
+        }
+    }
+}
