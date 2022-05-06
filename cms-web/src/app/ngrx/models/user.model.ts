@@ -4,4 +4,6 @@ export class User {
     lastName!: string;
     email!: string;
     isAdmin!: boolean;
+    createdOn!: Date;
+    createdBy!: string;
 }
