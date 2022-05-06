@@ -103,7 +103,7 @@
     }
 }
 
-@media screen and (min-width: $desktop-breakpoint) {
+@media screen and (min-width: $desktop-small-breakpoint) {
     .app-stage {
         .header-container {
             width: calc(100% - $sidebar-desktop-width);
