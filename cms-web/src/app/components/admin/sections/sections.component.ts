@@ -11,7 +11,7 @@ import { TableRow } from "src/app/models/view-models/table-row.model";
 import { loadSections, LOAD_SECTIONS_SUCCESS, removeSection, REMOVE_SECTION_SUCCESS } from "src/app/ngrx/actions/section/section.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { Section } from "src/app/ngrx/models/section.model";
-import { selectSectionById } from "src/app/ngrx/selectors/section/section.selectors";
+import { EventsService } from "src/app/services/events.service";
 import { MessageDialogComponent } from "../../shared/dialogs/message-dialog/message-dialog.component";
 import { AddSectionComponent } from "./add-section/add-section.component";
 
@@ -78,7 +78,8 @@ export class SectionsComponent implements OnDestroy, OnInit {
         return `${tableRow.columns[0].data} (${tableRow.columns[1].data})`;
     }
 
-    constructor(private store: Store<AppState>,
+    constructor(private eventsService: EventsService,
+                private store: Store<AppState>,
                 private dialog: MatDialog,
                 private actions$: ActionsSubject,
                 private datePipe: DatePipe) {}
@@ -178,10 +179,15 @@ export class SectionsComponent implements OnDestroy, OnInit {
         const instance = this.dialog.open(AddSectionComponent, dialogConfig);
         instance.componentInstance.sectionId = editedTableRow.id;
         instance.afterClosed().subscribe((section: Section) => {
+            console.log (section)
             if (section !== undefined) {
                 this.isDataLoaded = false;
                 this.rows = [];
                 this.store.dispatch(loadSections());
+
+                if (editedTableRow.columns[2].data !== '-') {
+                    this.eventsService.refreshSidebarEvent.emit();
+                }
             }
         });
     }

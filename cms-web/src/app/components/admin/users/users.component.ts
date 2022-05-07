@@ -161,7 +161,9 @@ export class UsersComponent implements OnDestroy, OnInit {
         instance.componentInstance.userId = editedTableRow.id;
         instance.afterClosed().subscribe((user: User) => {
             if (user !== undefined) {
-                this.rows.push(this.mapUserToTableRow(user));
+                this.isDataLoaded = false;
+                this.rows = [];
+                this.store.dispatch(loadUsers());
             }
         });
     }

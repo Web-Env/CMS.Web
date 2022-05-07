@@ -43,13 +43,30 @@ export const UserReducer = createReducer(
         error: error.error,
         status: 'error'
     })),
-    on(UserActions.addUser, (state) => ({ ...state, status: 'loading' })),
+    on(UserActions.addUser, (state) => ({ 
+        ...state, 
+        status: 'loading' 
+    })),
     on(UserActions.addUserSuccess, (state, { user }) => ({
         users: [...state.users, user],
         error: '',
         status: 'success'
     })),
     on(UserActions.addUserFailure, (state, { error }) => ({
+        ...state,
+        error,
+        status: 'error'
+    })),
+    on(UserActions.updateUser, (state) => ({
+         ...state, 
+         status: 'loading' 
+    })),
+    on(UserActions.updateUserSuccess, (state) => ({
+        ...state,
+        error: '',
+        status: 'success'
+    })),
+    on(UserActions.updateUserFailure, (state, { error }) => ({
         ...state,
         error,
         status: 'error'

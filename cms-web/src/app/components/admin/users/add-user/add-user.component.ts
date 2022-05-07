@@ -7,7 +7,7 @@ import { ActionsSubject, Store } from "@ngrx/store";
 import { delay, Subscription } from "rxjs";
 import * as shajs from "sha.js";
 import { UserUploadModel } from "src/app/models/upload-models/user.model";
-import { addUser } from "src/app/ngrx/actions/user/user.actions";
+import { addUser, updateUser } from "src/app/ngrx/actions/user/user.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import * as UserActions from "src/app/ngrx/actions/user/user.actions";
 import { selectUserById } from "src/app/ngrx/selectors/user/user.selectors";
@@ -50,13 +50,13 @@ export class AddUserComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnInit(): void {
-        this.addUserSuccessSubscription = this.actions$.pipe(ofType(UserActions.ADD_USER_SUCCESS)).subscribe((newUser: any) => {
+        this.addUserSuccessSubscription = this.actions$.pipe(ofType(UserActions.ADD_USER_SUCCESS, UserActions.UPDATE_USER_SUCCESS)).subscribe((newUser: any) => {
             if (this.saveClicked) {
                 this.dialogRef.close(newUser.user);
             }
         });
 
-        this.addUserFailureSubscription = this.actions$.pipe(ofType(UserActions.ADD_USER_FAILURE)).subscribe((data: any) => {
+        this.addUserFailureSubscription = this.actions$.pipe(ofType(UserActions.ADD_USER_FAILURE, UserActions.UPDATE_USER_FAILURE)).subscribe((data: any) => {
             if (data.name === 'HttpErrorResponse') {
                 const err = data as HttpErrorResponse;
 
@@ -191,7 +191,15 @@ export class AddUserComponent implements AfterViewInit, OnDestroy, OnInit {
             }
 
             try {
-                this.store.dispatch(addUser(newUserUploadModel));
+                if (this.userId === undefined && this.user === undefined) {
+                    this.store.dispatch(addUser(newUserUploadModel));
+                }
+                else {
+                    newUserUploadModel.id = this.userId;
+                    newUserUploadModel.email = this.user.email;
+                    
+                    this.store.dispatch(updateUser(newUserUploadModel));
+                }
             }
             catch (err) {
                 this.addUserFormErrorMessage = 'An unexpected error occured, please try again';

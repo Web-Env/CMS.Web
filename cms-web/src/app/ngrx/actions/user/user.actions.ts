@@ -16,6 +16,9 @@ export const LOAD_USER_BY_ID_FAILURE = `${LOAD_USER_BY_ID} ${StoreActionStatuses
 export const ADD_USER = `${ACTION_TITLE} ${StoreActions.add} ${ACTION_SUBJECT}`;
 export const ADD_USER_SUCCESS = `${ADD_USER} ${StoreActionStatuses.success}`;
 export const ADD_USER_FAILURE = `${ADD_USER} ${StoreActionStatuses.failure}`;
+export const UPDATE_USER = `${ACTION_TITLE} ${StoreActions.update} ${ACTION_SUBJECT}`;
+export const UPDATE_USER_SUCCESS = `${UPDATE_USER} ${StoreActionStatuses.success}`;
+export const UPDATE_USER_FAILURE = `${UPDATE_USER} ${StoreActionStatuses.failure}`;
 export const REMOVE_USER = `${ACTION_TITLE} ${StoreActions.remove} ${ACTION_SUBJECT}`;
 export const REMOVE_USER_SUCCESS = `${REMOVE_USER} ${StoreActionStatuses.success}`;
 export const REMOVE_USER_FAILURE = `${REMOVE_USER} ${StoreActionStatuses.failure}`;
@@ -59,6 +62,21 @@ export const addUserSuccess = createAction(
 
 export const addUserFailure = createAction(
     ADD_USER_FAILURE,
+    props<{ error: string }>()
+);
+
+export const updateUser = createAction(
+    UPDATE_USER,
+    (user: UserUploadModel) => ({ user })
+);
+
+export const updateUserSuccess = createAction(
+    UPDATE_USER_SUCCESS,
+    props<{ user: User }>()
+);
+
+export const updateUserFailure = createAction(
+    UPDATE_USER_FAILURE,
     props<{ error: string }>()
 );
 
