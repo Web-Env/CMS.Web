@@ -39,7 +39,7 @@ export class ContentEffects {
             ofType(addContent),
             switchMap((action) =>
                 from(this.dataService.postAsync<Content>('Content/Add', action.content, Content)).pipe(
-                    map((content: any) => addContentSuccess(content)),
+                    map((content: Content) => addContentSuccess({ content })),
                     catchError((error) => of(addContentFailure(error)))
                 )
             )
