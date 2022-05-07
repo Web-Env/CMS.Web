@@ -2,6 +2,7 @@ export class UserUploadModel {
     firstName!: string;
     lastName!: string;
     email!: string;
+    expiresOn: Date | undefined;
     isAdmin!: boolean;
     adminPassword: string | undefined;
 

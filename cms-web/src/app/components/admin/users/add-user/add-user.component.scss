@@ -1,4 +1,5 @@
 @import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
 
 .add-user-form-container {
     form {
@@ -44,6 +45,37 @@
         .admin-warning {
             color: $primary-negative-colour;
         }
+
+        .expiry-date-picker-container {
+            display: flex;
+            justify-content: space-between;
+
+            .form-group {
+                width: 100%;
+
+                .input-container {
+                    mat-datepicker-toggle.mat-datepicker-toggle {
+                        position: absolute;
+                        right: 5px;
+                        top: 15px;
+
+                        ::ng-deep.mat-icon-button {
+                            background-color: $primary-background-colour;
+
+                            .mat-button-wrapper {
+                                svg {
+                                    fill: $secondary-text-colour;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .add-six-months-button-container {
+                display: none;
+            }
+        }
     }
 
     .add-user-form-error {
@@ -52,5 +84,25 @@
         margin: 15px 0 0 0;
 
         text-align: center;
+    }
+}
+
+@media screen and (min-width: $tablet-small-breakpoint) {
+    .add-user-form-container {
+        form {
+            .expiry-date-picker-container {
+                .form-group {
+                    width: 60%;
+                }
+    
+                .add-six-months-button-container {
+                    width: 35%;
+                    
+                    margin-top: 10px;
+
+                    display: block;
+                }
+            }
+        }
     }
 }

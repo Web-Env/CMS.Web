@@ -3,6 +3,7 @@ export class User {
     firstName!: string;
     lastName!: string;
     email!: string;
+    expiresOn!: Date | undefined;
     isAdmin!: boolean;
     createdOn!: Date;
     createdBy!: string;

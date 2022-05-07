@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-loading-button',
@@ -9,6 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class LoadingButtonComponent {
     @Input() buttonText!: string;
+    @Input() buttonType: string = 'button';
     @Input() isLoading!: boolean;
     @Input() isDisabled!: boolean;
     @Input() useNegativeColour: boolean = false;

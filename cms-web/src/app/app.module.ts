@@ -2,7 +2,9 @@ import { ErrorHandler, Inject, Injectable, InjectionToken, isDevMode, NgModule }
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatNativeDateModule, MAT_DATE_LOCALE } from "@angular/material/core";
 import { DatePipe } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
@@ -126,7 +128,9 @@ export function rollbarFactory() {
         CKEditorModule,
         FormsModule,
         HttpClientModule,
+        MatDatepickerModule,
         MatDialogModule,
+        MatNativeDateModule,
         ReactiveFormsModule,
         ToastrModule.forRoot({
             progressBar: true,
@@ -162,8 +166,18 @@ export function rollbarFactory() {
             provide: MatDialogRef,
             useValue: {}
         },
-        { provide: ErrorHandler, useClass: RollbarErrorHandler },
-        { provide: RollbarService, useFactory: rollbarFactory },
+        { 
+            provide: ErrorHandler, 
+            useClass: RollbarErrorHandler 
+        },
+        { 
+            provide: RollbarService, 
+            useFactory: rollbarFactory 
+        },
+        {
+            provide: MAT_DATE_LOCALE, 
+            useValue: 'en-GB'
+        },
 
         DatePipe
     ],
