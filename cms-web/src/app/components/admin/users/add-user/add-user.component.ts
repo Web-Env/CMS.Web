@@ -1,15 +1,17 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { ofType } from "@ngrx/effects";
 import { ActionsSubject, Store } from "@ngrx/store";
+import { delay, Subscription } from "rxjs";
 import * as shajs from "sha.js";
 import { UserUploadModel } from "src/app/models/upload-models/user.model";
 import { addUser } from "src/app/ngrx/actions/user/user.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import * as UserActions from "src/app/ngrx/actions/user/user.actions";
-import { Subscription } from "rxjs";
+import { selectUserById } from "src/app/ngrx/selectors/user/user.selectors";
+import { User } from "src/app/ngrx/models/user.model";
 
 @Component({
     selector: 'app-add-user',
@@ -19,9 +21,15 @@ import { Subscription } from "rxjs";
         '../../../shared/form-components/text-input/text-input.component.scss'
     ]
 })
-export class AddUserComponent implements OnDestroy, OnInit {
+export class AddUserComponent implements AfterViewInit, OnDestroy, OnInit {
     addUserForm!: FormGroup;
+
+    userId!: string;
+    user!: User;
+
     isAdminChecked: boolean = false;
+    isAdminPasswordInputVisible: boolean = true;
+
     expiryDatePickerInputActive: boolean = false;
     expiryDatePickerInputPopulated: boolean = false;
     expiryDatePickerInputHasError: boolean = false;
@@ -77,6 +85,26 @@ export class AddUserComponent implements OnDestroy, OnInit {
         });
     }
 
+    ngAfterViewInit(): void {
+        if (this.userId !== undefined && this.userId !== '') {
+            this.store.select(selectUserById(this.userId)).pipe(delay(0)).subscribe((user: any) => {
+                this.user = user;
+                this.expiryDatePickerInputPopulated = this.user.expiresOn !== undefined;
+                this.isAdminChecked = this.user.isAdmin;
+                this.isAdminPasswordInputVisible = !this.isAdminChecked;
+
+                this.addUserForm.setValue({
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    expiryDate: user.expiresOn,
+                    isAdmin: user.isAdmin
+                });
+                this.addUserForm.get('email')?.disable();
+            });
+        }
+    }
+
     public buildForm(): void {
         this.addUserForm = new FormGroup({
             firstName: new FormControl(
@@ -91,8 +119,8 @@ export class AddUserComponent implements OnDestroy, OnInit {
                 '',
                 [Validators.required, Validators.email]
             ),
-            isAdmin: new FormControl(),
-            expiryDate: new FormControl()
+            expiryDate: new FormControl(),
+            isAdmin: new FormControl()
         });
     }
 
@@ -100,11 +128,20 @@ export class AddUserComponent implements OnDestroy, OnInit {
         this.isAdminChecked = event.target.checked;
 
         if (this.isAdminChecked) {
+            if (!this.isAdminPasswordInputVisible) {
+                return;
+            }
+
             this.addUserForm.addControl('password', new FormControl('', [Validators.required, Validators.minLength(8)]));
             this.addUserForm.get('expiryDate')?.setValue('');
         }
         else {
             this.addUserForm.removeControl('password');
+
+            if (this.user !== undefined && this.user.expiresOn !== undefined) {
+                this.addUserForm.get('expiryDate')?.setValue(this.user.expiresOn);
+                this.expiryDatePickerInputPopulated = true;
+            }
         }
     }
 
