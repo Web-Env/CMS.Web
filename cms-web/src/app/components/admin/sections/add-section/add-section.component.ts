@@ -1,23 +1,27 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { ofType } from "@ngrx/effects";
 import { ActionsSubject, Store } from "@ngrx/store";
-import { Subscription } from "rxjs";
+import { delay, Subscription } from "rxjs";
 import { TextInputComponent } from "src/app/components/shared/form-components/text-input/text-input.component";
 import { SectionUploadModel } from "src/app/models/upload-models/section.model";
-import { addSection } from "src/app/ngrx/actions/section/section.actions";
+import { addSection, updateSection } from "src/app/ngrx/actions/section/section.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import * as SectionActions from "src/app/ngrx/actions/section/section.actions";
 import { HttpErrorResponse } from "@angular/common/http";
+import { Section } from "src/app/ngrx/models/section.model";
+import { selectSectionById } from "src/app/ngrx/selectors/section/section.selectors";
 
 @Component({
     selector: 'app-add-section',
     templateUrl: './add-section.component.html'
 })
-export class AddSectionComponent implements OnDestroy, OnInit {
+export class AddSectionComponent implements AfterViewInit, OnDestroy, OnInit {
     @ViewChild('pathTextInputComponent')
     pathTextInputComponent!: TextInputComponent;
+
+    sectionId!: string;
 
     addSectionForm!: FormGroup;
 
@@ -37,11 +41,14 @@ export class AddSectionComponent implements OnDestroy, OnInit {
     }
 
     ngOnInit(): void {
-        this.addSectionSuccessSubscription = this.actions$.pipe(ofType(SectionActions.ADD_SECTION_SUCCESS)).subscribe((newSection) => {
-            if (this.saveClicked) {
-                this.dialogRef.close(newSection);
+        this.addSectionSuccessSubscription = this.actions$
+            .pipe(ofType(SectionActions.ADD_SECTION_SUCCESS, SectionActions.UPDATE_SECTION_SUCCESS))
+            .subscribe((newSection) => {
+                if (this.saveClicked) {
+                    this.dialogRef.close(newSection);
+                }
             }
-        });
+        );
 
         this.addSectionFailureSubscription = this.actions$.pipe(ofType(SectionActions.ADD_SECTION_FAILURE)).subscribe((data: any) => {
             if (data.name === 'HttpErrorResponse') {
@@ -70,6 +77,17 @@ export class AddSectionComponent implements OnDestroy, OnInit {
             this.addSectionFormErrorMessageVisible = true;
             this.toggleIsLoading(false);
         });
+    }
+
+    ngAfterViewInit(): void {
+        if (this.sectionId !== undefined && this.sectionId !== '') {
+            this.store.select(selectSectionById(this.sectionId)).pipe(delay(0)).subscribe((section: any) => {
+                this.addSectionForm.setValue({
+                    title: section.title,
+                    path: section.path
+                });
+            });
+        }
     }
 
     public buildForm(): void {
@@ -107,6 +125,7 @@ export class AddSectionComponent implements OnDestroy, OnInit {
 
     public async createSectionAsync(addSectionForm: any): Promise<void> {
         if(!this.isLoading) {
+            console.log (this.sectionId)
             this.addSectionFormErrorMessageVisible = false;
             this.toggleIsLoading(true);
             this.saveClicked = true;
@@ -117,7 +136,14 @@ export class AddSectionComponent implements OnDestroy, OnInit {
             );
 
             try {
-                this.store.dispatch(addSection(newSectionUploadModel));
+                if (this.sectionId === undefined || this.sectionId === '') {
+                    this.store.dispatch(addSection(newSectionUploadModel));
+                }
+                else {
+                    newSectionUploadModel.id = this.sectionId;
+
+                    this.store.dispatch(updateSection(newSectionUploadModel));
+                }
             }
             catch (err) {
                 this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
