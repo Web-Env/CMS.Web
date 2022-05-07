@@ -116,7 +116,7 @@ export class UsersComponent implements OnDestroy, OnInit {
         );
     }
 
-    public addUserClicked(): void {
+    private createMatDialogConfig(): MatDialogConfig {
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.disableClose = false;
@@ -126,6 +126,11 @@ export class UsersComponent implements OnDestroy, OnInit {
         dialogConfig.height = 'fit-content';
         dialogConfig.closeOnNavigation = true;
 
+        return dialogConfig;
+    }
+
+    public addUserClicked(): void {
+        const dialogConfig = this.createMatDialogConfig();
         const instance = this.dialog.open(AddUserComponent, dialogConfig);
         instance.afterClosed().subscribe((user: User) => {
             if (user !== undefined) {
@@ -140,6 +145,7 @@ export class UsersComponent implements OnDestroy, OnInit {
                 this.router.navigateByUrl(`admin/users/user-details/${tableRowActionButtonClickedEvent.tableRow.id}`);
                 break;
             case TableRowActionButtonClickedAction.edit:
+                this.editUser(tableRowActionButtonClickedEvent.tableRow);
                 break;
             case TableRowActionButtonClickedAction.delete:
                 this.deleteUser(tableRowActionButtonClickedEvent.tableRow);
@@ -147,6 +153,19 @@ export class UsersComponent implements OnDestroy, OnInit {
             default:
                 break;
         }
+    }
+
+    public editUser(editedTableRow: TableRow): void {
+        const dialogConfig = this.createMatDialogConfig();
+        const instance = this.dialog.open(AddUserComponent, dialogConfig);
+        instance.componentInstance.userId = editedTableRow.id;
+        instance.afterClosed().subscribe((user: User) => {
+            if (user !== undefined) {
+                this.isDataLoaded = false;
+                this.rows = [];
+                this.store.dispatch(loadUsers());
+            }
+        });
     }
 
     public deleteUser(deletedTableRow: TableRow): void {

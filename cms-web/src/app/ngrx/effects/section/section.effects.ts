@@ -51,7 +51,7 @@ export class SectionEffects {
             ofType(updateSection),
             switchMap((action) => 
                 from(this.dataService.putAsync<Section>('Section/Update', action.section, Section)).pipe(
-                    map((section: any) => updateSectionSuccess(section)),
+                    map((section: any) => updateSectionSuccess({ section })),
                     catchError((error) => of(updateSectionFailure(error)))
                 )
             )

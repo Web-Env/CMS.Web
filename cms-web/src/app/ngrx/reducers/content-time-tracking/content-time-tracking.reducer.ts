@@ -16,8 +16,7 @@ export const initialState: ContentTimeTrackingState = {
 
 export const ContentTimeTrackingReducer = createReducer(
     initialState,
-    on(loadContentTimeTrackingsByUserIdSuccess, (state, { contentTimeTrackings }) => ({ 
-        ...state,
+    on(loadContentTimeTrackingsByUserIdSuccess, ({ contentTimeTrackings }) => ({
         contentTimeTrackings,
         error: '',
         status: 'success' 

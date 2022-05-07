@@ -14,7 +14,10 @@ import {
     LOAD_USER_BY_ID,
     removeUser,
     removeUserFailure,
-    removeUserSuccess
+    removeUserSuccess,
+    updateUser,
+    updateUserFailure,
+    updateUserSuccess
 } from "../../actions/user/user.actions";
 import { User } from "../../models/user.model";
 
@@ -54,6 +57,18 @@ export class UserEffects {
                 from(this.dataService.postAsync<User>('User/CreateUser', action.user, User)).pipe(
                     map((user: User) => addUserSuccess({ user })),
                     catchError((error) => of(addUserFailure(error)))
+                )
+            )
+        )
+    );
+
+    updateUser$: CreateEffectMetadata = createEffect(() =>
+        this.actions$.pipe(
+            ofType(updateUser),
+            switchMap((action) =>
+                from(this.dataService.putAsync<User>('User/UpdateUser', action.user, User)).pipe(
+                    map((user: User) => updateUserSuccess({ user })),
+                    catchError((error) => of(updateUserFailure(error)))
                 )
             )
         )
