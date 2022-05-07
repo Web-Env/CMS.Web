@@ -39,7 +39,7 @@ export class SectionEffects {
             ofType(addSection),
             switchMap((action) => 
                 from(this.dataService.postAsync<Section>('Section/Add', action.section, Section)).pipe(
-                    map((section: any) => addSectionSuccess(section)),
+                    map((section: Section) => addSectionSuccess({ section })),
                     catchError((error) => of(addSectionFailure(error)))
                 )
             )

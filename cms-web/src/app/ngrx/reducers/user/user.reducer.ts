@@ -55,13 +55,11 @@ export const UserReducer = createReducer(
         error,
         status: 'error'
     })),
-    on(UserActions.removeUser,
-        (state, {userId}) => ({
-            ...state,
-            status: 'loading',
-            sections: state.users.filter((user) => user.id !== userId)
-        })
-    ),
+    on(UserActions.removeUser,(state, {userId}) => ({
+        ...state,
+        status: 'loading',
+        sections: state.users.filter((user) => user.id !== userId)
+    })),
     on(UserActions.removeUserSuccess, (state, {userId}) => ({
         ...state,
         error: '',
