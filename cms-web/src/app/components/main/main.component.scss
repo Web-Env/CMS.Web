@@ -36,7 +36,7 @@
 
     .stage {
         width: $stage-mobile-width;
-        height: calc(100% - ($header-desktop-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
+        height: calc(100% - ($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
 
         position: absolute;
         top: calc($header-mobile-height + $header-border-bottom-height + ($header-vertical-padding * 2));
