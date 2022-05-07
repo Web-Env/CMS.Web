@@ -97,6 +97,7 @@
 
         .stage {
             width: calc(100% - $sidebar-desktop-small-width);
+            height: calc(100% - ($header-desktop-height + $header-border-bottom-height + ($header-vertical-padding * 2)));
 
             left: 0;
         }
