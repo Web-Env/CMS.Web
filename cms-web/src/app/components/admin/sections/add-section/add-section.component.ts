@@ -125,7 +125,6 @@ export class AddSectionComponent implements AfterViewInit, OnDestroy, OnInit {
 
     public async createSectionAsync(addSectionForm: any): Promise<void> {
         if(!this.isLoading) {
-            console.log (this.sectionId)
             this.addSectionFormErrorMessageVisible = false;
             this.toggleIsLoading(true);
             this.saveClicked = true;

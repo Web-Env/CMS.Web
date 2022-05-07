@@ -26,12 +26,12 @@ export const SectionReducer = createReducer(
         ...state,
         status: 'loading'
     })),
-    on(SectionActions.addSectionSuccess, (state, { section }) => { console.log (section); return ({
+    on(SectionActions.addSectionSuccess, (state, { section }) =>  ({
         ...state,
         sections: [...state.sections, section],
         error: '',
         status: 'success'
-    })}),
+    })),
     on(SectionActions.addSectionFailure, (state, { error }) => ({
         ...state,
         error: error,
