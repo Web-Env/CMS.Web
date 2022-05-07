@@ -12,7 +12,7 @@
             <ckeditor *ngIf="!isEditing || (isEditing && contentLoaded)" id="editor" formControlName="content" [editor]="editor" [config]="htmlEditorConfig" [data]="content"></ckeditor>
         </div>
         
-        <app-loading-button [buttonText]="isEditing ? 'Update Content' : 'Add Content'" [isLoading]="isLoading" [isDisabled]="!addContentForm.valid"></app-loading-button>
+        <app-loading-button [buttonText]="isEditing ? 'Update Content' : 'Add Content'" [buttonType]="'submit'" [isLoading]="isLoading" [isDisabled]="!addContentForm.valid"></app-loading-button>
     </form>
     
     <p class="add-content-form-error" *ngIf="addContentFormErrorMessageVisible">{{ addContentFormErrorMessage }}</p>

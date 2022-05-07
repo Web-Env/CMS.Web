@@ -9,7 +9,7 @@ import { TableRowActionButtonClickedAction } from "src/app/consts/table-row-acti
 import { TableRowActionButtonClickedEvent } from "src/app/events/table-row-action-button-clicked.event";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
-import { loadUsers, LOAD_USERS_SUCCESS } from "src/app/ngrx/actions/user/user.actions";
+import { loadUsers, LOAD_USERS_SUCCESS, removeUser, REMOVE_USER_SUCCESS } from "src/app/ngrx/actions/user/user.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { User } from "src/app/ngrx/models/user.model";
 import { AddUserComponent } from "./add-user/add-user.component";
@@ -49,6 +49,7 @@ export class UsersComponent implements OnDestroy, OnInit {
     rows: Array<TableRow> = [];
 
     loadUsersSuccessSubscription!: Subscription;
+    removeUserSuccessSubscription!: Subscription;
 
     deleteStringBuilderFunction = (tableRow: TableRow): string => {
         return `${tableRow.columns[0].data} ${tableRow.columns[1].data} (${tableRow.columns[2].data})`;
@@ -76,6 +77,10 @@ export class UsersComponent implements OnDestroy, OnInit {
 
             this.rows = userRows;
             this.isDataLoaded = true;
+        });
+
+        this.removeUserSuccessSubscription = this.actions$.pipe(ofType(REMOVE_USER_SUCCESS)).subscribe((removeUserSuccessResult: any) => {
+            this.rows = this.rows.filter((tableRow) => tableRow.id !== removeUserSuccessResult.userId);
         });
     }
 
@@ -137,14 +142,19 @@ export class UsersComponent implements OnDestroy, OnInit {
             case TableRowActionButtonClickedAction.edit:
                 break;
             case TableRowActionButtonClickedAction.delete:
-                //this.deleteSection(tableRowActionButtonClickedEvent.tableRow);
+                this.deleteUser(tableRowActionButtonClickedEvent.tableRow);
                 break;
             default:
                 break;
         }
     }
 
+    public deleteUser(deletedTableRow: TableRow): void {
+        this.store.dispatch(removeUser(deletedTableRow.id));
+    }
+
     ngOnDestroy(): void {
         this.loadUsersSuccessSubscription.unsubscribe();
+        this.removeUserSuccessSubscription.unsubscribe();
     }
 }

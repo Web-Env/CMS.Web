@@ -17,6 +17,8 @@ export const ADD_USER = `${ACTION_TITLE} ${StoreActions.add} ${ACTION_SUBJECT}`;
 export const ADD_USER_SUCCESS = `${ADD_USER} ${StoreActionStatuses.success}`;
 export const ADD_USER_FAILURE = `${ADD_USER} ${StoreActionStatuses.failure}`;
 export const REMOVE_USER = `${ACTION_TITLE} ${StoreActions.remove} ${ACTION_SUBJECT}`;
+export const REMOVE_USER_SUCCESS = `${REMOVE_USER} ${StoreActionStatuses.success}`;
+export const REMOVE_USER_FAILURE = `${REMOVE_USER} ${StoreActionStatuses.failure}`;
 
 export const loadUsers = createAction(LOAD_USERS);
 
@@ -57,5 +59,20 @@ export const addUserSuccess = createAction(
 
 export const addUserFailure = createAction(
     ADD_USER_FAILURE,
+    props<{ error: string }>()
+);
+
+export const removeUser = createAction(
+    REMOVE_USER,
+    (userId: string) => ({ userId })
+);
+
+export const removeUserSuccess = createAction(
+    REMOVE_USER_SUCCESS,
+    props<{ userId: string }>()
+);
+
+export const removeUserFailure = createAction(
+    REMOVE_USER_FAILURE,
     props<{ error: string }>()
 );
