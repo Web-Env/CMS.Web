@@ -11,7 +11,7 @@ export const selectUserById = (userId: string) => createSelector(
     selectUsers,
     (state: UserState) => {
         state.users
-        return state.users.find(user => {
+        return state.users.find((user) => {
             return user.id === userId;
         });
     }
