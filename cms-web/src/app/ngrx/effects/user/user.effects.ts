@@ -52,7 +52,7 @@ export class UserEffects {
             ofType(addUser),
             switchMap((action) =>
                 from(this.dataService.postAsync<User>('User/CreateUser', action.user, User)).pipe(
-                    map((user: any) => addUserSuccess(user)),
+                    map((user: User) => addUserSuccess({ user })),
                     catchError((error) => of(addUserFailure(error)))
                 )
             )

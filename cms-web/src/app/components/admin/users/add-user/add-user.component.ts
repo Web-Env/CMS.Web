@@ -42,9 +42,9 @@ export class AddUserComponent implements OnDestroy, OnInit {
     }
 
     ngOnInit(): void {
-        this.addUserSuccessSubscription = this.actions$.pipe(ofType(UserActions.ADD_USER_SUCCESS)).subscribe((newUser) => {
+        this.addUserSuccessSubscription = this.actions$.pipe(ofType(UserActions.ADD_USER_SUCCESS)).subscribe((newUser: any) => {
             if (this.saveClicked) {
-                this.dialogRef.close(newUser);
+                this.dialogRef.close(newUser.user);
             }
         });
 

@@ -22,15 +22,13 @@ export const SectionReducer = createReducer(
         sections,
         error: '',
         status: 'success' })),
-    on(SectionActions.addSection,
-        (state) => ({
-            ...state,
-            status: 'loading'
-        })
-    ),
-    on(SectionActions.addSectionSuccess, (state, { section }) => ({
+    on(SectionActions.addSection, (state) => ({
         ...state,
-        section,
+        status: 'loading'
+    })),
+    on(SectionActions.addSectionSuccess, (state, { section }) =>  ({
+        ...state,
+        sections: [...state.sections, section],
         error: '',
         status: 'success'
     })),
@@ -39,15 +37,28 @@ export const SectionReducer = createReducer(
         error: error,
         status: 'error'
     })),
-    on(SectionActions.removeSection,
-        (state, {sectionId}) => ({
-            ...state,
-            status: 'loading',
-            sections: state.sections.filter((section) => section.id !== sectionId)
-        })
-    ),
+    on(SectionActions.updateSection, (state) => ({
+        ...state,
+        status: 'loading'
+    })),
+    on(SectionActions.updateSectionSuccess, (state, { section }) => ({
+        ...state,
+        section,
+        error: '',
+        status: 'success'
+    })),
+    on(SectionActions.updateSectionFailure, (state, { error }) => ({
+        ...state,
+        error: error,
+        status: 'error'
+    })),
+    on(SectionActions.removeSection, (state) => ({
+        ...state,
+        status: 'loading'
+    })),
     on(SectionActions.removeSectionSuccess, (state, {sectionId}) => ({
         ...state,
+        sections: state.sections.filter((section) => section.id !== sectionId),
         error: '',
         status: 'success'
     })),

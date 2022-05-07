@@ -11,6 +11,7 @@ import { TableRow } from "src/app/models/view-models/table-row.model";
 import { loadSections, LOAD_SECTIONS_SUCCESS, removeSection, REMOVE_SECTION_SUCCESS } from "src/app/ngrx/actions/section/section.actions";
 import { AppState } from "src/app/ngrx/app.state";
 import { Section } from "src/app/ngrx/models/section.model";
+import { selectSectionById } from "src/app/ngrx/selectors/section/section.selectors";
 import { MessageDialogComponent } from "../../shared/dialogs/message-dialog/message-dialog.component";
 import { AddSectionComponent } from "./add-section/add-section.component";
 
@@ -139,6 +140,7 @@ export class SectionsComponent implements OnDestroy, OnInit {
     public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
         switch(tableRowActionButtonClickedEvent.tableRowActionButtonClickedAction) {
             case TableRowActionButtonClickedAction.edit:
+                this.editSection(tableRowActionButtonClickedEvent.tableRow);
                 break;
             case TableRowActionButtonClickedAction.delete:
                 this.deleteSection(tableRowActionButtonClickedEvent.tableRow);
@@ -148,7 +150,7 @@ export class SectionsComponent implements OnDestroy, OnInit {
         }
     }
 
-    public addSectionClicked(): void {
+    private createMatDialogConfig(): MatDialogConfig {
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.disableClose = false;
@@ -158,10 +160,28 @@ export class SectionsComponent implements OnDestroy, OnInit {
         dialogConfig.height = 'fit-content';
         dialogConfig.closeOnNavigation = true;
 
+        return dialogConfig;
+    }
+
+    public addSectionClicked(): void {
+        const dialogConfig = this.createMatDialogConfig();
         const instance = this.dialog.open(AddSectionComponent, dialogConfig);
         instance.afterClosed().subscribe((section: Section) => {
             if (section !== undefined) {
                 this.rows.push(this.castSectionToTableRow(section));
+            }
+        });
+    }
+
+    public editSection(editedTableRow: TableRow): void {
+        const dialogConfig = this.createMatDialogConfig();
+        const instance = this.dialog.open(AddSectionComponent, dialogConfig);
+        instance.componentInstance.sectionId = editedTableRow.id;
+        instance.afterClosed().subscribe((section: Section) => {
+            if (section !== undefined) {
+                this.isDataLoaded = false;
+                this.rows = [];
+                this.store.dispatch(loadSections());
             }
         });
     }

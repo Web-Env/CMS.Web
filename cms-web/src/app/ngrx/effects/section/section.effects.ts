@@ -11,7 +11,10 @@ import {
     loadSectionsSuccess, 
     removeSection, 
     removeSectionFailure, 
-    removeSectionSuccess } from "../../actions/section/section.actions";
+    removeSectionSuccess, 
+    updateSection,
+    updateSectionFailure,
+    updateSectionSuccess} from "../../actions/section/section.actions";
 import { Section } from "../../models/section.model";
 
 @Injectable()
@@ -36,8 +39,20 @@ export class SectionEffects {
             ofType(addSection),
             switchMap((action) => 
                 from(this.dataService.postAsync<Section>('Section/Add', action.section, Section)).pipe(
-                    map((section: any) => addSectionSuccess(section)),
+                    map((section: Section) => addSectionSuccess({ section })),
                     catchError((error) => of(addSectionFailure(error)))
+                )
+            )
+        )
+    );
+
+    updateSection$: CreateEffectMetadata = createEffect(() => 
+        this.actions$.pipe(
+            ofType(updateSection),
+            switchMap((action) => 
+                from(this.dataService.putAsync<Section>('Section/Update', action.section, Section)).pipe(
+                    map((section: any) => updateSectionSuccess(section)),
+                    catchError((error) => of(updateSectionFailure(error)))
                 )
             )
         )

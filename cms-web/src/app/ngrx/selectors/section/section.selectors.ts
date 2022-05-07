@@ -7,3 +7,12 @@ export const selectAllSections = createSelector(
     selectSections,
     (state: SectionState) => state.sections
 );
+export const selectSectionById = (sectionId: string) => createSelector(
+    selectSections,
+    (state: SectionState) => {
+        state.sections
+        return state.sections.find(section => {
+            return section.id === sectionId;
+        });
+    }
+);

@@ -1,4 +1,5 @@
 export class SectionUploadModel {
+    id!: string;
     title!: string;
     path!: string;
 

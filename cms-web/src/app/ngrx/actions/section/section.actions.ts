@@ -13,6 +13,9 @@ export const LOAD_SECTIONS_FAILURE = `${LOAD_SECTIONS} ${StoreActionStatuses.fai
 export const ADD_SECTION = `${ACTION_TITLE} ${StoreActions.add} ${ACTION_SUBJECT}`;
 export const ADD_SECTION_SUCCESS = `${ADD_SECTION} ${StoreActionStatuses.success}`;
 export const ADD_SECTION_FAILURE = `${ADD_SECTION} ${StoreActionStatuses.failure}`;
+export const UPDATE_SECTION = `${ACTION_TITLE} ${StoreActions.update} ${ACTION_SUBJECT}`;
+export const UPDATE_SECTION_SUCCESS = `${UPDATE_SECTION} ${StoreActionStatuses.success}`;
+export const UPDATE_SECTION_FAILURE = `${UPDATE_SECTION} ${StoreActionStatuses.failure}`;
 export const REMOVE_SECTION = `${ACTION_TITLE} ${StoreActions.remove} ${ACTION_SUBJECT}`;
 export const REMOVE_SECTION_SUCCESS = `${REMOVE_SECTION} ${StoreActionStatuses.success}`;
 export const REMOVE_SECTION_FAILURE = `${REMOVE_SECTION} ${StoreActionStatuses.failure}`;
@@ -41,6 +44,21 @@ export const addSectionSuccess = createAction(
 
 export const addSectionFailure = createAction(
     ADD_SECTION_FAILURE,
+    props<{ error: string }>()
+);
+
+export const updateSection = createAction(
+    UPDATE_SECTION,
+    (section: SectionUploadModel) => ({ section })
+);
+
+export const updateSectionSuccess = createAction(
+    UPDATE_SECTION_SUCCESS,
+    props<{ section: Section }>()
+);
+
+export const updateSectionFailure = createAction(
+    UPDATE_SECTION_FAILURE,
     props<{ error: string }>()
 );
 
