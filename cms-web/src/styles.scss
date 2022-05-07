@@ -51,4 +51,73 @@ html {
     mat-dialog-container {
         background-color: $primary-background-colour !important;
     }
+
+    mat-calendar {
+        background-color: $secondary-background-colour;
+        color: $primary-text-colour;
+
+        mat-calendar-header {
+            .mat-calendar-header {
+                .mat-calendar-controls {
+                    button {
+                        background-color: $secondary-text-colour;
+                    }
+                }
+            }
+        }
+
+        .mat-calendar-content {
+            mat-month-view,
+            mat-year-view,
+            mat-multi-year-view {
+                .mat-calendar-table {
+                    .mat-calendar-body {
+                        tr {
+                            td {
+                                button {
+                                    &.mat-calendar-body-active {
+                                        border-radius: 50%;
+
+                                        .mat-calendar-body-cell-content {
+                                            background-color: $secondary-text-colour;
+                                            color: $secondary-background-colour;
+                                        }
+
+                                        .mat-calendar-body-cell-preview {
+                                            border-radius: 50%;
+                                        }
+                                    }
+
+                                    div {
+                                        color: $primary-text-colour;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            mat-year-view,
+            mat-multi-year-view {
+                .mat-calendar-table {
+                    .mat-calendar-body {
+                        tr {
+                            td {
+                                button {
+                                    &.mat-calendar-body-active {
+                                        border-radius: 36px;
+                                        
+                                        .mat-calendar-body-cell-preview {
+                                            border-radius: 36px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

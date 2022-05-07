@@ -14,11 +14,17 @@ import { Subscription } from "rxjs";
 @Component({
     selector: 'app-add-user',
     templateUrl: './add-user.component.html',
-    styleUrls: ['./add-user.component.scss']
+    styleUrls: [
+        './add-user.component.scss',
+        '../../../shared/form-components/text-input/text-input.component.scss'
+    ]
 })
 export class AddUserComponent implements OnDestroy, OnInit {
     addUserForm!: FormGroup;
     isAdminChecked: boolean = false;
+    expiryDatePickerInputActive: boolean = false;
+    expiryDatePickerInputPopulated: boolean = false;
+    expiryDatePickerInputHasError: boolean = false;
 
     saveClicked: boolean = false;
 
@@ -85,7 +91,8 @@ export class AddUserComponent implements OnDestroy, OnInit {
                 '',
                 [Validators.required, Validators.email]
             ),
-            isAdmin: new FormControl()
+            isAdmin: new FormControl(),
+            expiryDate: new FormControl()
         });
     }
 
@@ -94,10 +101,30 @@ export class AddUserComponent implements OnDestroy, OnInit {
 
         if (this.isAdminChecked) {
             this.addUserForm.addControl('password', new FormControl('', [Validators.required, Validators.minLength(8)]));
+            this.addUserForm.get('expiryDate')?.setValue('');
         }
         else {
             this.addUserForm.removeControl('password');
         }
+    }
+
+    public changeDatePickerInputState(active: boolean): void {
+        this.expiryDatePickerInputActive = active;
+
+        if (!this.expiryDatePickerInputActive) {
+            this.expiryDatePickerInputHasError = this.addUserForm.get('expiryDate')?.invalid || false;
+        }
+    }
+
+    public datePickerInputChanged(inputChangedEvent: any): void {
+        this.expiryDatePickerInputPopulated = inputChangedEvent.value !== undefined && inputChangedEvent.value !== '';
+    }
+
+    public setDatePickerToSixMonthsFromNow(): void {
+        const date = new Date();
+        this.addUserForm.get('expiryDate')?.setValue(new Date(date.setMonth(date.getMonth() + 6)));
+
+        this.expiryDatePickerInputPopulated = true;
     }
 
     private toggleIsLoading(isLoading: boolean): void {
@@ -121,6 +148,9 @@ export class AddUserComponent implements OnDestroy, OnInit {
             if (this.isAdminChecked) {
                 const hashedAdminPassword = shajs('sha256').update(addUserForm.password).digest('hex');
                 newUserUploadModel.adminPassword = hashedAdminPassword;
+            }
+            else if (addUserForm.expiryDate !== undefined) {
+                newUserUploadModel.expiresOn = addUserForm.expiryDate;
             }
 
             try {

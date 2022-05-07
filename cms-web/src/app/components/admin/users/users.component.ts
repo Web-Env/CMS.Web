@@ -27,19 +27,23 @@ export class UsersComponent implements OnDestroy, OnInit {
         ),
         new TableColumn(
             'Last Name',
-            25
+            20
         ),
         new TableColumn(
             'Email',
-            30
+            25
         ),
         new TableColumn(
             'Created On',
-            5
+            10
+        ),
+        new TableColumn(
+            'Expires On',
+            10
         ),
         new TableColumn(
             'Created By',
-            25
+            20
         )
     ];
     rows: Array<TableRow> = [];
@@ -85,14 +89,18 @@ export class UsersComponent implements OnDestroy, OnInit {
                 ),
                 new TableColumn(
                     user.lastName,
-                    25
+                    20
                 ),
                 new TableColumn(
                     user.email,
-                    30
+                    25
                 ),
                 new TableColumn(
                     this.datePipe.transform(user.createdOn, 'dd/MM/yy') as string,
+                    10
+                ),
+                new TableColumn(
+                    user.expiresOn ? this.datePipe.transform(user.expiresOn, 'dd/MM/yy') as string : '-',
                     10
                 ),
                 new TableColumn(

@@ -1,15 +1,40 @@
 <div class="add-user-form-container">
     <form [formGroup]="addUserForm" (ngSubmit)="createUserAsync(addUserForm.value)">
         <app-text-input formControlName="firstName" [parentForm]="addUserForm" [inputId]="'first-name'" [inputName]="'firstName'" [inputTitle]="'First Name'" [inputType]="'text'"></app-text-input>
+        
         <app-text-input formControlName="lastName" [parentForm]="addUserForm" [inputId]="'last-name'" [inputName]="'lastName'" [inputTitle]="'Last Name'" [inputType]="'text'"></app-text-input>
+        
         <app-text-input formControlName="email" [parentForm]="addUserForm" [inputId]="'email'" [inputName]="'email'" [inputTitle]="'Email'" [inputType]="'email'"></app-text-input>
+
+        <div *ngIf="!isAdminChecked" class="expiry-date-picker-container">
+            <div class="form-group" 
+                [ngClass]="{'active': expiryDatePickerInputActive, 'populated': expiryDatePickerInputPopulated, 'has-error': expiryDatePickerInputHasError}">
+                <div class="input-container">
+                    <label for="matInput">Membership Expiry Date</label>
+                    <input matInput 
+                        formControlName="expiryDate"
+                        [matDatepicker]="picker" 
+                        (focus)="changeDatePickerInputState(true)"
+                        (blur)="changeDatePickerInputState(false)"
+                        (dateChange)="datePickerInputChanged($event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </div>
+                <small class="warning-label">Expiry Date must be a valid Date (DD/MM/YYYY)</small>
+            </div>
+            <div class="add-six-months-button-container">
+                <app-loading-button [buttonText]="'Add 6 Months'" (click)="setDatePickerToSixMonthsFromNow()"></app-loading-button>
+            </div>
+        </div>
+        
         <div class="is-admin-form-group">
             <input type="checkbox" class="checkbox" id="is-admin" formControlName="isAdmin" (input)="isAdminChanged($event)">
             <label for="is-admin">Make user an Administrator</label>
         </div>
         <p *ngIf="isAdminChecked" class="admin-warning">You must provide your password to make this user an Administrator</p>
         <app-text-input *ngIf="isAdminChecked" formControlName="password" [parentForm]="addUserForm" [inputId]="'password'" [inputName]="'password'" [inputTitle]="'Your Password'" [inputType]="'password'" [inputErrorMessage]="'Password must be at least 8 characters'"></app-text-input>
-        <app-loading-button [buttonText]="'Add User'" [isLoading]="isLoading" [isDisabled]="!addUserForm.valid"></app-loading-button>
+        
+        <app-loading-button [buttonText]="'Add User'" [buttonType]="'submit'" [isLoading]="isLoading" [isDisabled]="!addUserForm.valid"></app-loading-button>
     </form>
     
     <p class="add-user-form-error" *ngIf="addUserFormErrorMessageVisible">{{ addUserFormErrorMessage }}</p>

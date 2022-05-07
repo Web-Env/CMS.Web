@@ -1,4 +1,4 @@
-<button class="button" [ngClass]="{'loading': isLoading, 'negative': useNegativeColour}" [disabled]="isDisabled">
+<button class="button" [ngClass]="{'loading': isLoading, 'negative': useNegativeColour}" [type]="buttonType" [disabled]="isDisabled">
     <span class="text">{{ buttonText }}</span>
     <div class="loading-icon icon"></div>
 </button>
