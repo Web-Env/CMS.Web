@@ -21,8 +21,7 @@ export const UserReducer = createReducer(
         users: state.users
     })),
     on(UserActions.loadUsers, (state) => ({ ...state, status: 'loading' })),
-    on(UserActions.loadUsersSuccess, (state, { users }) => ({
-        ...state,
+    on(UserActions.loadUsersSuccess, ({ users }) => ({
         users,
         error: '',
         status: 'success'

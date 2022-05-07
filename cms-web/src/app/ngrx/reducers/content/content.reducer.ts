@@ -17,8 +17,7 @@ export const initialState: ContentState = {
 export const ContentReducer = createReducer(
     initialState,
     on(ContentActions.loadContents, (state) => ({ ...state, status: 'loading' })),
-    on(ContentActions.loadContentsSuccess, (state, { contents }) => ({ 
-        ...state,
+    on(ContentActions.loadContentsSuccess, (state, { contents }) => ({
         contents,
         error: '',
         status: 'success' 
@@ -43,9 +42,8 @@ export const ContentReducer = createReducer(
             status: 'loading'
         })
     ),
-    on(ContentActions.updateContentSuccess, (state, { content }) => ({
+    on(ContentActions.updateContentSuccess, (state) => ({
         ...state,
-        content,
         error: '',
         status: 'success'
     })),
@@ -59,7 +57,7 @@ export const ContentReducer = createReducer(
         status: 'loading',
         contents: state.contents.filter((content) => content.id !== contentId)
     })),
-    on(ContentActions.removeContentSuccess, (state, {contentId}) => ({
+    on(ContentActions.removeContentSuccess, (state) => ({
         ...state,
         error: '',
         status: 'success'
