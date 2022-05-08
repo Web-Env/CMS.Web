@@ -152,6 +152,10 @@
                 }
             }
 
+            tr.clickable {
+                cursor: pointer;
+            }
+
             tr:last-child::ng-deep {
                 td {
                     border-bottom: none;
@@ -167,12 +171,24 @@
             }
 
             tr:nth-child(odd) {
+                &.clickable:hover {
+                    ::ng-deep td {
+                        background-color: lighten($color: $secondary-background-colour, $amount: 2);
+                    }
+                }
+                
                 ::ng-deep td {
                     background-color: lighten($color: $secondary-background-colour, $amount: 1);
                 }
             }
 
             tr:nth-child(even) {
+                &.clickable:hover {
+                    ::ng-deep td {
+                        background-color: darken($color: $secondary-background-colour, $amount: 2);
+                    }
+                }
+
                 ::ng-deep td {
                     background-color: darken($color: $secondary-background-colour, $amount: 1);
                 }
