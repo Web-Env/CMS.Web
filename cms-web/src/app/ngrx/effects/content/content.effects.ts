@@ -62,7 +62,7 @@ export class ContentEffects {
         this.actions$.pipe(
             ofType(removeContent),
             switchMap((action) =>
-                from(this.dataService.deleteAsync(`Content/Remove?contentId=${action.contentId}`)).pipe(
+                from(this.dataService.deleteAsync(`Content/Delete?contentId=${action.contentId}`)).pipe(
                     map(() => removeContentSuccess({ contentId: action.contentId })),
                     catchError((error) => of(removeContentFailure(error)))
                 )
