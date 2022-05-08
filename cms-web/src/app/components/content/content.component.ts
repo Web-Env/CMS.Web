@@ -9,7 +9,10 @@ import { DataService } from "src/app/services/data.service";
 @Component({
     selector: 'app-content',
     templateUrl: './content.component.html',
-    styleUrls: ['./content.component.scss']
+    styleUrls: [
+        './content.component.scss',
+        '../../../assets/scss/shared/content.scss'
+    ]
 })
 export class ContentComponent implements OnDestroy, OnInit {
     isLoading: boolean = true;

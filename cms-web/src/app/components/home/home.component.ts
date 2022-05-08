@@ -5,7 +5,10 @@ import { DataService } from "src/app/services/data.service";
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    styleUrls: [
+        './home.component.scss',
+        '../../../assets/scss/shared/content.scss'
+    ]
 })
 export class HomeComponent implements OnInit {
     isLoading: boolean = true;
