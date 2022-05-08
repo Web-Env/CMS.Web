@@ -27,7 +27,7 @@ export class AnnouncementEffects {
             ofType(loadAnnouncements),
             switchMap(() =>
                 from(this.dataService.getArrayAsync<Announcement>('Announcement/GetAll?page=1&pageSize=25', Announcement)).pipe(
-                    map((announcements) => loadAnnouncementsSuccess({ announcements: announcements })),
+                    map((announcements) => loadAnnouncementsSuccess({ announcements })),
                     catchError((error) => of(loadAnnouncementsFailure({ error })))
                 )
             )
