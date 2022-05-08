@@ -152,7 +152,7 @@ export function rollbarFactory() {
         }),
         StoreDevtoolsModule.instrument({
             maxAge: 25,
-            logOnly: !environment.production,
+            logOnly: environment.production,
         }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         EffectsModule.forRoot([
