@@ -15,7 +15,7 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
     @Input() path!: string;
     @Input() subButtons: any;
     @Input() isSubButton!: boolean;
-    @Input() parentButton!: SidebarButtonComponent;
+    @Input() parentActivateButtonFunction!: () => void;
     @Input() isActive: boolean = false;
     @Input() activateSidebarButtonObservable!: Observable<string>;
     @Input() deactivateSidebarButtonObservable!: Observable<string>;
@@ -27,6 +27,10 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
     
     hasSubButtons: boolean = false;
 
+    activateButtonFunction = (): void => {
+        this.activateButton();
+    }
+
     constructor() { }
 
     ngOnInit(): void {
@@ -35,8 +39,8 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
         this.activateSidebarButtonSubscription = this.activateSidebarButtonObservable
             .subscribe((activatedSidebarButtonPath: string) => {
                 if (!this.isActive && this.path.replace('content/', '') === activatedSidebarButtonPath) {
-                    if (this.isSubButton && this.parentButton !== undefined) {
-                        this.parentButton.activateButton();
+                    if (this.isSubButton && this.parentActivateButtonFunction !== undefined) {
+                        this.parentActivateButtonFunction();
                     }
 
                     this.activateButton();
