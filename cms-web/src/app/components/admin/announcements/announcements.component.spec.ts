@@ -1,43 +1,49 @@
 import { HttpClientModule } from "@angular/common/http";
-import { DatePipe } from "@angular/common";
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from "@angular/router/testing";
+import { MatDialog } from "@angular/material/dialog";
+import { DatePipe } from "@angular/common";
 import { ToastrModule, ToastrService } from "ngx-toastr";
+import { StoreModule } from "@ngrx/store";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { DataService } from "src/app/services/data.service";
 
-import { ContentComponent } from './content.component';
+import { AnnouncementsComponent } from './announcements.component';
+import { AnnouncementReducer } from "src/app/ngrx/reducers/announcement/announcement.reducer";
 
-describe('ContentComponent', () => {
-    let component: ContentComponent;
-    let fixture: ComponentFixture<ContentComponent>;
+describe('AnnouncementsComponent', () => {
+    let component: AnnouncementsComponent;
+    let fixture: ComponentFixture<AnnouncementsComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ContentComponent],
+            declarations: [AnnouncementsComponent],
             imports: [
                 HttpClientModule,
                 RouterTestingModule,
+                StoreModule.forRoot({
+                    announcementsReducer: AnnouncementReducer
+                }),
                 ToastrModule.forRoot()
             ],
             providers: [
                 AuthService,
                 DataService,
+                DatePipe,
                 ToastrService,
-                DatePipe
+                {
+                    provide: MatDialog,
+                    useValue: {}
+                }
             ]
         })
             .compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ContentComponent);
+        fixture = TestBed.createComponent(AnnouncementsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
-
-    afterEach(() => {
-        fixture.destroy();
     });
 
     it('should create', () => {

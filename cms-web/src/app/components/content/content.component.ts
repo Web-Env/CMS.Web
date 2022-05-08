@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common";
 import { Component, OnDestroy, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { NavigationEnd, Router } from "@angular/router";
@@ -12,6 +13,7 @@ import { DataService } from "src/app/services/data.service";
 })
 export class ContentComponent implements OnDestroy, OnInit {
     isLoading: boolean = true;
+    isViewingAnnouncement: boolean = false;
 
     componentInitialised: boolean = false;
     content!: ContentDownloadModel | undefined;
@@ -25,7 +27,8 @@ export class ContentComponent implements OnDestroy, OnInit {
     routerPathChangeSubscription!: Subscription;
 
     constructor(private dataService: DataService,
-                private router: Router) {
+                private router: Router,
+                private datePipe: DatePipe) {
         this.routerPathChangeSubscription = router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             .subscribe(() => {
@@ -45,19 +48,36 @@ export class ContentComponent implements OnDestroy, OnInit {
         this.content = undefined;
         this.url = this.router.url;
         const urlSplit = this.url.split('/');
+        this.isViewingAnnouncement = urlSplit[1] === 'announcement';
         this.contentPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
 
-        if (this.intervalId !== undefined) {
+        if (this.intervalId !== undefined && !this.isViewingAnnouncement) {
             clearInterval(this.intervalId);
         }
 
-        const contentModel = await this.dataService.getAsync<ContentDownloadModel>(`Content/Get?contentPath=${this.contentPath}`);
+        const endpoint = this.isViewingAnnouncement ? 'Announcement' : 'Content';
+        const parameters = this.isViewingAnnouncement ? 'announcementPath' : 'contentPath';
+        const url = `${endpoint}/Get?${parameters}=${this.contentPath}`;
+
+        const contentModel = await this.dataService.getAsync<ContentDownloadModel>(url);
         contentModel.content = `
             <style scoped>
+                .content .created-on {
+                    margin-top: 15px;
+                    margin-bottom: -15px;
+                }
+
+                .content .created-on small {
+                    color: #aaaaaa;
+
+                    font-size: 1.35em;
+                }
+
                 .content p,
                 .content li {
-                    font-size: 1.65em;
                     color: #d9d9da;
+
+                    font-size: 1.65em;
                 }
 
                 .content a {
@@ -94,19 +114,26 @@ export class ContentComponent implements OnDestroy, OnInit {
                     color: #d9d9da;
                 }
             </style>
+
+            ${this.isViewingAnnouncement ? 
+                `<div class="created-on"><small>${this.datePipe.transform(contentModel.createdOn, 'dd MMMM yyyy hh:mm')}</small></div>` : 
+                ''}
+
             ${contentModel.content}
         `;
 
         this.content = contentModel;
         this.isLoading = false;
 
-        this.intervalId = window.setInterval(() => {
-            this.recordUserViewTime();
-        }, 1000);
+        if (!this.isViewingAnnouncement) {
+            this.intervalId = window.setInterval(() => {
+                this.recordUserViewTime();
+            }, 1000);
+        }
     }
 
     public recordUserViewTime(): void {
-        if (document.hasFocus()) {
+        if (document.hasFocus() && !this.isViewingAnnouncement) {
             this.trackedTime += 1;
             
             if (this.trackedTime === this.interval) {
@@ -119,7 +146,10 @@ export class ContentComponent implements OnDestroy, OnInit {
 
     ngOnDestroy(): void {
         this.routerPathChangeSubscription.unsubscribe();
-        clearInterval(this.intervalId);
+
+        if (!this.isViewingAnnouncement) {
+            clearInterval(this.intervalId);
+        }
     }
 
 }

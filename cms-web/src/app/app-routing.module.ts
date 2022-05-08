@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from "./services/auth/auth-guard.service";
 
 import { AnnouncementsComponent } from "./components/announcements/announcements.component";
+import * as adminAnnouncementsComponent from "./components/admin/announcements/announcements.component";
+import { AnnouncementCreateComponent } from "./components/admin/announcements/announcement-create/announcement-create.component";
 import { ContentComponent } from "./components/content/content.component";
 import { ContentCreateComponent } from "./components/admin/content/content-create/content-create.component";
 import { ContentsComponent } from "./components/admin/content/contents.component";
@@ -21,16 +23,20 @@ const routes: Routes = [
     {path: '', component: MainComponent, canActivate: [ AuthGuardService ], children: [
         {path: '', component: HomeComponent},
         {path: 'announcements', component: AnnouncementsComponent},
+        {path: 'announcement/:announcementPath', component: ContentComponent},
         {path: 'content/:contentPath', component: ContentComponent},
-        {path: 'content/:sectionId/:entryId', component: ContentComponent},
-        {path: 'content/:announcementId', component: ContentComponent},
+        {path: 'content/:sectionId/:contentPath', component: ContentComponent},
+        {path: 'content/:contentId', component: ContentComponent},
+        {path: 'admin/announcements', component: adminAnnouncementsComponent.AnnouncementsComponent},
+        {path: 'admin/announcement-create', component: AnnouncementCreateComponent},
+        {path: 'admin/announcement-edit/:announcementPath', component: AnnouncementCreateComponent},
         {path: 'admin/content', component: ContentsComponent},
         {path: 'admin/content-create', component: ContentCreateComponent},
-        {path: 'admin/content-edit/:entryId', component: ContentCreateComponent},
+        {path: 'admin/content-edit/:contentPath', component: ContentCreateComponent},
         {path: 'admin/sections', component: SectionsComponent},
         {path: 'admin/users', component: UsersComponent},
         {path: 'admin/users/user-details/:userId', component: UserDetailsComponent},
-        {path: "**", redirectTo: "404"}
+        {path: "**", component: NotFoundComponent}
     ]},
     {path: 'login', component: LoginComponent},
     {path: 'set-password', component: SetPasswordComponent},
