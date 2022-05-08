@@ -94,6 +94,14 @@
                                             }
                                         }
 
+                                        .ck-splitbutton:hover,
+                                        .ck-splitbutton_open,
+                                        .ck-splitbutton-open {
+                                            .ck-button {
+                                                background: $secondary-background-hover-colour !important;
+                                            }
+                                        }
+
                                         .ck-dropdown__panel {
                                             background-color: $secondary-background-colour;
                                             color: $primary-text-colour;
