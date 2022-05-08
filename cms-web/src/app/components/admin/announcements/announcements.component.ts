@@ -14,8 +14,7 @@ import { loadAnnouncements, LOAD_ANNOUNCEMENTS_SUCCESS, removeAnnouncement, REMO
 
 @Component({
     selector: 'app-announcements',
-    templateUrl: './announcements.component.html',
-    styleUrls: ['./announcements.component.scss']
+    templateUrl: './announcements.component.html'
 })
 export class AnnouncementsComponent implements OnInit {
     isDataLoaded: boolean = false;

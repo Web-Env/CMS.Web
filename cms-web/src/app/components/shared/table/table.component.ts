@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dial
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from "rxjs";
 import { TableRowActionButtonClickedAction } from "src/app/consts/table-row-action-button-clicked-actions.const";
 import { TableRowActionButtonClickedEvent } from "src/app/events/table-row-action-button-clicked.event";
+import { TableRowClickedEvent } from "src/app/events/table-row-clicked.event";
 import { TableColumn } from "src/app/models/view-models/table-column.model";
 import { TableRow } from "src/app/models/view-models/table-row.model";
 import { DeleteConfirmationDialogComponent } from "../dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
@@ -19,6 +20,7 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Input() headers!: Array<TableColumn>;
     @Input() rows!: Array<TableRow>;
 
+    @Input() clickableRows: boolean = false;
     @Input() searchEnabled: boolean = true;
     @Input() actionButtonEnabled: boolean = true;
     @Input() viewButtonEnabled: boolean = true;
@@ -31,6 +33,8 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Output() tableActionClicked: EventEmitter<string> = new EventEmitter();
     @Output() tableRowActionButtonClickedEvent: EventEmitter<TableRowActionButtonClickedEvent> = 
         new EventEmitter<TableRowActionButtonClickedEvent>();
+    @Output() tableRowClickedEvent: EventEmitter<TableRowClickedEvent> = 
+        new EventEmitter<TableRowClickedEvent>();
 
     deleteDialogInstance!: MatDialogRef<DeleteConfirmationDialogComponent> | undefined;
 
@@ -102,6 +106,12 @@ export class TableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     public emitTableActionClickedEvent(): void {
         this.tableActionClicked.emit(this.tableName);
+    }
+
+    public tableRowClicked(row: TableRow): void {
+        if (this.clickableRows) {
+            this.tableRowClickedEvent.emit(new TableRowClickedEvent(row));
+        }
     }
 
     public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
