@@ -1,1 +1,8 @@
-<p>announcements works!</p>
+<app-table 
+    [isDataLoaded]="isDataLoaded"
+    [tableName]="'Announcement'" 
+    [headers]="headers" 
+    [rows]="rows"
+    [deleteStringBuilderFunction]="deleteStringBuilderFunction" 
+    (tableActionClicked)="addAnnouncementClicked()"
+    (tableRowActionButtonClickedEvent)="processTableRowActionButtonClicked($event)"></app-table>

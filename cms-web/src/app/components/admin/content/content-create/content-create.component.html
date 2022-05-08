@@ -1,5 +1,5 @@
 <div class="add-content-form-container">
-    <h1 class="table-name">Create Content</h1>
+    <h1 class="table-name">{{ isEditing ? 'Update' : 'Create' }} Content</h1>
     <form [formGroup]="addContentForm" (ngSubmit)="createOrUpdateContentAsync(addContentForm.value)">
         <select id="section" formControlName="section">
             <option value="none"><i>No Section Selected</i></option>

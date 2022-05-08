@@ -1,0 +1,15 @@
+<div class="add-content-form-container">
+    <h1 class="table-name">{{ isEditing ? 'Update' : 'Create' }} Announcement</h1>
+    <form [formGroup]="addAnnouncementForm" (ngSubmit)="createOrUpdateAnnouncementAsync(addAnnouncementForm.value)">
+        <app-text-input formControlName="title" [parentForm]="addAnnouncementForm" [inputId]="'title'" [inputName]="'title'" [inputTitle]="'Title'" [inputType]="'text'"></app-text-input>
+        <app-text-input formControlName="path" [parentForm]="addAnnouncementForm" [inputId]="'path'" [inputName]="'path'" [inputTitle]="'Path'" [inputType]="'text'" [disabled]="true" #pathTextInputComponent></app-text-input>
+
+        <div class="content-editor-container">
+            <ckeditor *ngIf="!isEditing || (isEditing && announcementContentLoaded)" id="editor" formControlName="content" [editor]="editor" [config]="htmlEditorConfig" [data]="announcementContent"></ckeditor>
+        </div>
+        
+        <app-loading-button [buttonText]="isEditing ? 'Update Announcement' : 'Add Announcement'" [buttonType]="'submit'" [isLoading]="isLoading" [isDisabled]="!addAnnouncementForm.valid"></app-loading-button>
+    </form>
+    
+    <p class="add-content-form-error" *ngIf="addAnnouncementFormErrorMessageVisible">{{ addAnnouncementFormErrorMessage }}</p>
+</div>

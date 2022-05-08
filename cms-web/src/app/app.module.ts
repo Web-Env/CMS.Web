@@ -21,6 +21,7 @@ import { environment } from '../environments/environment';
 import { AddSectionComponent } from './components/admin/sections/add-section/add-section.component';
 import { AddUserComponent } from './components/admin/users/add-user/add-user.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import * as adminAnnouncementsComponent from "./components/admin/announcements/announcements.component";
 import { AppComponent } from './app.component';
 import { ContentComponent, SanitizeHtmlPipe } from './components/content/content.component';
 import { ContentsComponent } from "./components/admin/content/contents.component";
@@ -51,6 +52,8 @@ import { AuthService } from "./services/auth/auth.service";
 import { DataService } from "./services/data.service";
 import { UrlHelperService } from "./services/url-helper.service";
 
+import { AnnouncementEffects } from "./ngrx/effects/announcement/announcement.effects";
+import { AnnouncementReducer } from "./ngrx/reducers/announcement/announcement.reducer";
 import { ContentEffects } from "./ngrx/effects/content/content.effects";
 import { ContentReducer } from "./ngrx/reducers/content/content.reducer";
 import { ContentTimeTrackingEffects } from "./ngrx/effects/content-time-tracking/content-time-tracking.effects";
@@ -61,6 +64,7 @@ import { SidebarEffects } from "./ngrx/effects/sidebar/sidebar.effects";
 import { SidebarReducer } from "./ngrx/reducers/sidebar/sidebar.reducer";
 import { UserEffects } from "./ngrx/effects/user/user.effects";
 import { UserReducer } from "./ngrx/reducers/user/user.reducer";
+import { AnnouncementCreateComponent } from './components/admin/announcements/announcement-create/announcement-create.component';
 
 const rollbarConfig = {
     accessToken: environment.rollbarAccessToken,
@@ -93,6 +97,7 @@ export function rollbarFactory() {
         AddUserComponent,
         AddSectionComponent,
         AnnouncementsComponent,
+        adminAnnouncementsComponent.AnnouncementsComponent,
         AppComponent,
         ContentComponent,
         ContentsComponent,
@@ -119,7 +124,8 @@ export function rollbarFactory() {
         DeleteConfirmationDialogComponent,
         MessageDialogComponent,
 
-        SanitizeHtmlPipe
+        SanitizeHtmlPipe,
+          AnnouncementCreateComponent
     ],
     imports: [
         AppRoutingModule,
@@ -138,6 +144,7 @@ export function rollbarFactory() {
         }),
 
         StoreModule.forRoot({
+            announcements: AnnouncementReducer,
             contents: ContentReducer,
             contentTimeTrackings: ContentTimeTrackingReducer,
             sections: SectionReducer,
@@ -150,6 +157,7 @@ export function rollbarFactory() {
         }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         EffectsModule.forRoot([
+            AnnouncementEffects,
             ContentEffects,
             ContentTimeTrackingEffects,
             SectionEffects,

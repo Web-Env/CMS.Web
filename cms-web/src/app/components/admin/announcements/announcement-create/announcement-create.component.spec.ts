@@ -1,23 +1,21 @@
 import { HttpClientModule } from "@angular/common/http";
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from "@angular/router/testing";
-import { MatDialog } from "@angular/material/dialog";
-import { DatePipe } from "@angular/common";
-import { ToastrModule, ToastrService } from "ngx-toastr";
 import { StoreModule } from "@ngrx/store";
+import { ToastrModule } from "ngx-toastr";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { DataService } from "src/app/services/data.service";
 
-import { AnnouncementsComponent } from './announcements.component';
+import { AnnouncementCreateComponent } from './announcement-create.component';
 import { AnnouncementReducer } from "src/app/ngrx/reducers/announcement/announcement.reducer";
 
-describe('AnnouncementsComponent', () => {
-    let component: AnnouncementsComponent;
-    let fixture: ComponentFixture<AnnouncementsComponent>;
+describe('AnnouncementCreateComponent', () => {
+    let component: AnnouncementCreateComponent;
+    let fixture: ComponentFixture<AnnouncementCreateComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [AnnouncementsComponent],
+            declarations: [AnnouncementCreateComponent],
             imports: [
                 HttpClientModule,
                 RouterTestingModule,
@@ -28,20 +26,14 @@ describe('AnnouncementsComponent', () => {
             ],
             providers: [
                 AuthService,
-                DataService,
-                DatePipe,
-                ToastrService,
-                {
-                    provide: MatDialog,
-                    useValue: {}
-                }
+                DataService
             ]
         })
             .compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AnnouncementsComponent);
+        fixture = TestBed.createComponent(AnnouncementCreateComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
