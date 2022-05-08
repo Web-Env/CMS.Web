@@ -36,7 +36,7 @@ const routes: Routes = [
         {path: 'admin/sections', component: SectionsComponent},
         {path: 'admin/users', component: UsersComponent},
         {path: 'admin/users/user-details/:userId', component: UserDetailsComponent},
-        {path: "**", component: NotFoundComponent}
+        {path: "**", redirectTo: '404'}
     ]},
     {path: 'login', component: LoginComponent},
     {path: 'set-password', component: SetPasswordComponent},
