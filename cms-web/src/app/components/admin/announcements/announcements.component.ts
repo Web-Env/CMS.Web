@@ -29,7 +29,8 @@ export class AnnouncementsComponent implements OnInit {
         ),
         new TableColumn(
             'Views',
-            5
+            5,
+            'number'
         ),
         new TableColumn(
             'Created On',
@@ -101,7 +102,8 @@ export class AnnouncementsComponent implements OnInit {
                 ),
                 new TableColumn(
                     announcement.views.toString(),
-                    5
+                    5,
+                    'number'
                 ),
                 new TableColumn(
                     this.datePipe.transform(announcement.createdOn, 'dd/MM/yy') as string,
