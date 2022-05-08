@@ -17,7 +17,8 @@ export const initialState: ContentState = {
 export const ContentReducer = createReducer(
     initialState,
     on(ContentActions.loadContents, (state) => ({ ...state, status: 'loading' })),
-    on(ContentActions.loadContentsSuccess, ({ contents }) => ({
+    on(ContentActions.loadContentsSuccess, (state, { contents }) => ({
+        ...state,
         contents,
         error: '',
         status: 'success' 

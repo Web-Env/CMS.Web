@@ -17,7 +17,8 @@ export const initialState: AnnouncementState = {
 export const AnnouncementReducer = createReducer(
     initialState,
     on(AnnouncementActions.loadAnnouncements, (state) => ({ ...state, status: 'loading' })),
-    on(AnnouncementActions.loadAnnouncementsSuccess, ({ announcements }) => ({
+    on(AnnouncementActions.loadAnnouncementsSuccess, (state, { announcements }) => ({
+        ...state,
         announcements,
         error: '',
         status: 'success' 

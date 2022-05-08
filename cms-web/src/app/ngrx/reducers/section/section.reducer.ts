@@ -17,7 +17,8 @@ export const initialState: SectionState = {
 export const SectionReducer = createReducer(
     initialState,
     on(SectionActions.loadSections, (state) => ({ ...state, status: 'loading' })),
-    on(SectionActions.loadSectionsSuccess, ({ sections }) => ({
+    on(SectionActions.loadSectionsSuccess, (state, { sections }) => ({
+        ...state,
         sections,
         error: '',
         status: 'success' })),

@@ -20,7 +20,8 @@ export const SidebarReducer = createReducer(
         ...state, 
         status: 'loading' 
     })),
-    on(SidebarActions.loadSidebarButtonsSuccess, ({ sidebarButtons }) => ({ 
+    on(SidebarActions.loadSidebarButtonsSuccess, (state, { sidebarButtons }) => ({
+        ...state,
         sidebarButtons,
         error: '',
         status: 'success' 
