@@ -55,7 +55,10 @@ export class ContentComponent implements OnDestroy, OnInit {
             clearInterval(this.intervalId);
         }
 
-        let url = `${this.isViewingAnnouncement ? 'Announcement' : 'Content'}/Get?${this.isViewingAnnouncement ? 'announcementPath' : 'contentPath'}=${this.contentPath}`
+        const endpoint = this.isViewingAnnouncement ? 'Announcement' : 'Content';
+        const parameters = this.isViewingAnnouncement ? 'announcementPath' : 'contentPath';
+        const url = `${endpoint}/Get?${parameters}=${this.contentPath}`;
+
         const contentModel = await this.dataService.getAsync<ContentDownloadModel>(url);
         contentModel.content = `
             <style scoped>

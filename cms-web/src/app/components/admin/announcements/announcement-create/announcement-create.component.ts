@@ -11,7 +11,13 @@ import { ActionsSubject, Store } from "@ngrx/store";
 import { AppState } from "src/app/ngrx/app.state";
 import { Router } from "@angular/router";
 import { ofType } from "@ngrx/effects";
-import { addAnnouncement, ADD_ANNOUNCEMENT_FAILURE, ADD_ANNOUNCEMENT_SUCCESS, updateAnnouncement, UPDATE_ANNOUNCEMENT_FAILURE, UPDATE_ANNOUNCEMENT_SUCCESS } from "src/app/ngrx/actions/announcement/announcement.actions";
+import { 
+    addAnnouncement, 
+    ADD_ANNOUNCEMENT_FAILURE, 
+    ADD_ANNOUNCEMENT_SUCCESS, 
+    updateAnnouncement, 
+    UPDATE_ANNOUNCEMENT_FAILURE, 
+    UPDATE_ANNOUNCEMENT_SUCCESS } from "src/app/ngrx/actions/announcement/announcement.actions";
 import { HttpErrorResponse } from "@angular/common/http";
 import { AnnouncementDownloadModel } from "src/app/models/download-models/announcement.model";
 import { ContentUploadModel } from "src/app/models/upload-models/content.model";

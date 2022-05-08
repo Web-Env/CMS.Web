@@ -152,7 +152,7 @@ export class ContentsComponent implements OnDestroy, OnInit {
                     15
                 )
             ]
-        )
+        );
     }
 
     public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {

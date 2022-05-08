@@ -58,28 +58,34 @@ export class AnnouncementsComponent implements OnInit {
     ngOnInit(): void {
         this.store.dispatch(loadAnnouncements());
 
-        this.loadAnnouncementsSuccessSubscription = this.actions$.pipe(ofType(LOAD_ANNOUNCEMENTS_SUCCESS)).subscribe((announcements: any) => {
-            const announcementRows = new Array<TableRow>();
+        this.loadAnnouncementsSuccessSubscription = this.actions$
+            .pipe(ofType(LOAD_ANNOUNCEMENTS_SUCCESS))
+            .subscribe((announcements: any) => {
+                const announcementRows = new Array<TableRow>();
 
-            if (announcements !== null && announcements.announcements !== null) {
-                
-                announcements.announcements.forEach((announcement: Announcement) => {
-                    announcementRows.push(
-                        this.castAnnouncementToTableRow(announcement)
-                    );
-                });
+                if (announcements !== null && announcements.announcements !== null) {
+                    
+                    announcements.announcements.forEach((announcement: Announcement) => {
+                        announcementRows.push(
+                            this.castAnnouncementToTableRow(announcement)
+                        );
+                    });
 
-                
+                    
+                }
+
+                this.rows = announcementRows;
+
+                this.isDataLoaded = true;
             }
+        );
 
-            this.rows = announcementRows;
-
-            this.isDataLoaded = true;
-        });
-
-        this.removeAnnouncementSuccessSubscription = this.actions$.pipe(ofType(REMOVE_ANNOUNCEMENT_SUCCESS)).subscribe((removeAnnouncementSuccessResult: any) => {
-            this.rows = this.rows.filter((tableRow) => tableRow.id !== removeAnnouncementSuccessResult.announcementId);
-        });
+        this.removeAnnouncementSuccessSubscription = this.actions$
+            .pipe(ofType(REMOVE_ANNOUNCEMENT_SUCCESS))
+            .subscribe((removeAnnouncementSuccessResult: any) => {
+                this.rows = this.rows.filter((tableRow) => tableRow.id !== removeAnnouncementSuccessResult.announcementId);
+            }
+        );
     }
 
     private castAnnouncementToTableRow(announcement: Announcement): TableRow {
@@ -107,7 +113,7 @@ export class AnnouncementsComponent implements OnInit {
                     15
                 )
             ]
-        )
+        );
     }
 
     public processTableRowActionButtonClicked(tableRowActionButtonClickedEvent: TableRowActionButtonClickedEvent): void {
