@@ -1,4 +1,4 @@
-<div *ngIf="!userIsLoading && isContentTimeTrackingLoaded" class="user-details-container">
+<div *ngIf="!userIsLoading && isContentTimeTrackingLoaded && user !== undefined" class="user-details-container">
     <h1>User Details</h1>
 
     <div class="user-container">
@@ -36,3 +36,5 @@
 </div>
 
 <div *ngIf="userIsLoading && !isContentTimeTrackingLoaded" class="loading-icon"></div>
+
+<app-not-found *ngIf="!userIsLoading && user === undefined"></app-not-found>

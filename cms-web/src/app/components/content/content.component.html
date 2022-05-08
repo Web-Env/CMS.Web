@@ -3,3 +3,5 @@
 </div>
 
 <div *ngIf="isLoading" class="loading-icon"></div>
+
+<app-not-found *ngIf="!isLoading && content === undefined"></app-not-found>
