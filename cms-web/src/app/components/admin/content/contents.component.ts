@@ -34,12 +34,16 @@ export class ContentsComponent implements OnDestroy, OnInit {
             15
         ),
         new TableColumn(
+            'Views',
+            5
+        ),
+        new TableColumn(
             'Created On',
             10
         ),
         new TableColumn(
             'Created By',
-            20
+            15
         )
     ];
     rows!: Array<TableRow>;
@@ -83,7 +87,11 @@ export class ContentsComponent implements OnDestroy, OnInit {
                         ),
                         new TableColumn(
                             '-',
-                            25
+                            10
+                        ),
+                        new TableColumn(
+                            '-',
+                            15
                         )
                     ],
                     false,
@@ -132,12 +140,16 @@ export class ContentsComponent implements OnDestroy, OnInit {
                     15
                 ),
                 new TableColumn(
-                    this.datePipe.transform(content.createdOn, 'dd/MM/yy') as string,
+                    content.views.toString(),
                     5
                 ),
                 new TableColumn(
+                    this.datePipe.transform(content.createdOn, 'dd/MM/yy') as string,
+                    10
+                ),
+                new TableColumn(
                     `${content.createdBy.firstName} ${content.createdBy.lastName}`,
-                    25
+                    15
                 )
             ]
         )
