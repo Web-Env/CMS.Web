@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { Router } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
 import { ActionsSubject, Store } from "@ngrx/store";
 import { debounceTime, fromEvent, Subject, Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { SidebarButtonViewModel } from "src/app/models/view-models/sidebar-button.model";
 import { SidebarButton } from "src/app/ngrx/models/sidebarbutton.model";
 import { loadSidebarButtons, LOAD_SIDEBARBUTTONS_SUCCESS } from "src/app/ngrx/actions/sidebar/sidebar.actions";
@@ -21,6 +21,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     searchTermInputSubscription!: Subscription;
     loadSidebarButtonsSuccessSubscription!: Subscription;
     contentAddedSubscription!: Subscription;
+    routerPathChangeSubscription!: Subscription;
 
     @Output() deactivateSidebarEvent: EventEmitter<boolean> = new EventEmitter();
 
@@ -28,6 +29,7 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     url!: string;
 
     activeSidebarButtonPath!: string;
+    activateSidebarButtonSubject: Subject<string> = new Subject<string>();
     deactivateSidebarButtonSubject: Subject<string> = new Subject<string>();
 
     searchTermEntered: boolean = false;
@@ -47,6 +49,19 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
         this.url = this.router.url.replace('content/', '');
         this.url = this.url.replace('/', '');
         this.activeSidebarButtonPath = this.url;
+
+        this.routerPathChangeSubscription = this.router.events
+            .pipe(filter((event) => event instanceof NavigationEnd))
+            .subscribe(() => {
+                this.emitActiveSidebarButtonPathToDeactivate();
+
+                this.url = this.router.url.replace('content/', '');
+                this.url = this.url.replace('/', '');
+                this.activeSidebarButtonPath = this.url;
+
+                this.emitSidebarButtonPathToActivate();
+            }
+        );
 
         this.store.dispatch(loadSidebarButtons());
 
@@ -225,12 +240,17 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     }
 
     public sidebarButtonClicked(sidebarButtonClickedPath: string): void {
-        this.emitActiveSidebarButtonPathToDeactivate();
-        this.deactivateSidebarEvent.emit();
-
-        this.activeSidebarButtonPath = sidebarButtonClickedPath.replace('content/', '');
+        this.deactivateSidebar();
 
         this.router.navigate([sidebarButtonClickedPath]);
+    }
+
+    public deactivateSidebar(): void {
+        this.deactivateSidebarEvent.emit();
+    }
+
+    public emitSidebarButtonPathToActivate(): void {
+        this.activateSidebarButtonSubject.next(this.activeSidebarButtonPath);
     }
 
     public emitActiveSidebarButtonPathToDeactivate(): void {

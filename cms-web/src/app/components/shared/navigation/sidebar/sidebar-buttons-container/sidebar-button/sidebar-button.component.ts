@@ -15,18 +15,38 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
     @Input() path!: string;
     @Input() subButtons: any;
     @Input() isSubButton!: boolean;
+    @Input() parentActivateButtonFunction!: () => void;
     @Input() isActive: boolean = false;
+    @Input() activateSidebarButtonObservable!: Observable<string>;
     @Input() deactivateSidebarButtonObservable!: Observable<string>;
+
+    activateSidebarButtonSubscription!: Subscription;
     deactivateSidebarButtonSubscription!: Subscription;
 
     @Output() sidebarButtonClickedEventEmitter: EventEmitter<string> = new EventEmitter();
     
     hasSubButtons: boolean = false;
 
+    activateButtonFunction = (): void => {
+        this.activateButton();
+    }
+
     constructor() { }
 
     ngOnInit(): void {
         this.hasSubButtons = this.subButtons != null;
+
+        this.activateSidebarButtonSubscription = this.activateSidebarButtonObservable
+            .subscribe((activatedSidebarButtonPath: string) => {
+                if (!this.isActive && this.path.replace('content/', '') === activatedSidebarButtonPath) {
+                    if (this.isSubButton && this.parentActivateButtonFunction !== undefined) {
+                        this.parentActivateButtonFunction();
+                    }
+
+                    this.activateButton();
+                }
+            }
+        );
 
         this.deactivateSidebarButtonSubscription = this.deactivateSidebarButtonObservable
             .subscribe((deactivatedSidebarButtonPath: string) => {
@@ -43,8 +63,6 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
         }
         else {
             if (!this.isActive) {
-                this.activateButton();
-
                 this.emitSidebarButtonClickedEvent(this.path);
             }
         }
@@ -71,6 +89,7 @@ export class SidebarButtonComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy(): void {
+        this.activateSidebarButtonSubscription.unsubscribe();
         this.deactivateSidebarButtonSubscription.unsubscribe();
     }
 }

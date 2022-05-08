@@ -43,7 +43,6 @@ export class AddSectionComponent implements AfterViewInit, OnDestroy, OnInit {
         this.addSectionSuccessSubscription = this.actions$
             .pipe(ofType(SectionActions.ADD_SECTION_SUCCESS, SectionActions.UPDATE_SECTION_SUCCESS))
             .subscribe((newSection: any) => {
-                console.log (newSection)
                 if (this.saveClicked) {
                     this.dialogRef.close(newSection.section);
                 }

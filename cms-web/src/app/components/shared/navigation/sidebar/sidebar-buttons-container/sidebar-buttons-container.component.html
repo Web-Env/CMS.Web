@@ -9,6 +9,7 @@
             [path]="button.path" 
             [isActive]="button.isActive" 
             [subButtons]="button.subButtons"
+            [activateSidebarButtonObservable]="activateSidebarButtonSubject.asObservable()" 
             [deactivateSidebarButtonObservable]="deactivateSidebarButtonSubject.asObservable()" 
             (sidebarButtonClickedEventEmitter)="sidebarButtonClicked($event)"></app-sidebar-button>
         <div *ngIf="searchTermEntered && sidebarButtons.length === 0 && searchProcessed" class="sidebar-buttons-message-container">

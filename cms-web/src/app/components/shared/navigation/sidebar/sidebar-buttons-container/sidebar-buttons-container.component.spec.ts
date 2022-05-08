@@ -70,14 +70,6 @@ describe('SidebarButtonsContainerComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    // it('#mapButtonsToSidebar should push all elements from the buttons array to the sidebarButtons array', fakeAsync(() => {
-    //     (component as any).mapButtonsToSidebar();
-
-    //     //Timeout to allow promise resolution
-    //     tick(2000);
-    //     expect(component.sidebarButtons).toEqual(component.buttons);        
-    // }));
-
     it('#searchTermChanged should call #resetSearch if search term is empty string', () => {
         component.searchTerm = 'Test';
         
@@ -163,16 +155,16 @@ describe('SidebarButtonsContainerComponent', () => {
     it('#sidebarButtonClicked should set activeSidebarButtonPath property', () => {
         component.sidebarButtonClicked('home');
 
-        expect(component.activeSidebarButtonPath).toBe('home');
+        expect(component.activeSidebarButtonPath).toBe('');
     });
 
-    it('#sidebarButtonClicked should call #emitActiveSidebarButtonPath', () => {
-        spyOn(component, 'emitActiveSidebarButtonPathToDeactivate').and.callThrough();
+    it('#sidebarButtonClicked should call #deactivateSidebar', () => {
+        spyOn(component, 'deactivateSidebar').and.callThrough();
 
         component.activeSidebarButtonPath = 'Test';
         component.sidebarButtonClicked('home');
 
-        expect(component.emitActiveSidebarButtonPathToDeactivate).toHaveBeenCalled();
+        expect(component.deactivateSidebar).toHaveBeenCalled();
     });
 
     it('#clearSearchInput should clear input and call #resetSearch', () => {

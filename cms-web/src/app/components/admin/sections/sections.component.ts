@@ -179,7 +179,6 @@ export class SectionsComponent implements OnDestroy, OnInit {
         const instance = this.dialog.open(AddSectionComponent, dialogConfig);
         instance.componentInstance.sectionId = editedTableRow.id;
         instance.afterClosed().subscribe((section: Section) => {
-            console.log (section)
             if (section !== undefined) {
                 this.isDataLoaded = false;
                 this.rows = [];
