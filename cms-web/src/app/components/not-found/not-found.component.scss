@@ -1,0 +1,39 @@
+@import "src/assets/scss/variables/colours";
+@import "src/assets/scss/variables/dimensions";
+
+.not-found-container {
+    width: 80%;
+
+    margin: 50px auto 0 auto;
+
+    .icon-container {
+        img {
+            width: 100%;
+        }
+    }
+    
+    p {
+        color: $primary-text-colour;
+
+        font-size: 1.5em;
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: $tablet-small-breakpoint) {
+    .not-found-container {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+    .not-found-container {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: $desktop-large-breakpoint) {
+    .not-found-container {
+        width: 20%;
+    }
+}
