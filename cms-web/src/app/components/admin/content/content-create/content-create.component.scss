@@ -3,7 +3,7 @@
 @import "src/assets/scss/variables/typeface";
 
 .add-content-form-container {
-    width: 95%;
+    width: calc(100% - 30px);
 
     margin: 15px auto;
 

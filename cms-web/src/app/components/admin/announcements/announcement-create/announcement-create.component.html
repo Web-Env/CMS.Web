@@ -1,4 +1,4 @@
-<div class="add-content-form-container">
+<div *ngIf="!isEditing || (isEditing && !isLoadingAnnouncement && announcementContent !== undefined)" class="add-content-form-container">
     <h1 class="table-name">{{ isEditing ? 'Update' : 'Create' }} Announcement</h1>
     <form [formGroup]="addAnnouncementForm" (ngSubmit)="createOrUpdateAnnouncementAsync(addAnnouncementForm.value)">
         <app-text-input formControlName="title" [parentForm]="addAnnouncementForm" [inputId]="'title'" [inputName]="'title'" [inputTitle]="'Title'" [inputType]="'text'"></app-text-input>
@@ -13,3 +13,5 @@
     
     <p class="add-content-form-error" *ngIf="addAnnouncementFormErrorMessageVisible">{{ addAnnouncementFormErrorMessage }}</p>
 </div>
+<div *ngIf="isEditing && isLoadingAnnouncement" class="loading-icon"></div>
+<app-not-found *ngIf="isEditing && !isLoadingAnnouncement && announcementContent === undefined"></app-not-found>

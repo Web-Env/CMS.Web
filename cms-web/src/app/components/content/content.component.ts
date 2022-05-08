@@ -1,4 +1,5 @@
 import { DatePipe } from "@angular/common";
+import { HttpErrorResponse, HttpStatusCode } from "@angular/common/http";
 import { Component, OnDestroy, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { NavigationEnd, Router } from "@angular/router";
@@ -48,6 +49,7 @@ export class ContentComponent implements OnDestroy, OnInit {
     }
 
     public async getContentAsync(): Promise<void> {
+        this.isLoading = true;
         this.content = undefined;
         this.url = this.router.url;
         const urlSplit = this.url.split('/');
@@ -62,22 +64,34 @@ export class ContentComponent implements OnDestroy, OnInit {
         const parameters = this.isViewingAnnouncement ? 'announcementPath' : 'contentPath';
         const url = `${endpoint}/Get?${parameters}=${this.contentPath}`;
 
-        const contentModel = await this.dataService.getAsync<ContentDownloadModel>(url);
-        contentModel.content = `
-            ${this.isViewingAnnouncement ? 
-                `<div class="created-on"><small>${this.datePipe.transform(contentModel.createdOn, 'dd MMMM yyyy hh:mm')}</small></div>` : 
-                ''}
-
-            ${contentModel.content}
-        `;
-
-        this.content = contentModel;
-        this.isLoading = false;
-
-        if (!this.isViewingAnnouncement) {
-            this.intervalId = window.setInterval(() => {
-                this.recordUserViewTime();
-            }, 1000);
+        try {
+            const contentModel = await this.dataService.getAsync<ContentDownloadModel>(url);
+            contentModel.content = `
+                ${this.isViewingAnnouncement ? 
+                    `<div class="created-on"><small>${this.datePipe.transform(contentModel.createdOn, 'dd MMMM yyyy hh:mm')}</small></div>` : 
+                    ''
+                }
+    
+                ${contentModel.content}
+            `;
+    
+            this.content = contentModel;
+    
+            if (!this.isViewingAnnouncement) {
+                this.intervalId = window.setInterval(() => {
+                    this.recordUserViewTime();
+                }, 1000);
+            }
+        }
+        catch (err) {
+            if (err instanceof HttpErrorResponse) {
+                if (err.status === HttpStatusCode.NotFound) {
+                    
+                }
+            }
+        }
+        finally {
+            this.isLoading = false;
         }
     }
 

@@ -35,7 +35,8 @@ export class ContentsComponent implements OnDestroy, OnInit {
         ),
         new TableColumn(
             'Views',
-            5
+            5,
+            'number'
         ),
         new TableColumn(
             'Created On',
@@ -83,7 +84,8 @@ export class ContentsComponent implements OnDestroy, OnInit {
                         ),
                         new TableColumn(
                             '-',
-                            5
+                            5,
+                            'number'
                         ),
                         new TableColumn(
                             '-',
@@ -141,7 +143,8 @@ export class ContentsComponent implements OnDestroy, OnInit {
                 ),
                 new TableColumn(
                     content.views.toString(),
-                    5
+                    5,
+                    'number'
                 ),
                 new TableColumn(
                     this.datePipe.transform(content.createdOn, 'dd/MM/yy') as string,

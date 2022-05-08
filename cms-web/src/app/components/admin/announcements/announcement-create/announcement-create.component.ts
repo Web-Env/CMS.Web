@@ -18,7 +18,6 @@ import {
     updateAnnouncement, 
     UPDATE_ANNOUNCEMENT_FAILURE, 
     UPDATE_ANNOUNCEMENT_SUCCESS } from "src/app/ngrx/actions/announcement/announcement.actions";
-import { HttpErrorResponse } from "@angular/common/http";
 import { AnnouncementDownloadModel } from "src/app/models/download-models/announcement.model";
 import { ContentUploadModel } from "src/app/models/upload-models/content.model";
 
@@ -49,6 +48,7 @@ export class AnnouncementCreateComponent implements OnInit {
     }
 
     isLoading: boolean = false;
+    isLoadingAnnouncement: boolean = false;
     addAnnouncementFormErrorMessageVisible: boolean = false;
     addAnnouncementFormErrorMessage: string = '';
     saveClicked: boolean = false;
@@ -84,50 +84,36 @@ export class AnnouncementCreateComponent implements OnInit {
 
         this.addAnnouncementFailureSubscription = this.actions$
             .pipe(ofType(ADD_ANNOUNCEMENT_FAILURE, UPDATE_ANNOUNCEMENT_FAILURE)).subscribe((data: any) => {
-                if (data.name === 'HttpErrorResponse') {
-                    const err = data as HttpErrorResponse;
-
-                    // if (err.status === 403) {
-                    //     this.addSectionFormErrorMessage = 'An error occured, please check your password';
-                    // }
-                    // else if (err.status == 400) {
-                    //     if (err.error !== null && err.error.errorMessage !== null) {
-                    //         this.addSectionFormErrorMessage = err.error.errorMessage;
-                    //     }
-                    //     else {
-                    //         this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-                    //         throw err;
-                    //     }
-                    // }
-                    // else {
-                    //     this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-                    // }
-                }
-                else {
-                    //this.addSectionFormErrorMessage = 'An unexpected error occured, please try again';
-                }
-
-                //this.addSectionFormErrorMessageVisible = true;
                 this.isLoading = false;
             }
         );
     }
     
     public async getAnnouncementAsync(urlSplit: Array<string>): Promise<void> {
+        this.isLoadingAnnouncement = true;
         this.announcementContent = undefined;
 
         this.announcementPath = encodeURIComponent(urlSplit[urlSplit.length - 1]);
-        const contentModel = await this.dataService.getAsync<AnnouncementDownloadModel>(`Announcement/Get?announcementPath=${this.announcementPath}`);
+        try {
+            const contentModel = await this.dataService.getAsync<AnnouncementDownloadModel>(`Announcement/Get?announcementPath=${this.announcementPath}`);
 
-        this.announcementContent = contentModel.content;
-        this.announcementId = contentModel.id;
-        this.announcementTitle = contentModel.title;
-        this.announcementPath = contentModel.path;
-        this.announcementContentLoaded = true;
+            this.announcementContent = contentModel.content;
+            this.announcementId = contentModel.id;
+            this.announcementTitle = contentModel.title;
+            this.announcementPath = contentModel.path;
+            this.announcementContentLoaded = true;
+            
+            this.addAnnouncementForm.controls['title'].setValue(this.announcementTitle);
+            this.addAnnouncementForm.controls['path'].setValue(this.announcementPath || '-');
+            this.addAnnouncementForm.controls['content'].setValue(this.announcementContent);
+        }
+        catch (err) {
+            throw err;
+        }
+        finally {
+            this.isLoadingAnnouncement = false;
+        }
         
-        this.addAnnouncementForm.controls['title'].setValue(this.announcementTitle);
-        this.addAnnouncementForm.controls['path'].setValue(this.announcementPath || '-');
-        this.addAnnouncementForm.controls['content'].setValue(this.announcementContent);
     }
 
     public buildForm(): void {
