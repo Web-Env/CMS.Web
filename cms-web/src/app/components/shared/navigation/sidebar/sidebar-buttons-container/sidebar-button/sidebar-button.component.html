@@ -19,6 +19,8 @@
             [path]="subButton.path" 
             [isActive]="subButton.isActive" 
             [isSubButton]="true" 
+            [parentButton]="this"
+            [activateSidebarButtonObservable]="activateSidebarButtonObservable" 
             [deactivateSidebarButtonObservable]="deactivateSidebarButtonObservable" 
             (sidebarButtonClickedEventEmitter)="sidebarSubButtonClicked($event)"></app-sidebar-button>
     </div>

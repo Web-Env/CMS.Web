@@ -26,13 +26,13 @@ export class ContentComponent implements OnDestroy, OnInit {
 
     constructor(private dataService: DataService,
                 private router: Router) {
-        this.routerPathChangeSubscription = router.events.pipe(
-            filter((event) => event instanceof NavigationEnd)
-        ).subscribe(() => {
-            if (this.componentInitialised) {
-                this.getContentAsync();
+        this.routerPathChangeSubscription = router.events
+            .pipe(filter((event) => event instanceof NavigationEnd))
+            .subscribe(() => {
+                if (this.componentInitialised) {
+                    this.getContentAsync();
+                }
             }
-        }
         );
     }
 
