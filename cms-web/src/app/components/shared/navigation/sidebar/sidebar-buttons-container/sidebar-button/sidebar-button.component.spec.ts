@@ -35,6 +35,7 @@ describe('SidebarButtonComponent', () => {
         component.path = buttonPath;
         component.isSubButton = false;
         component.deactivateSidebarButtonObservable = new BehaviorSubject<string>("");
+        component.activateSidebarButtonObservable = new BehaviorSubject<string>("");
 
         fixture.detectChanges();
     });
@@ -47,24 +48,23 @@ describe('SidebarButtonComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('#sidebarButtonClicked should toggle isActive', () => {
-        component.sidebarSubButtonClicked(buttonPath);
-
-        expect(component.isActive).toBeTruthy();
-    });
-
-    it('#sidebarButtonClicked should toggle isActive and emit sidebarButtonClickedEvent', () => {
+    it('#sidebarButtonClicked should emit sidebarButtonClickedEvent', () => {
         spyOn(component, 'emitSidebarButtonClickedEvent');
 
         component.sidebarButtonClicked();
 
         fixture.detectChanges();
 
-        expect(component.isActive).toBeTruthy();
         expect(component.emitSidebarButtonClickedEvent).toHaveBeenCalledWith(buttonPath);
     });
 
-    it('#sidebarButtonClicked should toggle isActive if the sidebar button contains sub-buttons', () => {
+    it('#sidebarSubButtonClicked should toggle isActive', () => {
+        component.sidebarSubButtonClicked(buttonPath);
+
+        expect(component.isActive).toBeTruthy();
+    });
+
+    it('#sidebarSubButtonClicked should toggle isActive if the sidebar button contains sub-buttons', () => {
         component.hasSubButtons = true;
         component.subButtons = [
             subButton
@@ -105,7 +105,7 @@ describe('SidebarButtonComponent', () => {
         expect(component.isActive).toBeTruthy();
     });
 
-    it('#activateButton should set isActive to true', () => {
+    it('#deactivateButton should set isActive to false', () => {
         component.isActive = true;
 
         component.deactivateButton();

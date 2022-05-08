@@ -240,9 +240,13 @@ export class SidebarButtonsContainerComponent implements AfterViewInit, OnDestro
     }
 
     public sidebarButtonClicked(sidebarButtonClickedPath: string): void {
-        this.deactivateSidebarEvent.emit();
+        this.deactivateSidebar();
 
         this.router.navigate([sidebarButtonClickedPath]);
+    }
+
+    public deactivateSidebar(): void {
+        this.deactivateSidebarEvent.emit();
     }
 
     public emitSidebarButtonPathToActivate(): void {
