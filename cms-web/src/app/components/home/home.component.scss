@@ -2,4 +2,61 @@
     width: calc(100% - 60px);
 
     margin: auto;
+
+    .ck-content {
+        ::ng-deep {
+            .created-on {
+                margin-top: 15px;
+                margin-bottom: -15px;
+            }
+    
+            .created-on small {
+                color: #aaaaaa;
+    
+                font-size: 1.35em;
+            }
+    
+            p,
+            li {
+                color: #d9d9da;
+    
+                font-size: 1.65em;
+            }
+    
+            a {
+                color: #04cad3;
+    
+                cursor: pointer;
+            }
+            
+    
+            a:hover {
+                color: #03bac3;
+            }
+    
+            h1,
+            h2,
+            h3,
+            h4 {
+                color: #04cad3;
+            }
+    
+            h2 {
+                font-size: 2.5em;
+            }
+    
+            h3 {
+                font-size: 2em;
+            }
+    
+            h4 {
+                font-size: 1.75em;
+            }
+    
+            figcaption {
+                background-color: #292c31;
+                color: #d9d9da;
+            }
+        }
+    }
 }

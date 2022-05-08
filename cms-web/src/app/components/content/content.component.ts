@@ -61,60 +61,6 @@ export class ContentComponent implements OnDestroy, OnInit {
 
         const contentModel = await this.dataService.getAsync<ContentDownloadModel>(url);
         contentModel.content = `
-            <style scoped>
-                .content .created-on {
-                    margin-top: 15px;
-                    margin-bottom: -15px;
-                }
-
-                .content .created-on small {
-                    color: #aaaaaa;
-
-                    font-size: 1.35em;
-                }
-
-                .content p,
-                .content li {
-                    color: #d9d9da;
-
-                    font-size: 1.65em;
-                }
-
-                .content a {
-                    color: #04cad3;
-
-                    cursor: pointer;
-                }
-                
-
-                .content a:hover {
-                    color: #03bac3;
-                }
-
-                .content h2,
-                .content h3,
-                .content h4 {
-                    color: #04cad3;
-                }
-
-                .content h2 {
-                    font-size: 2.5em;
-                }
-
-                .content h3 {
-                    font-size: 2em;
-                }
-
-                .content h4 {
-                    font-size: 1.75em;
-                }
-
-                .content figcaption {
-                    background-color: #292c31;
-                    color: #d9d9da;
-                }
-            </style>
-
             ${this.isViewingAnnouncement ? 
                 `<div class="created-on"><small>${this.datePipe.transform(contentModel.createdOn, 'dd MMMM yyyy hh:mm')}</small></div>` : 
                 ''}
