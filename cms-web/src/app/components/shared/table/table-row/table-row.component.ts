@@ -11,6 +11,7 @@ import { TableRow } from "src/app/models/view-models/table-row.model";
 export class TableRowComponent {
     @Input() row!: TableRow;
 
+    @Input() clickableRows: boolean = false;
     @Input() viewButtonEnabled: boolean = true;
     @Input() editButtonEnabled: boolean = true;
     @Input() deleteButtonEnabled: boolean = true;

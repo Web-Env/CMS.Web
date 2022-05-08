@@ -18,11 +18,13 @@
         </thead>
         
         <tbody *ngIf="!isLoading && rows !== undefined && rows?.length > 0">
-            <tr *ngFor="let row of rows" app-table-row 
+            <tr *ngFor="let row of rows" [ngClass]="{'clickable': clickableRows}" app-table-row 
                 [row]="row" 
+                [clickableRows]="clickableRows"
                 [viewButtonEnabled]="viewButtonEnabled" 
                 [editButtonEnabled]="editButtonEnabled" 
                 [deleteButtonEnabled]="deleteButtonEnabled"
+                (click)="tableRowClicked(row)"
                 (actionButtonClickedEvent)="processTableRowActionButtonClicked($event)"></tr>
         </tbody>
         
