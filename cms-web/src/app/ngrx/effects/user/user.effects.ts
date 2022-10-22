@@ -30,7 +30,7 @@ export class UserEffects {
         this.actions$.pipe(
             ofType(loadUsers),
             switchMap(() =>
-                from(this.dataService.getArrayAsync<User>('User/GetAll?page=1&pageSize=25', User)).pipe(
+                from(this.dataService.getArrayAsync<User>('User/GetAll?page=1&pageSize=150', User)).pipe(
                     map((users) => loadUsersSuccess({ users })),
                     catchError((error) => of(loadUsersFailure({ error })))
                 )

@@ -103,6 +103,7 @@ export class AddSectionComponent implements AfterViewInit, OnDestroy, OnInit {
 
         this.addSectionForm.get('title')?.valueChanges.subscribe((data) => {
             let titleData = data.toLowerCase().trim();
+            titleData = titleData.replace(/[^\w\s]/g, '');
             titleData = titleData.replaceAll(' ', '-');
 
             this.pathTextInputComponent.writeValue(titleData);

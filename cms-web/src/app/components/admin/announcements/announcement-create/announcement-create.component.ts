@@ -135,6 +135,7 @@ export class AnnouncementCreateComponent implements OnInit {
         this.addAnnouncementForm.get('title')?.valueChanges.subscribe((data) => {
             if (data !== undefined && data !== null) {
                 let titleData = data.toLowerCase().trim();
+                titleData = titleData.replace(/[^\w\s]/g, '');
                 titleData = titleData.replaceAll(' ', '-');
     
                 this.pathTextInputComponent.writeValue(titleData);

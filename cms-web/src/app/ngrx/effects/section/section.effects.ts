@@ -26,7 +26,7 @@ export class SectionEffects {
         this.actions$.pipe(
             ofType(loadSections),
             switchMap(() =>
-                from(this.dataService.getArrayAsync<Section>('Section/GetAll?page=1&pageSize=25', Section)).pipe(
+                from(this.dataService.getArrayAsync<Section>('Section/GetAll?page=1&pageSize=150', Section)).pipe(
                     map((sections) => loadSectionsSuccess({ sections: sections })),
                     catchError((error) => of(loadSectionsFailure({ error })))
                 )

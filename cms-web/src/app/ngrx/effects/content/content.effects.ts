@@ -26,7 +26,7 @@ export class ContentEffects {
         this.actions$.pipe(
             ofType(loadContents),
             switchMap(() =>
-                from(this.dataService.getArrayAsync<Content>('Content/GetAll?page=1&pageSize=25', Content)).pipe(
+                from(this.dataService.getArrayAsync<Content>('Content/GetAll?page=1&pageSize=150', Content)).pipe(
                     map((contents) => loadContentsSuccess({ contents: contents })),
                     catchError((error) => of(loadContentsFailure({ error })))
                 )
