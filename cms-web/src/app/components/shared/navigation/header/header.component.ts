@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { AuthService } from "src/app/services/auth/auth.service";
 
 @Component({
@@ -6,7 +6,7 @@ import { AuthService } from "src/app/services/auth/auth.service";
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnDestroy, OnInit {
     userComponentVisible: boolean = false;
     userMenuActive: boolean = false;
     userName!: string;
@@ -20,6 +20,8 @@ export class HeaderComponent implements OnInit {
         const firstName = localStorage.getItem('FirstName');
         const lastName = localStorage.getItem('LastName');
         this.initializeUserComponent(`${firstName} ${lastName}`);
+
+        window.addEventListener('click', this.handleWindowClick.bind(this), false);
     }
 
     private initializeUserComponent(userName: string): void {
@@ -33,11 +35,29 @@ export class HeaderComponent implements OnInit {
         this.menuButtonClickedEvent.emit(this.sidebarOpened);
     }
 
+    private handleWindowClick(e: MouseEvent): void {
+        var path = e.composedPath() as Element[];
+        var pathClassNames = path.map(x => x.className);
+
+        if (pathClassNames.includes('sidebar-container') || pathClassNames.includes('menu-button-container')) {
+            return;
+        }
+        else {
+            if (this.sidebarOpened) {
+                this.menuButtonClicked();
+            }
+        }
+    }
+
     public userClicked(): void {
         this.userMenuActive = !this.userMenuActive;
     }
 
     public logOutButtonClicked(): void {
         this.authService.logOut();
+    }
+
+    ngOnDestroy(): void {
+        window.removeEventListener('click', this.handleWindowClick, false);
     }
 }

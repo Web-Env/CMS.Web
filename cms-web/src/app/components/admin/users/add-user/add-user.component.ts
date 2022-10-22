@@ -183,7 +183,6 @@ export class AddUserComponent implements AfterViewInit, OnDestroy, OnInit {
             );
 
             if (this.isAdminChecked && ((this.userId === undefined && this.user === undefined) || (this.userId !== undefined && this.user !== undefined && !this.user.isAdmin))) {
-                console.log ("Test")
                 const hashedAdminPassword = shajs('sha256').update(addUserForm.password).digest('hex');
                 newUserUploadModel.adminPassword = hashedAdminPassword;
             }
